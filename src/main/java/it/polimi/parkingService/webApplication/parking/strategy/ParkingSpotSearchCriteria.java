@@ -1,9 +1,8 @@
-package it.polimi.parkingService.webApplication.parking.utils;
+package it.polimi.parkingService.webApplication.parking.strategy;
 
 import it.polimi.parkingService.webApplication.parking.enums.ParkingSpotStatus;
 import it.polimi.parkingService.webApplication.parking.enums.StripeColor;
 import it.polimi.parkingService.webApplication.parking.models.ParkingSpot;
-import it.polimi.parkingService.webApplication.parking.utils.SearchCriteria;
 
 public class ParkingSpotSearchCriteria implements SearchCriteria {
     protected final ParkingSpotStatus status;

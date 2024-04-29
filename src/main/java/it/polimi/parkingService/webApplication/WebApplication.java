@@ -4,12 +4,14 @@ import it.polimi.parkingService.webApplication.parking.enums.ParkingSpotStatus;
 import it.polimi.parkingService.webApplication.parking.models.ParkingArea;
 import it.polimi.parkingService.webApplication.parking.models.ParkingSpot;
 import it.polimi.parkingService.webApplication.parking.enums.StripeColor;
-import it.polimi.parkingService.webApplication.parking.utils.ParkingSpotSearchCriteria;
-import it.polimi.parkingService.webApplication.parking.utils.SearchCriteria;
+import it.polimi.parkingService.webApplication.parking.strategy.PriorityQueueParkingSpotResearch;
+import it.polimi.parkingService.webApplication.parking.strategy.ParkingSpotSearchCriteria;
+import it.polimi.parkingService.webApplication.parking.strategy.SearchCriteria;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+
 
 @SpringBootApplication
 public class WebApplication {
@@ -35,10 +37,10 @@ public class WebApplication {
 		for (int i = 0; i < ORDER; i++) {
 			for (int j = 0; j < ORDER; j++) {
 				ParkingSpot parkingSpot = new ParkingSpot(parkingArea, i, j);
-				if(j % 3 == 0) {
+				if(j == 3) {
 					parkingSpot.setStripeColor(StripeColor.YELLOW);
 				}
-				if(i == 0 && j == 0) {
+				if(i == 4 && j == 4) {
 					parkingSpot.setStripeColor(StripeColor.PINK);
 				}
 				parkingArea.setParkingSpot(parkingSpot);
@@ -46,8 +48,13 @@ public class WebApplication {
 		}
 
 		SearchCriteria criteria = new ParkingSpotSearchCriteria(ParkingSpotStatus.FREE, StripeColor.YELLOW);
-		ParkingSpot parkingSpot = parkingArea.searchForParkingSpot(criteria);
-		System.out.println(parkingSpot);
+//		SearchCriteria criteria = new ParkingSpotSearchCriteria();
+		PriorityQueueParkingSpotResearch strategy = new PriorityQueueParkingSpotResearch(4, 4);
+
+		parkingArea.setParkingSpotResearchStrategy(strategy);
+		ParkingSpot parkingSpot1 = parkingArea.searchForParkingSpot(criteria);
+		System.out.println(parkingSpot1);
+//		System.out.println(Arrays.deepToString(parkingArea.getParkingSpots()));
 	}
 
 }

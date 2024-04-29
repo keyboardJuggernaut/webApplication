@@ -1,6 +1,5 @@
 package it.polimi.parkingService.webApplication.parking.strategy;
 
-import it.polimi.parkingService.webApplication.parking.utils.SearchCriteria;
 import it.polimi.parkingService.webApplication.parking.models.ParkingSpot;
 
 public abstract class ParkingSpotResearchStrategy {
