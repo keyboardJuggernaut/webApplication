@@ -7,19 +7,31 @@ import it.polimi.parkingService.webApplication.parking.exceptions.ParkingSpotNot
 import it.polimi.parkingService.webApplication.payment.exceptions.PaymentFailed;
 import it.polimi.parkingService.webApplication.payment.models.PaymentReceipt;
 import it.polimi.parkingService.webApplication.payment.models.PaymentSystem;
-import jakarta.persistence.Entity;
+import it.polimi.parkingService.webApplication.utils.BaseEntity;
+import jakarta.persistence.*;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Entity
-public class Parking {
+public class Parking extends BaseEntity {
+    @Column(name="estimated_time")
     private LocalTime estimatedTime;
+    @Column(name="arrival")
     private LocalDateTime arrival;
+
+    @Column(name="leaving")
     private LocalDateTime leaving;
+
+    //TODO: DELETE @Transient
+    @Transient
     private CustomerAccount customerAccount;
+
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinColumn(name="parking_spot_id")
     private ParkingSpot spot;
+    @Transient
     private PaymentSystem paymentSystem;
     private final static double hourlyFee = 1.5;
 

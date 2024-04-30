@@ -47,14 +47,6 @@ public class WebApplication {
 			}
 		}
 
-		SearchCriteria criteria = new ParkingSpotSearchCriteria(ParkingSpotStatus.FREE, StripeColor.YELLOW);
-//		SearchCriteria criteria = new ParkingSpotSearchCriteria();
-		PriorityQueueParkingSpotResearch strategy = new PriorityQueueParkingSpotResearch(4, 4);
-
-		parkingArea.setParkingSpotResearchStrategy(strategy);
-		ParkingSpot parkingSpot1 = parkingArea.searchForParkingSpot(criteria);
-		System.out.println(parkingSpot1);
-//		System.out.println(Arrays.deepToString(parkingArea.getParkingSpots()));
 	}
 
 }
