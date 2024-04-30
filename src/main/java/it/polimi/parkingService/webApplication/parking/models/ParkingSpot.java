@@ -2,19 +2,33 @@ package it.polimi.parkingService.webApplication.parking.models;
 
 import it.polimi.parkingService.webApplication.parking.enums.ParkingSpotStatus;
 import it.polimi.parkingService.webApplication.parking.enums.StripeColor;
+import it.polimi.parkingService.webApplication.utils.BaseEntity;
+import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ParkingSpot {
+@Entity
+@Table(name="parking_spot")
+public class ParkingSpot extends BaseEntity {
 
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinColumn(name="parking_area_id")
     private ParkingArea parkingArea;
-    private ParkingSpotStatus status = ParkingSpotStatus.FREE;
-    private StripeColor stripeColor = StripeColor.WHITE;
 
+    @Column(name="status")
+    @Enumerated(EnumType.STRING)
+    private ParkingSpotStatus status = ParkingSpotStatus.FREE;
+    @Column(name="stripe_color")
+    @Enumerated(EnumType.STRING)
+    private StripeColor stripeColor = StripeColor.WHITE;
+    @Column(name="row_number")
     private int rowNumber;
+    @Column(name="column_number")
     private int columnNumber;
 
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE,
+                    CascadeType.DETACH, CascadeType.REFRESH})
     private List<Parking> parkings;
 
     public ParkingSpot(){}

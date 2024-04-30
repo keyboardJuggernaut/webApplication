@@ -7,11 +7,13 @@ import it.polimi.parkingService.webApplication.parking.exceptions.ParkingSpotNot
 import it.polimi.parkingService.webApplication.payment.exceptions.PaymentFailed;
 import it.polimi.parkingService.webApplication.payment.models.PaymentReceipt;
 import it.polimi.parkingService.webApplication.payment.models.PaymentSystem;
+import jakarta.persistence.Entity;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+@Entity
 public class Parking {
     private LocalTime estimatedTime;
     private LocalDateTime arrival;
