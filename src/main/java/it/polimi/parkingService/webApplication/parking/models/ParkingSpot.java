@@ -3,6 +3,9 @@ package it.polimi.parkingService.webApplication.parking.models;
 import it.polimi.parkingService.webApplication.parking.enums.ParkingSpotStatus;
 import it.polimi.parkingService.webApplication.parking.enums.StripeColor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ParkingSpot {
 
     private ParkingArea parkingArea;
@@ -12,12 +15,25 @@ public class ParkingSpot {
     private int rowNumber;
     private int columnNumber;
 
+    private List<Parking> parkings;
+
     public ParkingSpot(){}
 
-    public ParkingSpot(ParkingArea parkingArea, int rowNumber, int columnNumber) {
-        this.parkingArea = parkingArea;
+    public ParkingSpot(int rowNumber, int columnNumber) {
         this.rowNumber = rowNumber;
         this.columnNumber = columnNumber;
+    }
+
+    public String getSpotIdentifier() {
+        return String.valueOf(rowNumber) + String.valueOf(columnNumber);
+    }
+
+    public void addParking(Parking parking){
+        if(parkings == null) {
+            parkings = new ArrayList<>();
+        }
+        parkings.add(parking);
+        parking.setSpot(this);
     }
 
     public ParkingArea getParkingArea() {
@@ -58,6 +74,14 @@ public class ParkingSpot {
 
     public void setColumnNumber(int columnNumber) {
         this.columnNumber = columnNumber;
+    }
+
+    public List<Parking> getParkings() {
+        return parkings;
+    }
+
+    public void setParkings(List<Parking> parkings) {
+        this.parkings = parkings;
     }
 
     @Override

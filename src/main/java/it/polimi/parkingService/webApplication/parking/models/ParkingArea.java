@@ -5,6 +5,8 @@ import it.polimi.parkingService.webApplication.parking.strategy.ParkingSpotResea
 import it.polimi.parkingService.webApplication.parking.strategy.SearchCriteria;
 import org.springframework.stereotype.Component;
 
+import java.time.Duration;
+
 /**
  * Class model for parking area
  * Note: the set of parking spots is represented as a quadratic matrix
@@ -29,6 +31,7 @@ public class ParkingArea {
             parkingSpots = new ParkingSpot[order][order];
         }
         parkingSpots[parkingSpot.getRowNumber()][parkingSpot.getColumnNumber()] = parkingSpot;
+        parkingSpot.setParkingArea(this);
     }
 
     public ParkingSpot getParkingSpot(int row, int column) {

@@ -36,7 +36,7 @@ public class WebApplication {
 		ParkingArea parkingArea = new ParkingArea("Parcheggio del centro", ORDER);
 		for (int i = 0; i < ORDER; i++) {
 			for (int j = 0; j < ORDER; j++) {
-				ParkingSpot parkingSpot = new ParkingSpot(parkingArea, i, j);
+				ParkingSpot parkingSpot = new ParkingSpot(i, j);
 				if(j == 3) {
 					parkingSpot.setStripeColor(StripeColor.YELLOW);
 				}
