@@ -1,7 +1,6 @@
 package it.polimi.parkingService.webApplication.parking.models;
 
 import it.polimi.parkingService.webApplication.account.CustomerAccount;
-import it.polimi.parkingService.webApplication.parking.exceptions.ParkingNotTerminated;
 import it.polimi.parkingService.webApplication.payment.exceptions.PaymentFailed;
 import it.polimi.parkingService.webApplication.payment.exceptions.RefundFailed;
 import it.polimi.parkingService.webApplication.payment.models.PaymentReceipt;
