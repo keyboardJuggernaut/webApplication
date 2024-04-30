@@ -5,7 +5,8 @@ import it.polimi.parkingService.webApplication.parking.strategy.ParkingSpotResea
 import it.polimi.parkingService.webApplication.parking.strategy.SearchCriteria;
 import org.springframework.stereotype.Component;
 
-import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class model for parking area
@@ -16,7 +17,7 @@ public class ParkingArea {
     private String name;
     private int order;
 
-    private ParkingSpot[][] parkingSpots;
+    private List<ParkingSpot> parkingSpots;
     private ParkingSpotResearchStrategy parkingSpotResearchStrategy;
 
     public ParkingArea(String name, int order) {
@@ -26,17 +27,18 @@ public class ParkingArea {
 
     public ParkingArea(){}
 
-    public void setParkingSpot(ParkingSpot parkingSpot) {
+    public void setParkingSpot(ParkingSpot parkingSpot) throws IndexOutOfBoundsException {
         if(parkingSpots == null){
-            parkingSpots = new ParkingSpot[order][order];
+            parkingSpots = new ArrayList<>(order*order);
         }
-        parkingSpots[parkingSpot.getRowNumber()][parkingSpot.getColumnNumber()] = parkingSpot;
+
+        parkingSpots.add(getFlattenedArrayIndex(parkingSpot.getRowNumber(), parkingSpot.getColumnNumber()), parkingSpot);
         parkingSpot.setParkingArea(this);
     }
 
-    public ParkingSpot getParkingSpot(int row, int column) {
+    public ParkingSpot getParkingSpot(int row, int column) throws IndexOutOfBoundsException {
         if(parkingSpots != null) {
-            return parkingSpots[row][column];
+            return parkingSpots.get(getFlattenedArrayIndex(row, column));
         }
         return null;
     }
@@ -49,7 +51,34 @@ public class ParkingArea {
         if(parkingSpotResearchStrategy == null) {
             parkingSpotResearchStrategy = new LinearSearchParkingSpotResearchStrategy();
         }
-        return parkingSpotResearchStrategy.findSpot(parkingSpots, searchCriteria);
+        return parkingSpotResearchStrategy.findSpot(convertToMatrix(), searchCriteria);
+    }
+
+    private int getFlattenedArrayIndex(int row, int column) throws IndexOutOfBoundsException {
+        if (row < 0 || row >= order || column < 0 || column >= order) {
+            throw new IndexOutOfBoundsException("Invalid row or column index");
+        }
+        return row * order + column;
+    }
+
+    private ParkingSpot[][] convertToMatrix() {
+        if (parkingSpots.size() != order * order) {
+            throw new IllegalArgumentException("Array size does not match matrix dimensions");
+        }
+
+        // Initialize matrix with the given dimensions
+        ParkingSpot[][] parkingSpotsMatrix = new ParkingSpot[order][order];
+
+        // Populate matrix from 1D array
+        for (int i = 0; i < order; i++) {
+            for (int j = 0; j < order; j++) {
+                // Calculate index in the 1D array
+                int index = i * order + j;
+                // Set the corresponding element in the matrix
+                parkingSpotsMatrix[i][j] = parkingSpots.get(index);
+            }
+        }
+        return parkingSpotsMatrix;
     }
 
     public String getName() {
@@ -60,11 +89,11 @@ public class ParkingArea {
         this.name = name;
     }
 
-    public ParkingSpot[][] getParkingSpots() {
+    public List<ParkingSpot> getParkingSpots() {
         return parkingSpots;
     }
 
-    public void setParkingSpots(ParkingSpot[][] parkingSpots) {
+    public void setParkingSpots(List<ParkingSpot> parkingSpots) {
         this.parkingSpots = parkingSpots;
     }
 

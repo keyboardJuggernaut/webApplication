@@ -29,7 +29,7 @@ public class WebApplication {
 		};
 	}
 
-	private void initApplication() {
+	private void initApplication()  {
 
 		final int ORDER = 5;
 
