@@ -1,4 +1,4 @@
-package it.polimi.parkingService.webApplication.analysis;
+package it.polimi.parkingService.webApplication.analysis.builder;
 
 import java.util.Map;
 import java.util.TreeMap;

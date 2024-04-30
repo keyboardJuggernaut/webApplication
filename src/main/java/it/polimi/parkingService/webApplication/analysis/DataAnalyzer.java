@@ -1,5 +1,9 @@
 package it.polimi.parkingService.webApplication.analysis;
 
+import it.polimi.parkingService.webApplication.analysis.builder.BarChartBuilder;
+import it.polimi.parkingService.webApplication.analysis.builder.ChartMaker;
+import it.polimi.parkingService.webApplication.analysis.builder.DataChartBuilder;
+
 import java.util.Map;
 
 public class DataAnalyzer {

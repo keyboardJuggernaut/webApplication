@@ -1,9 +1,9 @@
-package it.polimi.parkingService.webApplication.analysis;
+package it.polimi.parkingService.webApplication.analysis.builder;
 
 import java.util.Map;
 import java.util.TreeMap;
 
-public class BarChartBuilder extends DataChartBuilder{
+public class BarChartBuilder extends DataChartBuilder {
     private BarChartGraphData graphData;
     @Override
     public void reset() {
