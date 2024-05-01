@@ -32,10 +32,6 @@ public class ParkingAreaService implements IParkingAreaService{
         if (result.isPresent()) {
             parkingArea = result.get();
         }
-        else {
-            // we didn't find the employee
-            throw new RuntimeException("Did not find employee id - " + id);
-        }
 
         return parkingArea;
     }

@@ -37,21 +37,23 @@ public class WebApplication {
 	}
 
 	private void initApplication(IParkingAreaService parkingAreaService)  {
-
-		ParkingArea parkingArea = new ParkingArea(PARKING_AREA_NAME, ORDER);
-		for (int i = 0; i < ORDER; i++) {
-			for (int j = 0; j < ORDER; j++) {
-				ParkingSpot parkingSpot = new ParkingSpot(i, j);
-				if(j == 3) {
-					parkingSpot.setStripeColor(StripeColor.YELLOW);
+		ParkingArea parkingArea = parkingAreaService.findById(1);
+		if(parkingArea == null) {
+			parkingArea = new ParkingArea(PARKING_AREA_NAME, ORDER);
+			for (int i = 0; i < ORDER; i++) {
+				for (int j = 0; j < ORDER; j++) {
+					ParkingSpot parkingSpot = new ParkingSpot(i, j);
+					if (j == 3) {
+						parkingSpot.setStripeColor(StripeColor.YELLOW);
+					}
+					if (i == 4 && j == 4) {
+						parkingSpot.setStripeColor(StripeColor.PINK);
+					}
+					parkingArea.setParkingSpot(parkingSpot);
 				}
-				if(i == 4 && j == 4) {
-					parkingSpot.setStripeColor(StripeColor.PINK);
-				}
-				parkingArea.setParkingSpot(parkingSpot);
 			}
+			parkingAreaService.save(parkingArea);
 		}
-		parkingAreaService.save(parkingArea);
 	}
 
 }

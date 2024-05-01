@@ -1,5 +1,5 @@
-DROP SCHEMA IF EXISTS `parking_project_directory`;
-CREATE SCHEMA `parking_project_directory`;
+# DROP SCHEMA IF EXISTS `parking_project_directory`;
+CREATE SCHEMA IF NOT EXISTS `parking_project_directory`;
 
 use `parking_project_directory`;
 
