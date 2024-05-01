@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-//@Table(name="parking_spot")
+@Table(name="parking_spot")
 public class ParkingSpot extends BaseEntity {
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
@@ -17,10 +17,10 @@ public class ParkingSpot extends BaseEntity {
     private ParkingArea parkingArea;
 
     @Column(name="status")
-    @Enumerated(EnumType.STRING)
+//    @Enumerated(EnumType.STRING)
     private ParkingSpotStatus status = ParkingSpotStatus.FREE;
     @Column(name="stripe_color")
-    @Enumerated(EnumType.STRING)
+//    @Enumerated(EnumType.STRING)
     private StripeColor stripeColor = StripeColor.WHITE;
     @Column(name="row_number")
     private int rowNumber;

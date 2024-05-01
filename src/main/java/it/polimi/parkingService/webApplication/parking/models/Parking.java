@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Entity
+@Table(name="parking")
 public class Parking extends BaseEntity {
     @Column(name="estimated_time")
     private LocalTime estimatedTime;

@@ -15,7 +15,7 @@ import java.util.List;
  * Note: the set of parking spots is represented as a quadratic matrix
  */
 @Entity
-//@Table(name="parking_area")
+@Table(name="parking_area")
 public class ParkingArea extends BaseEntity {
 
     @Column(name="name")
