@@ -8,7 +8,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 CREATE TABLE IF NOT EXISTS `parking_area` (
                              `id` int NOT NULL AUTO_INCREMENT,
                              `name` varchar(40) DEFAULT NULL,
-                             `order` int DEFAULT NULL,
+                             `matrix_order` int DEFAULT NULL,
                              PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
@@ -17,8 +17,8 @@ CREATE TABLE IF NOT EXISTS `parking_spot` (
                               `id` int NOT NULL AUTO_INCREMENT,
                               `status` ENUM('FREE', 'BUSY', 'RESERVED', 'UNAVAILABLE'),
                               `stripe_color` ENUM('WHITE', 'YELLOW', 'PINK'),
-                              `row_number` int DEFAULT NULL,
-                              `column_number` int DEFAULT NULL,
+                              `row_index` int DEFAULT NULL,
+                              `column_index` int DEFAULT NULL,
                               `parking_area_id` int DEFAULT NULL,
                               PRIMARY KEY (`id`),
 

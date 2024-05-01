@@ -21,10 +21,11 @@ public class ParkingArea extends BaseEntity {
     @Column(name="name")
     private String name;
 
-    @Column(name="order")
+    @Column(name="matrix_order")
     private int order;
 
     @OneToMany(
+            mappedBy = "parkingArea",
             cascade = {CascadeType.PERSIST, CascadeType.MERGE,
                     CascadeType.DETACH, CascadeType.REFRESH})
     private List<ParkingSpot> parkingSpots;

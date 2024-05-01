@@ -17,14 +17,14 @@ public class ParkingSpot extends BaseEntity {
     private ParkingArea parkingArea;
 
     @Column(name="status")
-//    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     private ParkingSpotStatus status = ParkingSpotStatus.FREE;
     @Column(name="stripe_color")
-//    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     private StripeColor stripeColor = StripeColor.WHITE;
-    @Column(name="row_number")
+    @Column(name="row_index")
     private int rowNumber;
-    @Column(name="column_number")
+    @Column(name="column_index")
     private int columnNumber;
 
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE,
