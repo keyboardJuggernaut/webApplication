@@ -25,6 +25,10 @@ public class Parking extends BaseEntity {
     @Column(name="leaving")
     private LocalDateTime leaving;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "payment_receipt_id")
+    private PaymentReceipt paymentReceipt;
+
     //TODO: DELETE @Transient
     @Transient
     private CustomerAccount customerAccount;
@@ -71,7 +75,9 @@ public class Parking extends BaseEntity {
 
     public PaymentReceipt pay() throws ParkingNotTerminated, PaymentFailed {
         double amount = getParkingCharge();
-        return paymentSystem.processPayment(customerAccount, amount);
+        PaymentReceipt receipt = paymentSystem.processPayment(customerAccount, amount);
+        setPaymentReceipt(receipt);
+        return receipt;
     }
 
     public CustomerAccount getCustomerAccount() {
@@ -112,5 +118,21 @@ public class Parking extends BaseEntity {
 
     public void setLeaving(LocalDateTime leaving) {
         this.leaving = leaving;
+    }
+
+    public PaymentReceipt getPaymentReceipt() {
+        return paymentReceipt;
+    }
+
+    public void setPaymentReceipt(PaymentReceipt paymentReceipt) {
+        this.paymentReceipt = paymentReceipt;
+    }
+
+    public PaymentSystem getPaymentSystem() {
+        return paymentSystem;
+    }
+
+    public void setPaymentSystem(PaymentSystem paymentSystem) {
+        this.paymentSystem = paymentSystem;
     }
 }

@@ -5,18 +5,28 @@ import it.polimi.parkingService.webApplication.payment.exceptions.PaymentFailed;
 import it.polimi.parkingService.webApplication.payment.exceptions.RefundFailed;
 import it.polimi.parkingService.webApplication.payment.models.PaymentReceipt;
 import it.polimi.parkingService.webApplication.payment.models.PaymentSystem;
+import it.polimi.parkingService.webApplication.utils.BaseEntity;
+import jakarta.persistence.*;
 
 import java.time.Duration;
 import java.time.LocalDate;
 
-public class Booking {
+@Entity
+@Table(name="booking")
+public class Booking extends BaseEntity {
+
+    @Column(name="date")
     private LocalDate date;
     public final static double DAILY_CHARGE = 15;
 
+    @Transient
     private CustomerAccount customerAccount;
 
+    @Transient
     private PaymentSystem paymentSystem;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "payment_receipt_id")
     private PaymentReceipt paymentReceipt;
 
     public final static long HOURS_TO_REFUND = 48;
