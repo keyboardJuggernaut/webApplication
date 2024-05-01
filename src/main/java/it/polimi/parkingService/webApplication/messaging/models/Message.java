@@ -1,6 +1,6 @@
 package it.polimi.parkingService.webApplication.messaging.models;
 
-import it.polimi.parkingService.webApplication.account.UserAccount;
+import it.polimi.parkingService.webApplication.account.models.UserAccount;
 import it.polimi.parkingService.webApplication.messaging.exceptions.AddingResponseForbidden;
 
 import java.time.LocalDateTime;

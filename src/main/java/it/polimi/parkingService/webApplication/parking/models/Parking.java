@@ -1,6 +1,6 @@
 package it.polimi.parkingService.webApplication.parking.models;
 
-import it.polimi.parkingService.webApplication.account.CustomerAccount;
+import it.polimi.parkingService.webApplication.account.models.Account;
 import it.polimi.parkingService.webApplication.parking.exceptions.MissingEstimatedTime;
 import it.polimi.parkingService.webApplication.parking.exceptions.ParkingNotTerminated;
 import it.polimi.parkingService.webApplication.parking.exceptions.ParkingSpotNotFoundYet;
@@ -29,9 +29,9 @@ public class Parking extends BaseEntity {
     @JoinColumn(name = "payment_receipt_id")
     private PaymentReceipt paymentReceipt;
 
-    //TODO: DELETE @Transient
-    @Transient
-    private CustomerAccount customerAccount;
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinColumn(name="account_id")
+    private Account customerAccount;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name="parking_spot_id")
@@ -80,12 +80,12 @@ public class Parking extends BaseEntity {
         return receipt;
     }
 
-    public CustomerAccount getCustomerAccount() {
+    public Account getCustomerAccount() {
         return customerAccount;
     }
 
-    public void setCustomerAccount(CustomerAccount customerAccount) {
-        this.customerAccount = customerAccount;
+    public void setCustomerAccount(Account account) {
+        this.customerAccount = account;
     }
 
     public ParkingSpot getSpot() {

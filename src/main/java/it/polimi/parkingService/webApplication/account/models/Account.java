@@ -1,24 +1,47 @@
-package it.polimi.parkingService.webApplication.account;
+package it.polimi.parkingService.webApplication.account.models;
 
 import it.polimi.parkingService.webApplication.parking.models.Booking;
 import it.polimi.parkingService.webApplication.parking.models.Parking;
 import it.polimi.parkingService.webApplication.payment.models.PaymentMethod;
+import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CustomerAccount extends UserAccount{
+@Entity
+@Table(name="account")
+public class Account extends UserAccount{
 
+    @Column(name="license_plate")
     private String licensePlate;
+    @Column(name="is_disabled")
     private boolean isDisabled;
+    @Column(name="is_pregnant")
     private boolean isPregnant;
+
+    @OneToMany(
+            mappedBy = "account",
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE,
+                    CascadeType.DETACH, CascadeType.REFRESH})
+    private List<Role> roles;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "payment_method_id")
     private PaymentMethod paymentMethod;
 
+    @OneToMany(
+            mappedBy = "customerAccount",
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE,
+                    CascadeType.DETACH, CascadeType.REFRESH})
     private List<Parking> parkings;
 
+    @OneToMany(
+            mappedBy = "customerAccount",
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE,
+                    CascadeType.DETACH, CascadeType.REFRESH})
     private List<Booking> bookings;
 
-    public CustomerAccount(String username, String password, UserStatus status, String firstName, String lastName, String licensePlate, boolean isDisabled, boolean isPregnant, PaymentMethod paymentMethod) {
+    public Account(String username, String password, UserStatus status, String firstName, String lastName, String licensePlate, boolean isDisabled, boolean isPregnant, PaymentMethod paymentMethod) {
         super(username, password, status, firstName, lastName);
         this.licensePlate = licensePlate;
         this.isDisabled = isDisabled;
@@ -26,7 +49,15 @@ public class CustomerAccount extends UserAccount{
         this.paymentMethod = paymentMethod;
     }
 
-    public CustomerAccount() {}
+    public Account() {}
+
+    public void addRole(Role role){
+        if(roles == null) {
+            roles = new ArrayList<>();
+        }
+        roles.add(role);
+        role.setAccount(this);
+    }
 
     public void addParking(Parking parking) {
         if(parkings == null) {
@@ -95,5 +126,13 @@ public class CustomerAccount extends UserAccount{
 
     public void setPaymentMethod(PaymentMethod paymentMethod) {
         this.paymentMethod = paymentMethod;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 }

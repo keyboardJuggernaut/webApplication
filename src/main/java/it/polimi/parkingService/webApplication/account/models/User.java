@@ -1,10 +1,20 @@
-package it.polimi.parkingService.webApplication.account;
+package it.polimi.parkingService.webApplication.account.models;
 
-public class User {
-    private int id;
+import it.polimi.parkingService.webApplication.utils.BaseEntity;
+import jakarta.persistence.*;
+
+@MappedSuperclass
+public class User extends BaseEntity {
+
+    @Column(name="username")
     private String username;
+
+    @Column(name="password")
+
     private String password;
 
+    @Column(name="status_account")
+    @Enumerated(EnumType.STRING)
     private UserStatus status;
 
     public User(String username, String password, UserStatus status) {
@@ -14,14 +24,6 @@ public class User {
     }
 
     public User(){}
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getUsername() {
         return username;

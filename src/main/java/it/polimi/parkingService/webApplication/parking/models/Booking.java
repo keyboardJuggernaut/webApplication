@@ -1,6 +1,6 @@
 package it.polimi.parkingService.webApplication.parking.models;
 
-import it.polimi.parkingService.webApplication.account.CustomerAccount;
+import it.polimi.parkingService.webApplication.account.models.Account;
 import it.polimi.parkingService.webApplication.payment.exceptions.PaymentFailed;
 import it.polimi.parkingService.webApplication.payment.exceptions.RefundFailed;
 import it.polimi.parkingService.webApplication.payment.models.PaymentReceipt;
@@ -19,8 +19,9 @@ public class Booking extends BaseEntity {
     private LocalDate date;
     public final static double DAILY_CHARGE = 15;
 
-    @Transient
-    private CustomerAccount customerAccount;
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinColumn(name="account_id")
+    private Account customerAccount;
 
     @Transient
     private PaymentSystem paymentSystem;
@@ -60,11 +61,11 @@ public class Booking extends BaseEntity {
         this.date = date;
     }
 
-    public CustomerAccount getCustomerAccount() {
+    public Account getCustomerAccount() {
         return customerAccount;
     }
 
-    public void setCustomerAccount(CustomerAccount customerAccount) {
+    public void setCustomerAccount(Account customerAccount) {
         this.customerAccount = customerAccount;
     }
 

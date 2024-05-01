@@ -1,11 +1,22 @@
 package it.polimi.parkingService.webApplication.payment.models;
 
+import it.polimi.parkingService.webApplication.utils.BaseEntity;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+
 import java.time.LocalDate;
 
-public class PaymentMethod {
-    private String pan;
-    private String cvv;
+@Entity
+@Table(name="payment_method")
+public class PaymentMethod extends BaseEntity {
 
+    @Column(name = "pan")
+    private String pan;
+
+    @Column(name = "cvv")
+    private String cvv;
+    @Column(name = "expiration_date")
     private LocalDate expirationDate;
 
     public PaymentMethod(String pan, String cvv, LocalDate expirationDate) {

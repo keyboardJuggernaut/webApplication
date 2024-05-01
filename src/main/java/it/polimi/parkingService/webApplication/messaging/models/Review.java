@@ -1,6 +1,6 @@
 package it.polimi.parkingService.webApplication.messaging.models;
 
-import it.polimi.parkingService.webApplication.account.UserAccount;
+import it.polimi.parkingService.webApplication.account.models.UserAccount;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
