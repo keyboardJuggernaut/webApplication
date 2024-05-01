@@ -27,7 +27,9 @@ public class ParkingSpot extends BaseEntity {
     @Column(name="column_index")
     private int columnNumber;
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE,
+    @OneToMany(
+            mappedBy = "spot",
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE,
                     CascadeType.DETACH, CascadeType.REFRESH})
     private List<Parking> parkings;
 
