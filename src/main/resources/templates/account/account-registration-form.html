@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
+    <title>Registration</title>
+</head>
+<body>
+<div class="container">
+
+
+    <h3>User registration</h3>
+    <hr>
+
+    <form action="#" th:action="@{/accounts/save}"
+          th:object="${account}" method="POST">
+
+        <!-- Add hidden form field to handle update -->
+        <input type="hidden" th:field="*{id}" />
+
+        <input type="text" th:field="*{username}"
+               class="form-control mb-4 w-25" placeholder="Username">
+
+        <input type="password" th:field="*{password}"
+               class="form-control mb-4 w-25" placeholder="Password">
+
+        <input type="text" th:field="*{firstName}"
+               class="form-control mb-4 w-25" placeholder="First Name">
+
+        <input type="text" th:field="*{lastName}"
+               class="form-control mb-4 w-25" placeholder="Last Name">
+
+        <input type="text" th:field="*{licensePlate}"
+               class="form-control mb-4 w-25" placeholder="License Plate">
+
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" th:field="*{isDisabled}" th:value="true" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+                I need assistance for disability
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" th:field="*{isPregnant}" th:value="true" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+                I need assistance for pregnancy
+            </label>
+        </div>
+
+        <button type="submit" class="btn btn-info col-2">Register</button>
+
+    </form>
+
+
+</div>
+</body>
+</html>

@@ -1,6 +1,6 @@
 package it.polimi.parkingService.webApplication.parking.models;
 
-import it.polimi.parkingService.webApplication.account.models.Account;
+import it.polimi.parkingService.webApplication.account.models.User;
 import it.polimi.parkingService.webApplication.payment.exceptions.PaymentFailed;
 import it.polimi.parkingService.webApplication.payment.exceptions.RefundFailed;
 import it.polimi.parkingService.webApplication.payment.models.PaymentReceipt;
@@ -21,7 +21,7 @@ public class Booking extends BaseEntity {
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name="account_id")
-    private Account customerAccount;
+    private User customerUser;
 
     @Transient
     private PaymentSystem paymentSystem;
@@ -44,29 +44,29 @@ public class Booking extends BaseEntity {
         return date;
     }
 
-    public PaymentReceipt pay() throws PaymentFailed {
-        PaymentReceipt receipt = paymentSystem.processPayment(customerAccount, DAILY_CHARGE);
-        setPaymentReceipt(receipt);
-        return receipt;
-    }
-
-    public void refund() throws RefundFailed {
-        long remainingHours = Duration.between(date, LocalDate.now()).toHours();
-        if(remainingHours < HOURS_TO_REFUND) {
-            paymentSystem.undoPayment(customerAccount, paymentReceipt);
-        }
-    }
+//    public PaymentReceipt pay() throws PaymentFailed {
+//        PaymentReceipt receipt = paymentSystem.processPayment(customerUser, DAILY_CHARGE);
+//        setPaymentReceipt(receipt);
+//        return receipt;
+//    }
+//
+//    public void refund() throws RefundFailed {
+//        long remainingHours = Duration.between(date, LocalDate.now()).toHours();
+//        if(remainingHours < HOURS_TO_REFUND) {
+//            paymentSystem.undoPayment(customerUser, paymentReceipt);
+//        }
+//    }
 
     public void setDate(LocalDate date) {
         this.date = date;
     }
 
-    public Account getCustomerAccount() {
-        return customerAccount;
+    public User getCustomerUser() {
+        return customerUser;
     }
 
-    public void setCustomerAccount(Account customerAccount) {
-        this.customerAccount = customerAccount;
+    public void setCustomerUser(User customerUser) {
+        this.customerUser = customerUser;
     }
 
     public PaymentSystem getPaymentSystem() {

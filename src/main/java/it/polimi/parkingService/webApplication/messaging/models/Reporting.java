@@ -1,6 +1,6 @@
 package it.polimi.parkingService.webApplication.messaging.models;
 
-import it.polimi.parkingService.webApplication.account.models.UserAccount;
+import it.polimi.parkingService.webApplication.account.models.User;
 import it.polimi.parkingService.webApplication.messaging.enums.ReportingSeverity;
 import it.polimi.parkingService.webApplication.messaging.enums.ReportingStatus;
 import it.polimi.parkingService.webApplication.messaging.exceptions.AddingResponseForbidden;
@@ -14,7 +14,7 @@ public class Reporting extends Message {
     private ReportingStatus status = ReportingStatus.OPEN;
     private List<Response> linkedResponses;
 
-    public Reporting(LocalDateTime timestamp, String body, UserAccount author, Forum forum, ReportingSeverity severity) {
+    public Reporting(LocalDateTime timestamp, String body, User author, Forum forum, ReportingSeverity severity) {
         super(timestamp, body, author, forum);
         this.severity = severity;
     }

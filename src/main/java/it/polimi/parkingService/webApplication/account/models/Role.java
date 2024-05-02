@@ -1,41 +1,43 @@
 package it.polimi.parkingService.webApplication.account.models;
-
-import it.polimi.parkingService.webApplication.account.enums.RoleTypes;
-import it.polimi.parkingService.webApplication.utils.BaseEntity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="roles")
-public class Role extends BaseEntity {
+@Table(name = "role")
+public class Role {
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-    @JoinColumn(name="account_id")
-    private Account account;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
 
-    @Column(name="role")
-    @Enumerated(EnumType.STRING)
-    private RoleTypes role;
+    @Column(name = "name")
+    private String name;
 
-    public Role(Account account, RoleTypes role) {
-        this.account = account;
-        this.role = role;
+    public Role() {
     }
 
-    public Role(){}
-
-    public Account getAccount() {
-        return account;
+    public Role(String name) {
+        this.name = name;
     }
 
-    public void setAccount(Account account) {
-        this.account = account;
+    public Long getId() {
+        return id;
     }
 
-    public RoleTypes getRole() {
-        return role;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public void setRole(RoleTypes role) {
-        this.role = role;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Role{" + "id=" + id + ", name='" + name + '\'' + '}';
     }
 }

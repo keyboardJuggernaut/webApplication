@@ -1,6 +1,6 @@
 package it.polimi.parkingService.webApplication.payment.models;
 
-import it.polimi.parkingService.webApplication.account.models.Account;
+import it.polimi.parkingService.webApplication.account.models.User;
 import it.polimi.parkingService.webApplication.payment.exceptions.PaymentFailed;
 import it.polimi.parkingService.webApplication.payment.exceptions.RefundFailed;
 
@@ -17,19 +17,19 @@ public class PaymentSystem {
         isSucceeded = succeded;
     }
 
-    public PaymentReceipt processPayment(Account customerAccount, double amount) throws PaymentFailed{
-        if(customerAccount.getPaymentMethod() == null) {
-            throw new PaymentFailed("Invalid payment method");
-        }
-        isSucceeded = true;
-        return new PaymentReceipt(LocalDateTime.now(), amount, customerAccount);
-    }
-
-    public void undoPayment(Account customerAccount, PaymentReceipt paymentReceipt) throws RefundFailed {
-        if(customerAccount.getPaymentMethod() == null) {
-            throw new RefundFailed("Invalid payment method");
-        }
-        // refunding ...
-        System.out.println("Refunding an amount of " + paymentReceipt.getAmount());
-    }
+//    public PaymentReceipt processPayment(User customerUser, double amount) throws PaymentFailed{
+//        if(customerUser.getPaymentMethod() == null) {
+//            throw new PaymentFailed("Invalid payment method");
+//        }
+//        isSucceeded = true;
+//        return new PaymentReceipt(LocalDateTime.now(), amount, customerUser);
+//    }
+//
+//    public void undoPayment(User customerUser, PaymentReceipt paymentReceipt) throws RefundFailed {
+//        if(customerUser.getPaymentMethod() == null) {
+//            throw new RefundFailed("Invalid payment method");
+//        }
+//        // refunding ...
+//        System.out.println("Refunding an amount of " + paymentReceipt.getAmount());
+//    }
 }

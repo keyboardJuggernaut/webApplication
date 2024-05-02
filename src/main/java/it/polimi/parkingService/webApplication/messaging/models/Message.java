@@ -1,6 +1,6 @@
 package it.polimi.parkingService.webApplication.messaging.models;
 
-import it.polimi.parkingService.webApplication.account.models.UserAccount;
+import it.polimi.parkingService.webApplication.account.models.User;
 import it.polimi.parkingService.webApplication.messaging.exceptions.AddingResponseForbidden;
 
 import java.time.LocalDateTime;
@@ -8,11 +8,11 @@ import java.time.LocalDateTime;
 public abstract class Message {
     private LocalDateTime timestamp;
     private String body;
-    private UserAccount author;
+    private User author;
     private Forum forum;
     public abstract void addResponse(Response response) throws AddingResponseForbidden;
 
-    public Message(LocalDateTime timestamp, String body, UserAccount author, Forum forum) {
+    public Message(LocalDateTime timestamp, String body, User author, Forum forum) {
         this.timestamp = timestamp;
         this.body = body;
         this.author = author;
@@ -35,11 +35,11 @@ public abstract class Message {
         this.body = body;
     }
 
-    public UserAccount getAuthor() {
+    public User getAuthor() {
         return author;
     }
 
-    public void setAuthor(UserAccount author) {
+    public void setAuthor(User author) {
         this.author = author;
     }
 

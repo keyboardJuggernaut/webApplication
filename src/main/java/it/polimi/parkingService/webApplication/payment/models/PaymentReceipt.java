@@ -1,6 +1,6 @@
 package it.polimi.parkingService.webApplication.payment.models;
 
-import it.polimi.parkingService.webApplication.account.models.Account;
+import it.polimi.parkingService.webApplication.account.models.User;
 import it.polimi.parkingService.webApplication.parking.models.Booking;
 import it.polimi.parkingService.webApplication.utils.BaseEntity;
 import jakarta.persistence.*;
@@ -19,22 +19,22 @@ public class PaymentReceipt extends BaseEntity {
     @OneToOne(mappedBy = "paymentReceipt")
     private Booking booking;
     @Transient
-    private Account customerAccount;
+    private User customerUser;
 
-    public PaymentReceipt(LocalDateTime timestamp, double amount, Account customerAccount) {
+    public PaymentReceipt(LocalDateTime timestamp, double amount, User customerUser) {
         this.timestamp = timestamp;
         this.amount = amount;
-        this.customerAccount = customerAccount;
+        this.customerUser = customerUser;
     }
 
     public PaymentReceipt(){}
 
-    public Account getCustomerAccount() {
-        return customerAccount;
+    public User getCustomerUser() {
+        return customerUser;
     }
 
-    public void setCustomerAccount(Account customerAccount) {
-        this.customerAccount = customerAccount;
+    public void setCustomerUser(User customerUser) {
+        this.customerUser = customerUser;
     }
 
     public LocalDateTime getTimestamp() {

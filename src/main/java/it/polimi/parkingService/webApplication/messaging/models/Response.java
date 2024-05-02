@@ -1,17 +1,17 @@
 package it.polimi.parkingService.webApplication.messaging.models;
 
-import it.polimi.parkingService.webApplication.account.models.UserAccount;
+import it.polimi.parkingService.webApplication.account.models.User;
 
 import java.time.LocalDateTime;
 
 public class Response {
     private LocalDateTime timestamp;
     private String body;
-    private UserAccount author;
+    private User author;
 
     private Message firstMessage;
 
-    public Response(LocalDateTime timestamp, String body, UserAccount author) {
+    public Response(LocalDateTime timestamp, String body, User author) {
         this.timestamp = timestamp;
         this.body = body;
         this.author = author;
@@ -35,11 +35,11 @@ public class Response {
         this.body = body;
     }
 
-    public UserAccount getAuthor() {
+    public User getAuthor() {
         return author;
     }
 
-    public void setAuthor(UserAccount author) {
+    public void setAuthor(User author) {
         this.author = author;
     }
 

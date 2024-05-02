@@ -1,13 +1,9 @@
 package it.polimi.parkingService.webApplication;
 
-import it.polimi.parkingService.webApplication.parking.enums.ParkingSpotStatus;
 import it.polimi.parkingService.webApplication.parking.models.ParkingArea;
 import it.polimi.parkingService.webApplication.parking.models.ParkingSpot;
 import it.polimi.parkingService.webApplication.parking.enums.StripeColor;
 import it.polimi.parkingService.webApplication.parking.services.IParkingAreaService;
-import it.polimi.parkingService.webApplication.parking.strategy.PriorityQueueParkingSpotResearch;
-import it.polimi.parkingService.webApplication.parking.strategy.ParkingSpotSearchCriteria;
-import it.polimi.parkingService.webApplication.parking.strategy.SearchCriteria;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -55,5 +51,7 @@ public class WebApplication {
 			parkingAreaService.save(parkingArea);
 		}
 	}
+
+
 
 }

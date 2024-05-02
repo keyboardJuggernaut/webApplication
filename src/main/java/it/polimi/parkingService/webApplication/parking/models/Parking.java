@@ -1,6 +1,6 @@
 package it.polimi.parkingService.webApplication.parking.models;
 
-import it.polimi.parkingService.webApplication.account.models.Account;
+import it.polimi.parkingService.webApplication.account.models.User;
 import it.polimi.parkingService.webApplication.parking.exceptions.MissingEstimatedTime;
 import it.polimi.parkingService.webApplication.parking.exceptions.ParkingNotTerminated;
 import it.polimi.parkingService.webApplication.parking.exceptions.ParkingSpotNotFoundYet;
@@ -31,7 +31,7 @@ public class Parking extends BaseEntity {
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name="account_id")
-    private Account customerAccount;
+    private User customerUser;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name="parking_spot_id")
@@ -73,19 +73,19 @@ public class Parking extends BaseEntity {
         return parkingTime * hourlyFee;
     }
 
-    public PaymentReceipt pay() throws ParkingNotTerminated, PaymentFailed {
-        double amount = getParkingCharge();
-        PaymentReceipt receipt = paymentSystem.processPayment(customerAccount, amount);
-        setPaymentReceipt(receipt);
-        return receipt;
+//    public PaymentReceipt pay() throws ParkingNotTerminated, PaymentFailed {
+//        double amount = getParkingCharge();
+//        PaymentReceipt receipt = paymentSystem.processPayment(customerUser, amount);
+//        setPaymentReceipt(receipt);
+//        return receipt;
+//    }
+
+    public User getCustomerUser() {
+        return customerUser;
     }
 
-    public Account getCustomerAccount() {
-        return customerAccount;
-    }
-
-    public void setCustomerAccount(Account account) {
-        this.customerAccount = account;
+    public void setCustomerUser(User account) {
+        this.customerUser = account;
     }
 
     public ParkingSpot getSpot() {
