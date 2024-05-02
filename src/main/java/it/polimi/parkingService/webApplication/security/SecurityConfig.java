@@ -25,20 +25,6 @@ public class SecurityConfig {
         return auth;
     }
 
-//    @Bean
-//    public UserDetailsManager userDetailsManager(DataSource dataSource) {
-//
-//        JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager(dataSource);
-//
-//        jdbcUserDetailsManager.setUsersByUsernameQuery(
-//                "select id, password from account where id=?");
-//
-//        // define query to retrieve the authorities/roles by username
-//        jdbcUserDetailsManager.setAuthoritiesByUsernameQuery(
-//                "select account_id, role from roles where account_id=?");
-//
-//        return jdbcUserDetailsManager;
-//    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http, CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler) throws Exception {

@@ -1,9 +1,13 @@
 package it.polimi.parkingService.webApplication.account.models;
 
+import it.polimi.parkingService.webApplication.parking.models.Booking;
+import it.polimi.parkingService.webApplication.parking.models.Parking;
 import it.polimi.parkingService.webApplication.payment.models.PaymentMethod;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "user")
@@ -46,6 +50,18 @@ public class User {
     @JoinColumn(name = "payment_method_id")
     private PaymentMethod paymentMethod;
 
+    @OneToMany(
+            mappedBy = "customerUser",
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE,
+                    CascadeType.DETACH, CascadeType.REFRESH})
+    private List<Parking> parkings;
+
+    @OneToMany(
+            mappedBy = "customerUser",
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE,
+                    CascadeType.DETACH, CascadeType.REFRESH})
+    private List<Booking> bookings;
+
     public User() {
     }
 
@@ -61,6 +77,22 @@ public class User {
         this.password = password;
         this.enabled = enabled;
         this.roles = roles;
+    }
+
+    public void addParking(Parking parking) {
+        if(parkings == null) {
+            parkings = new ArrayList<>();
+        }
+        parkings.add(parking);
+        parking.setCustomerUser(this);
+    }
+
+    public void addBooking(Booking booking) {
+        if(bookings == null) {
+            bookings = new ArrayList<>();
+        }
+        bookings.add(booking);
+        booking.setCustomerUser(this);
     }
 
     public Long getId() {
@@ -152,6 +184,22 @@ public class User {
 
     public void setPaymentMethod(PaymentMethod paymentMethod) {
         this.paymentMethod = paymentMethod;
+    }
+
+    public List<Parking> getParkings() {
+        return parkings;
+    }
+
+    public void setParkings(List<Parking> parkings) {
+        this.parkings = parkings;
+    }
+
+    public List<Booking> getBookings() {
+        return bookings;
+    }
+
+    public void setBookings(List<Booking> bookings) {
+        this.bookings = bookings;
     }
 
     @Override

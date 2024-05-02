@@ -44,18 +44,18 @@ public class Booking extends BaseEntity {
         return date;
     }
 
-//    public PaymentReceipt pay() throws PaymentFailed {
-//        PaymentReceipt receipt = paymentSystem.processPayment(customerUser, DAILY_CHARGE);
-//        setPaymentReceipt(receipt);
-//        return receipt;
-//    }
-//
-//    public void refund() throws RefundFailed {
-//        long remainingHours = Duration.between(date, LocalDate.now()).toHours();
-//        if(remainingHours < HOURS_TO_REFUND) {
-//            paymentSystem.undoPayment(customerUser, paymentReceipt);
-//        }
-//    }
+    public PaymentReceipt pay() throws PaymentFailed {
+        PaymentReceipt receipt = paymentSystem.processPayment(customerUser, DAILY_CHARGE);
+        setPaymentReceipt(receipt);
+        return receipt;
+    }
+
+    public void refund() throws RefundFailed {
+        long remainingHours = Duration.between(date, LocalDate.now()).toHours();
+        if(remainingHours < HOURS_TO_REFUND) {
+            paymentSystem.undoPayment(customerUser, paymentReceipt);
+        }
+    }
 
     public void setDate(LocalDate date) {
         this.date = date;

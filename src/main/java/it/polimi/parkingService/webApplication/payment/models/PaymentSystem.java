@@ -17,19 +17,19 @@ public class PaymentSystem {
         isSucceeded = succeded;
     }
 
-//    public PaymentReceipt processPayment(User customerUser, double amount) throws PaymentFailed{
-//        if(customerUser.getPaymentMethod() == null) {
-//            throw new PaymentFailed("Invalid payment method");
-//        }
-//        isSucceeded = true;
-//        return new PaymentReceipt(LocalDateTime.now(), amount, customerUser);
-//    }
-//
-//    public void undoPayment(User customerUser, PaymentReceipt paymentReceipt) throws RefundFailed {
-//        if(customerUser.getPaymentMethod() == null) {
-//            throw new RefundFailed("Invalid payment method");
-//        }
-//        // refunding ...
-//        System.out.println("Refunding an amount of " + paymentReceipt.getAmount());
-//    }
+    public PaymentReceipt processPayment(User customerUser, double amount) throws PaymentFailed{
+        if(customerUser.getPaymentMethod() == null) {
+            throw new PaymentFailed("Invalid payment method");
+        }
+        isSucceeded = true;
+        return new PaymentReceipt(LocalDateTime.now(), amount, customerUser);
+    }
+
+    public void undoPayment(User customerUser, PaymentReceipt paymentReceipt) throws RefundFailed {
+        if(customerUser.getPaymentMethod() == null) {
+            throw new RefundFailed("Invalid payment method");
+        }
+        // refunding ...
+        System.out.println("Refunding an amount of " + paymentReceipt.getAmount());
+    }
 }
