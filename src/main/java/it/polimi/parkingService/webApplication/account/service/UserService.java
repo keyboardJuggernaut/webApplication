@@ -53,6 +53,7 @@ public class UserService implements IUserService {
         user.setLicensePlate(webUser.getLicensePlate());
         user.setIsDisabled(webUser.getIsDisabled());
         user.setIsPregnant(webUser.getIsPregnant());
+        user.setPaymentMethod(webUser.getPaymentMethod());
 
         // give user default role of "employee"
         user.setRoles(Arrays.asList(roleDao.findRoleByName("ROLE_CUSTOMER")));

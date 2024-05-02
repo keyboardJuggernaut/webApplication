@@ -123,7 +123,44 @@
                                 I need assistance for pregnancy
 
                             </label>
+                        </div>
 
+                        <!-- Payment method -->
+                        <div th:object="${paymentMethod}" >
+
+                        <div style="margin-bottom: 25px" class="input-group">
+                            <input type="text" th:field="*{pan}" placeholder="PAN (*)" class="form-control" />
+                        </div>
+
+                        <div th:if="${#fields.hasErrors('pan')}"
+                             style="margin-bottom: 25px" class="text-danger">
+                            <ul>
+                                <li th:each="err : ${#fields.errors('pan')}" th:text="'PAN ' + ${err}" />
+                            </ul>
+                        </div>
+
+
+                        <div style="margin-bottom: 25px" class="input-group">
+                            <input type="text" th:field="*{cvv}" placeholder="CVV (*)" class="form-control" />
+                        </div>
+
+                        <div th:if="${#fields.hasErrors('cvv')}"
+                             style="margin-bottom: 25px" class="text-danger">
+                            <ul>
+                                <li th:each="err : ${#fields.errors('cvv')}" th:text="'CVV ' + ${err}" />
+                            </ul>
+                        </div>
+
+                        <div style="margin-bottom: 25px" class="input-group">
+                            <input type="text" th:field="*{expirationDate}" placeholder="EXPIRES (*)" class="form-control" />
+                        </div>
+
+                        <div th:if="${#fields.hasErrors('expirationDate')}"
+                             style="margin-bottom: 25px" class="text-danger">
+                            <ul>
+                                <li th:each="err : ${#fields.errors('expirationDate')}" th:text="'EXPIRES ' + ${err}" />
+                            </ul>
+                        </div>
                         </div>
 
                         <!-- Registration Button -->

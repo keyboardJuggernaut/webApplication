@@ -23,9 +23,12 @@ CREATE TABLE IF NOT EXISTS `user` (
                         `license_plate` varchar(7) DEFAULT NULL,
                         `is_disabled` boolean DEFAULT FALSE,
                         `is_pregnant` boolean DEFAULT FALSE,
-                        PRIMARY KEY (`id`)
+                        `payment_method_id` int DEFAULT NULL,
+                        PRIMARY KEY (`id`),
 
-
+                        FOREIGN KEY (`payment_method_id`)
+                        REFERENCES `payment_method` (`id`)
+                        ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
 # CREATE TABLE IF NOT EXISTS `account` (

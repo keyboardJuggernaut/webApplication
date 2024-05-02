@@ -2,6 +2,7 @@ package it.polimi.parkingService.webApplication.account.controllers;
 
 import it.polimi.parkingService.webApplication.account.models.User;
 import it.polimi.parkingService.webApplication.account.service.UserService;
+import it.polimi.parkingService.webApplication.payment.models.PaymentMethod;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,13 +35,14 @@ public class RegistrationController {
     public String showMyLoginPage(Model theModel) {
 
         theModel.addAttribute("user", new User());
-
+        theModel.addAttribute("paymentMethod", new PaymentMethod());
         return "account/registration-form";
     }
 
     @PostMapping("/processRegistrationForm")
     public String processRegistrationForm(
             @Valid @ModelAttribute("user") User theUser,
+            @Valid @ModelAttribute("paymentMethod") PaymentMethod paymentMethod,
             BindingResult theBindingResult,
             HttpSession session, Model theModel) {
 
@@ -60,7 +62,8 @@ public class RegistrationController {
             return "account/registration-form";
         }
 
-        // create user account and store in the databse
+        theUser.setPaymentMethod(paymentMethod);
+        // create user account and store in the database
         userService.save(theUser);
 
 

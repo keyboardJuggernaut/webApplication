@@ -1,5 +1,6 @@
 package it.polimi.parkingService.webApplication.account.models;
 
+import it.polimi.parkingService.webApplication.payment.models.PaymentMethod;
 import jakarta.persistence.*;
 
 import java.util.Collection;
@@ -40,6 +41,10 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Collection<Role> roles;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "payment_method_id")
+    private PaymentMethod paymentMethod;
 
     public User() {
     }
@@ -138,6 +143,15 @@ public class User {
 
     public void setIsPregnant(boolean pregnant) {
         isPregnant = pregnant;
+    }
+
+
+    public PaymentMethod getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(PaymentMethod paymentMethod) {
+        this.paymentMethod = paymentMethod;
     }
 
     @Override
