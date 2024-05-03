@@ -11,10 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -49,8 +46,10 @@ public class ParkingAreaController {
         return "parkingArea/checkin";
     }
 
-//    @PostMapping("/parking")
-//    public String validateCheckInQRCode(@ModelAttribute("qrcode") String qrcode, Model model) throws NotFoundException, IOException {
-//        ParkingSpot parkingSpot = parkingAreaService.findParkingSpot(QRCodeGenerator.decodeQRCodeEncodedImage(qrcode));
-//    }
+    @GetMapping("/parking")
+    public String validateCheckInQRCode(@RequestParam("qrcode") String qrcode, Model model) throws NotFoundException, IOException {
+        ParkingSpot parkingSpot = parkingAreaService.findParkingSpot(QRCodeGenerator.decodeQRCodeEncodedImage(qrcode));
+        model.addAttribute("spotIdentifier", parkingSpot.getSpotIdentifier());
+        return "parkingArea/parking-confirmation";
+    }
 }

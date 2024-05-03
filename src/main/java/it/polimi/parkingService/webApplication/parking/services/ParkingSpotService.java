@@ -1,8 +1,10 @@
 package it.polimi.parkingService.webApplication.parking.services;
 
 import it.polimi.parkingService.webApplication.parking.dao.ParkingSpotRepository;
+import it.polimi.parkingService.webApplication.parking.enums.ParkingSpotStatus;
 import it.polimi.parkingService.webApplication.parking.models.ParkingArea;
 import it.polimi.parkingService.webApplication.parking.models.ParkingSpot;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -49,5 +51,12 @@ public class ParkingSpotService implements IParkingSpotService{
     @Override
     public void deleteById(int id) {
         parkingSpotRepository.deleteById(id);
+    }
+
+
+    @Override
+    @Transactional
+    public void update(long id, ParkingSpotStatus status) {
+        parkingSpotRepository.update(id, status);
     }
 }

@@ -33,6 +33,14 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
+	public User findById(Long id) {
+		User user = entityManager.find(User.class, id);
+
+		// return employee
+		return user;
+	}
+
+	@Override
 	@Transactional
 	public void save(User theUser) {
 

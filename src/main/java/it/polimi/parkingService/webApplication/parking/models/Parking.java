@@ -9,6 +9,7 @@ import it.polimi.parkingService.webApplication.payment.models.PaymentReceipt;
 import it.polimi.parkingService.webApplication.payment.models.PaymentSystem;
 import it.polimi.parkingService.webApplication.utils.BaseEntity;
 import jakarta.persistence.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -40,13 +41,9 @@ public class Parking extends BaseEntity {
     private PaymentSystem paymentSystem;
     private final static double hourlyFee = 1.5;
 
-    public Parking(LocalTime estimatedTime, LocalDateTime arrival, PaymentSystem paymentSystem) {
-        this.estimatedTime = estimatedTime;
-        this.arrival = arrival;
-        this.paymentSystem = paymentSystem;
-    }
-    public Parking( LocalDateTime arrival,  PaymentSystem paymentSystem) {
-        this.arrival = arrival;
+    public Parking(User customerUser,  PaymentSystem paymentSystem) {
+        this.arrival = LocalDateTime.now();
+        this.customerUser = customerUser;
         this.paymentSystem = paymentSystem;
 
     }

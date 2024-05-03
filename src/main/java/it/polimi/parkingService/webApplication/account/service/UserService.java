@@ -41,6 +41,11 @@ public class UserService implements IUserService {
     }
 
     @Override
+    public User findById(Long id) {
+        return userDao.findById(id);
+    }
+
+    @Override
     public void save(User webUser) {
         User user = new User();
 

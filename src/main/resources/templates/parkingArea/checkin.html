@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Checkin</title>
@@ -7,5 +7,8 @@
 <body>
 <h1>QR Code</h1>
 <img th:src="'data:image/png;base64,' + ${qrcode}" alt="QR Code">
+<div>
+    <a th:href="@{/parkingArea/parking(qrcode=${qrcode})}" class="btn btn-primary mt-3" role="button" aria-pressed="true">Scan</a>
+</div>
 </body>
 </html>

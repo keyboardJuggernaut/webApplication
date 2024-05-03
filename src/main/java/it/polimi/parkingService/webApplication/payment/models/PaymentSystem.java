@@ -3,9 +3,11 @@ package it.polimi.parkingService.webApplication.payment.models;
 import it.polimi.parkingService.webApplication.account.models.User;
 import it.polimi.parkingService.webApplication.payment.exceptions.PaymentFailed;
 import it.polimi.parkingService.webApplication.payment.exceptions.RefundFailed;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
+@Component
 public class PaymentSystem {
     private boolean isSucceeded;
 

@@ -26,6 +26,7 @@ public class ParkingArea extends BaseEntity {
 
     @OneToMany(
             mappedBy = "parkingArea",
+            fetch = FetchType.EAGER,
             cascade = {CascadeType.PERSIST, CascadeType.MERGE,
                     CascadeType.DETACH, CascadeType.REFRESH})
     private List<ParkingSpot> parkingSpots;

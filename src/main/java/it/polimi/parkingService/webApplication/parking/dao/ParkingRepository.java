@@ -10,6 +10,6 @@ import java.util.List;
 
 public interface ParkingRepository extends JpaRepository<Parking, Integer> {
 
-    @Query("SELECT p FROM Parking p WHERE p.customerUser = :user AND p.arrival = null")
+    @Query("SELECT p FROM Parking p WHERE p.customerUser = :user AND p.leaving IS null")
     List<Parking> findInProgressParkingsByUserId(User user);
 }

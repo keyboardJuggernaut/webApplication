@@ -6,6 +6,7 @@ import it.polimi.parkingService.webApplication.account.models.User;
 public interface UserDao {
 
     User findByUserName(String userName);
+    User findById(Long id);
 
     void save(User theUser);
 
