@@ -70,12 +70,12 @@ public class Parking extends BaseEntity {
         return parkingTime * hourlyFee;
     }
 
-//    public PaymentReceipt pay() throws ParkingNotTerminated, PaymentFailed {
-//        double amount = getParkingCharge();
-//        PaymentReceipt receipt = paymentSystem.processPayment(customerUser, amount);
-//        setPaymentReceipt(receipt);
-//        return receipt;
-//    }
+    public PaymentReceipt pay() throws ParkingNotTerminated, PaymentFailed {
+        double amount = getParkingCharge();
+        PaymentReceipt receipt = paymentSystem.processPayment(customerUser, amount);
+        setPaymentReceipt(receipt);
+        return receipt;
+    }
 
     public User getCustomerUser() {
         return customerUser;

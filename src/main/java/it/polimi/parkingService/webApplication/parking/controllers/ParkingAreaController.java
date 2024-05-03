@@ -2,8 +2,10 @@ package it.polimi.parkingService.webApplication.parking.controllers;
 
 import com.google.zxing.NotFoundException;
 import com.google.zxing.WriterException;
+import it.polimi.parkingService.webApplication.parking.models.Parking;
 import it.polimi.parkingService.webApplication.parking.models.ParkingSpot;
 import it.polimi.parkingService.webApplication.parking.services.IParkingAreaService;
+import it.polimi.parkingService.webApplication.parking.services.IParkingService;
 import it.polimi.parkingService.webApplication.parking.services.IParkingSpotService;
 import it.polimi.parkingService.webApplication.utils.QRCodeGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.time.LocalTime;
 import java.util.List;
 
 @Controller
@@ -22,12 +25,14 @@ public class ParkingAreaController {
 
     private IParkingAreaService parkingAreaService;
     private IParkingSpotService parkingSpotService;
+    private IParkingService parkingService;
 
 
     @Autowired
-    private ParkingAreaController(IParkingAreaService parkingAreaService, IParkingSpotService parkingSpotService){
+    private ParkingAreaController(IParkingAreaService parkingAreaService, IParkingSpotService parkingSpotService, IParkingService parkingService){
         this.parkingAreaService = parkingAreaService;
         this.parkingSpotService = parkingSpotService;
+        this.parkingService = parkingService;
     }
 
     @GetMapping("/map")
@@ -50,6 +55,17 @@ public class ParkingAreaController {
     public String validateCheckInQRCode(@RequestParam("qrcode") String qrcode, Model model) throws NotFoundException, IOException {
         ParkingSpot parkingSpot = parkingAreaService.findParkingSpot(QRCodeGenerator.decodeQRCodeEncodedImage(qrcode));
         model.addAttribute("spotIdentifier", parkingSpot.getSpotIdentifier());
+        Parking parking = parkingService.findBySpotEquals(parkingSpot);
+        model.addAttribute("parking", parking);
         return "parkingArea/parking-confirmation";
+    }
+
+    @PostMapping("/estimatedTime")
+    public String setEstimatedTime(@ModelAttribute("parking") Parking parking) {
+        if(parking.getEstimatedTime() == null) {
+            throw new RuntimeException("Missing estimated time");
+        }
+        parkingService.update(parking.getId(), parking.getEstimatedTime());
+       return "redirect:/parkingArea/map";
     }
 }

@@ -3,9 +3,12 @@ package it.polimi.parkingService.webApplication.parking.services;
 import it.polimi.parkingService.webApplication.account.models.User;
 import it.polimi.parkingService.webApplication.parking.dao.ParkingRepository;
 import it.polimi.parkingService.webApplication.parking.models.Parking;
+import it.polimi.parkingService.webApplication.parking.models.ParkingSpot;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,5 +56,16 @@ public class ParkingService implements IParkingService{
 
     public List<Parking> findInProgressParkingsByUserId(User user) {
         return parkingRepository.findInProgressParkingsByUserId(user);
+    }
+
+    @Override
+    public Parking findBySpotEquals(ParkingSpot parkingSpot) {
+        return parkingRepository.findBySpotEquals(parkingSpot);
+    }
+
+    @Override
+    @Transactional
+    public void update(long id, LocalTime estimatedTime) {
+        parkingRepository.update(id, estimatedTime);
     }
 }
