@@ -7,18 +7,23 @@ import it.polimi.parkingService.webApplication.parking.models.ParkingSpot;
 import it.polimi.parkingService.webApplication.parking.services.IParkingAreaService;
 import it.polimi.parkingService.webApplication.parking.services.IParkingService;
 import it.polimi.parkingService.webApplication.parking.services.IParkingSpotService;
+import it.polimi.parkingService.webApplication.parking.services.SseService;
 import it.polimi.parkingService.webApplication.utils.QRCodeGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.io.IOException;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 @Controller
 @RequestMapping("/parkingArea")
@@ -28,17 +33,23 @@ public class ParkingAreaController {
     private IParkingSpotService parkingSpotService;
     private IParkingService parkingService;
 
+    private SseService sseService;
+
+    private final Set<SseEmitter> emitters = new CopyOnWriteArraySet<>();
+
+
 
     @Autowired
-    private ParkingAreaController(IParkingAreaService parkingAreaService, IParkingSpotService parkingSpotService, IParkingService parkingService){
+    private ParkingAreaController(IParkingAreaService parkingAreaService, IParkingSpotService parkingSpotService, IParkingService parkingService, SseService sseService){
         this.parkingAreaService = parkingAreaService;
         this.parkingSpotService = parkingSpotService;
         this.parkingService = parkingService;
+        this.sseService = sseService;
     }
 
     @GetMapping("/map")
     public String showParkingArea(Model model) {
-        Map<ParkingSpot, Parking> spotWithParking = parkingSpotService.getSpotsWithParkings();
+         Map<ParkingSpot, Parking> spotWithParking = parkingSpotService.getSpotsWithParkings();
          model.addAttribute("spotWithParking", spotWithParking);
          return "parkingArea/map";
     }
@@ -49,6 +60,9 @@ public class ParkingAreaController {
         String currentPrincipalUsername = authentication.getName();
         String qrCode = parkingAreaService.getCheckInQRCode(currentPrincipalUsername);
         model.addAttribute("qrcode", qrCode);
+        for (SseEmitter emitter : emitters) {
+            emitter.send("test");
+        }
         return "parkingArea/checkin";
     }
 
@@ -68,5 +82,12 @@ public class ParkingAreaController {
         }
         parkingService.update(parking.getId(), parking.getEstimatedTime());
        return "redirect:/parkingArea/map";
+    }
+
+    @GetMapping(path = "/sse", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public SseEmitter subscribe() {
+        SseEmitter emitter = new SseEmitter(Long.MAX_VALUE);
+        sseService.addEmitter(emitter);
+        return emitter;
     }
 }

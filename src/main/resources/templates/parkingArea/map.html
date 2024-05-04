@@ -10,6 +10,28 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
     <title>Parking Service</title>
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const eventSource = new EventSource("/parkingArea/sse");
+            eventSource.onmessage = (event) => {
+                console.log(`Event received: ${event.data}`)
+
+                const data = JSON.parse(event.data)
+                const row = document.getElementById(data.id);
+                const spotStatusCell = row.querySelector('#spotStatus');
+                spotStatusCell.textContent = data.status;
+
+                eventSource.onerror = (error) => {
+                    console.error("Error occurred:", error);
+                    eventSource.close();
+                };
+            };
+        });
+
+
+
+    </script>
 </head>
 
 <body>
@@ -39,10 +61,10 @@
         </thead>
 
         <tbody>
-        <tr th:each="parkingSpot : ${spotWithParking.keySet()}">
+        <tr th:each="parkingSpot : ${spotWithParking.keySet()}" th:id="${parkingSpot.id}">
 
             <td><span th:text="${parkingSpot.rowNumber}"></span><span th:text="${parkingSpot.columnNumber}"></span></td>
-            <td th:text="${parkingSpot.status}" />
+            <td id="spotStatus" th:text="${parkingSpot.status}" />
             <td th:text="${parkingSpot.stripeColor}" />
             <div th:if="${spotWithParking.get(parkingSpot) != null}">
                 <td th:text="${spotWithParking.get(parkingSpot).estimatedTime}"></td>

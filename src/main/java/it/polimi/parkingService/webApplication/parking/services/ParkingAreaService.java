@@ -44,16 +44,19 @@ public class ParkingAreaService implements IParkingAreaService{
     private TokenGenerator tokenGenerator;
 
     private PaymentSystem paymentSystem;
+    private SseService sseService;
+
 
 
     @Autowired
-    public ParkingAreaService(ParkingAreaRepository parkingAreaRepository, IUserService userService, ParkingService parkingService, TokenGenerator tokenGenerator, IParkingSpotService parkingSpotService, PaymentSystem paymentSystem) {
+    public ParkingAreaService(ParkingAreaRepository parkingAreaRepository, IUserService userService, ParkingService parkingService, TokenGenerator tokenGenerator, IParkingSpotService parkingSpotService, PaymentSystem paymentSystem, SseService sseService) {
         this.parkingAreaRepository = parkingAreaRepository;
         this.userService = userService;
         this.parkingService = parkingService;
         this.tokenGenerator = tokenGenerator;
         this.parkingSpotService = parkingSpotService;
         this.paymentSystem = paymentSystem;
+        this.sseService = sseService;
     }
 
     public String getCheckInQRCode(String username) throws ParkingAlreadyInProgress, IOException, WriterException {
@@ -100,6 +103,7 @@ public class ParkingAreaService implements IParkingAreaService{
         // update status and save
         parkingSpot.setStatus(ParkingSpotStatus.BUSY);
         parkingSpotService.update(parkingSpot.getId(), parkingSpot.getStatus());
+        sseService.sendEvent(new Event(parkingSpot.getId(), parkingSpot.getStatus()));
 
         // create parking and save
         Parking parking = new Parking(user, paymentSystem);
