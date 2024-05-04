@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/parkingArea")
@@ -37,8 +38,8 @@ public class ParkingAreaController {
 
     @GetMapping("/map")
     public String showParkingArea(Model model) {
-         List<ParkingSpot> parkingSpots= parkingSpotService.findAll();
-         model.addAttribute("parkingSpots", parkingSpots);
+        Map<ParkingSpot, Parking> spotWithParking = parkingSpotService.getSpotsWithParkings();
+         model.addAttribute("spotWithParking", spotWithParking);
          return "parkingArea/map";
     }
 

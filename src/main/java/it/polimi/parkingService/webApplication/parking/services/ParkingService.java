@@ -64,6 +64,11 @@ public class ParkingService implements IParkingService{
     }
 
     @Override
+    public Parking findActualInProgressParkingBySpot(ParkingSpot spot) {
+        return parkingRepository.findActualInProgressParkingBySpot(spot);
+    }
+
+    @Override
     @Transactional
     public void update(long id, LocalTime estimatedTime) {
         parkingRepository.update(id, estimatedTime);

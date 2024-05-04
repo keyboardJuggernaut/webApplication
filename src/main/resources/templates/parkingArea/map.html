@@ -31,21 +31,22 @@
     <table class="table table-bordered table-striped">
         <thead class="table-dark">
         <tr>
-            <th>Row </th>
-            <th>Column</th>
+            <th>Spot number</th>
             <th>Status</th>
             <th>Color</th>
-
+            <th>Estimated Time</th>
         </tr>
         </thead>
 
         <tbody>
-        <tr th:each="parkingSpot : ${parkingSpots}">
+        <tr th:each="parkingSpot : ${spotWithParking.keySet()}">
 
-            <td th:text="${parkingSpot.rowNumber}" />
-            <td th:text="${parkingSpot.columnNumber}" />
+            <td><span th:text="${parkingSpot.rowNumber}"></span><span th:text="${parkingSpot.columnNumber}"></span></td>
             <td th:text="${parkingSpot.status}" />
             <td th:text="${parkingSpot.stripeColor}" />
+            <div th:if="${spotWithParking.get(parkingSpot) != null}">
+                <td th:text="${spotWithParking.get(parkingSpot).estimatedTime}"></td>
+            </div>
 
         </tr>
         </tbody>

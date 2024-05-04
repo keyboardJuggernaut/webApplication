@@ -18,6 +18,9 @@ public interface ParkingRepository extends JpaRepository<Parking, Integer> {
     @Query("SELECT p FROM Parking p WHERE p.customerUser = :user AND p.leaving IS null")
     List<Parking> findInProgressParkingsByUserId(User user);
 
+    @Query("SELECT p FROM Parking  p WHERE p.spot =:spot AND p.leaving IS null AND p.arrival > CURRENT_DATE")
+    Parking findActualInProgressParkingBySpot(ParkingSpot spot);
+
     Parking findBySpotEquals(ParkingSpot parkingSpot);
 
     @Modifying

@@ -10,6 +10,6 @@ import java.time.LocalTime;
 
 public interface IParkingService extends BaseService<Parking> {
     Parking findBySpotEquals(ParkingSpot parkingSpot);
-
+    Parking findActualInProgressParkingBySpot(ParkingSpot spot);
     void update(@Param(value = "id") long id, @Param(value = "estimatedTime") LocalTime estimatedTime);
 }
