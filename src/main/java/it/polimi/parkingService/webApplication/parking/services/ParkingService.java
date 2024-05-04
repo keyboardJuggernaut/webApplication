@@ -54,7 +54,7 @@ public class ParkingService implements IParkingService{
         parkingRepository.deleteById(id);
     }
 
-    public List<Parking> findInProgressParkingsByUserId(User user) {
+    public Optional<Parking> findInProgressParkingsByUserId(User user) {
         return parkingRepository.findInProgressParkingsByUserId(user);
     }
 

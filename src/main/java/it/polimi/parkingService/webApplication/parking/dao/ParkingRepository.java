@@ -12,11 +12,12 @@ import org.springframework.data.repository.query.Param;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 
 public interface ParkingRepository extends JpaRepository<Parking, Integer> {
 
     @Query("SELECT p FROM Parking p WHERE p.customerUser = :user AND p.leaving IS null")
-    List<Parking> findInProgressParkingsByUserId(User user);
+    Optional<Parking> findInProgressParkingsByUserId(User user);
 
     @Query("SELECT p FROM Parking  p WHERE p.spot =:spot AND p.leaving IS null AND p.arrival > CURRENT_DATE")
     Parking findActualInProgressParkingBySpot(ParkingSpot spot);

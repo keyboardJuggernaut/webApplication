@@ -22,12 +22,12 @@ public class TokenGenerator {
     public TokenGenerator() {
         algorithm = Algorithm.HMAC256(SECRET);
     }
-    public String getToken(Long claimValue) {
-        return JWT.create().withClaim("userId", claimValue).withExpiresAt(Instant.now().plusSeconds(SECONDS_TO_EXPIRE)).sign(algorithm);
+    public String getToken(String claimName, Long claimValue) {
+        return JWT.create().withClaim(claimName, claimValue).withExpiresAt(Instant.now().plusSeconds(SECONDS_TO_EXPIRE)).sign(algorithm);
     }
 
-    public Integer decodeToken(String token) {
+    public Integer decodeToken(String claimName,String token) {
         DecodedJWT jwt = JWT.require(algorithm).build().verify(token);
-        return jwt.getClaim("userId").asInt();
+        return jwt.getClaim(claimName).asInt();
     }
 }

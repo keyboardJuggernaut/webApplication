@@ -60,10 +60,16 @@ public class ParkingAreaController {
         String currentPrincipalUsername = authentication.getName();
         String qrCode = parkingAreaService.getCheckInQRCode(currentPrincipalUsername);
         model.addAttribute("qrcode", qrCode);
-        for (SseEmitter emitter : emitters) {
-            emitter.send("test");
-        }
         return "parkingArea/checkin";
+    }
+
+    @GetMapping("/checkout")
+    public String showCheckOutQRCode(Model model) throws IOException, WriterException {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalUsername = authentication.getName();
+        String qrCode = parkingAreaService.getCheckOutQRCode(currentPrincipalUsername);
+        model.addAttribute("qrcode", qrCode);
+        return "parkingArea/checkout";
     }
 
     @GetMapping("/parking")
@@ -74,6 +80,12 @@ public class ParkingAreaController {
         model.addAttribute("parking", parking);
         return "parkingArea/parking-confirmation";
     }
+    @GetMapping("/leaving")
+    public void validateCheckOutQRCode(@RequestParam("qrcode") String qrcode, Model model) throws NotFoundException, IOException {
+//        TODO: continua
+//        return "parkingArea/checkout-confirmation";
+    }
+
 
     @PostMapping("/estimatedTime")
     public String setEstimatedTime(@ModelAttribute("parking") Parking parking) {

@@ -10,5 +10,6 @@ import java.io.IOException;
 
 public interface IParkingAreaService extends BaseService<ParkingArea> {
     public String getCheckInQRCode(String username) throws ParkingAlreadyInProgress, IOException, WriterException;
+    public String getCheckOutQRCode(String username) throws ParkingAlreadyInProgress, IOException, WriterException;
     public ParkingSpot findParkingSpot (String checkinToken);
 }

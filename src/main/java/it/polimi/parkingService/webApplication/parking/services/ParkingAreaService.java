@@ -61,16 +61,28 @@ public class ParkingAreaService implements IParkingAreaService{
 
     public String getCheckInQRCode(String username) throws ParkingAlreadyInProgress, IOException, WriterException {
         User user = userService.findByUserName(username);
-        List<Parking> parkings = parkingService.findInProgressParkingsByUserId(user);
-        if(!parkings.isEmpty()) {
+        Optional<Parking> parking = parkingService.findInProgressParkingsByUserId(user);
+        if(parking.isPresent()) {
             throw new ParkingAlreadyInProgress(username + " has not terminated the parking yet");
         }
-        String token = tokenGenerator.getToken(user.getId());
+        String token = tokenGenerator.getToken("userId", user.getId());
+        return QRCodeGenerator.getQRCodeEncodedImage(token, 100, 100);
+    }
+
+    @Override
+    public String getCheckOutQRCode(String username) throws ParkingAlreadyInProgress, IOException, WriterException {
+        User user = userService.findByUserName(username);
+        Optional<Parking> result = parkingService.findInProgressParkingsByUserId(user);
+        if(result.isEmpty()) {
+            throw new ParkingAlreadyInProgress(username + " has not done the check in yet");
+        }
+        Parking parking = result.get();
+        String token = tokenGenerator.getToken("parkingId", parking.getId());
         return QRCodeGenerator.getQRCodeEncodedImage(token, 100, 100);
     }
 
     public ParkingSpot findParkingSpot (String checkinToken){
-        long userId = tokenGenerator.decodeToken(checkinToken);
+        long userId = tokenGenerator.decodeToken("userId", checkinToken);
         User user = userService.findById(userId);
 
 

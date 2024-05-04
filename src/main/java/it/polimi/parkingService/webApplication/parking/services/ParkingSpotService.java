@@ -9,10 +9,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class ParkingSpotService implements IParkingSpotService{
@@ -68,7 +65,7 @@ public class ParkingSpotService implements IParkingSpotService{
 
     public Map<ParkingSpot, Parking> getSpotsWithParkings() {
         List<ParkingSpot> parkingSpots = findAll();
-        Map<ParkingSpot, Parking> pairs = new HashMap<>();
+        Map<ParkingSpot, Parking> pairs = new LinkedHashMap<>();
         for(ParkingSpot spot : parkingSpots) {
             if(spot.getStatus() == ParkingSpotStatus.BUSY) {
                 Parking parking = parkingService.findActualInProgressParkingBySpot(spot);
