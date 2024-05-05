@@ -23,19 +23,23 @@ public class Booking extends BaseEntity {
     @JoinColumn(name="account_id")
     private User customerUser;
 
-    @Transient
-    private PaymentSystem paymentSystem;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "payment_receipt_id")
     private PaymentReceipt paymentReceipt;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "parking_spot_id")
+    private ParkingSpot parkingSpot;
+
+    @Column(name="claimed")
+    private Boolean claimed;
+
     public final static long HOURS_TO_REFUND = 48;
 
 
-    public Booking(LocalDate date, PaymentSystem paymentSystem) {
+    public Booking(LocalDate date) {
         this.date = date;
-        this.paymentSystem = paymentSystem;
     }
 
     public Booking(){}
@@ -44,13 +48,11 @@ public class Booking extends BaseEntity {
         return date;
     }
 
-    public PaymentReceipt pay() throws PaymentFailed {
-        PaymentReceipt receipt = paymentSystem.processPayment(customerUser, DAILY_CHARGE);
-        setPaymentReceipt(receipt);
-        return receipt;
+    public void pay(PaymentSystem paymentSystem) throws PaymentFailed {
+        paymentReceipt = paymentSystem.processPayment(customerUser, DAILY_CHARGE);
     }
 
-    public void refund() throws RefundFailed {
+    public void refund(PaymentSystem paymentSystem) throws RefundFailed {
         long remainingHours = Duration.between(date, LocalDate.now()).toHours();
         if(remainingHours < HOURS_TO_REFUND) {
             paymentSystem.undoPayment(customerUser, paymentReceipt);
@@ -69,13 +71,6 @@ public class Booking extends BaseEntity {
         this.customerUser = customerUser;
     }
 
-    public PaymentSystem getPaymentSystem() {
-        return paymentSystem;
-    }
-
-    public void setPaymentSystem(PaymentSystem paymentSystem) {
-        this.paymentSystem = paymentSystem;
-    }
 
     public PaymentReceipt getPaymentReceipt() {
         return paymentReceipt;
@@ -83,5 +78,21 @@ public class Booking extends BaseEntity {
 
     public void setPaymentReceipt(PaymentReceipt paymentReceipt) {
         this.paymentReceipt = paymentReceipt;
+    }
+
+    public ParkingSpot getParkingSpot() {
+        return parkingSpot;
+    }
+
+    public void setParkingSpot(ParkingSpot parkingSpot) {
+        this.parkingSpot = parkingSpot;
+    }
+
+    public Boolean getClaimed() {
+        return claimed;
+    }
+
+    public void setClaimed(Boolean claimed) {
+        this.claimed = claimed;
     }
 }

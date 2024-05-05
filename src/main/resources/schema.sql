@@ -31,33 +31,6 @@ CREATE TABLE IF NOT EXISTS `user` (
                         ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
-# CREATE TABLE IF NOT EXISTS `account` (
-#                                               `id` int NOT NULL AUTO_INCREMENT,
-#                                               `username` varchar(40) DEFAULT NULL,
-#                                               `password` varchar(100) DEFAULT NULL,
-#                                               `enabled` tinyint NOT NULL,
-#                                               `first_name` varchar(40) DEFAULT NULL,
-#                                               `last_name` varchar(40) DEFAULT NULL,
-#                                               `license_plate` varchar(7) DEFAULT NULL,
-#                                               `is_disabled` boolean DEFAULT FALSE,
-#                                               `is_pregnant` boolean DEFAULT FALSE,
-#                                               `payment_method_id` int DEFAULT NULL,
-#                                               PRIMARY KEY (`id`),
-#
-#                                               FOREIGN KEY (`payment_method_id`)
-#                                                   REFERENCES `payment_method` (`id`)
-#                                                   ON DELETE NO ACTION ON UPDATE NO ACTION
-# ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
-
-
-# CREATE TABLE IF NOT EXISTS `roles` (
-#                          `id` int NOT NULL AUTO_INCREMENT,
-#                          `role` varchar(50) NOT NULL,
-#                          `account_id` int NOT NULL,
-#                          PRIMARY KEY (`id`),
-#                          UNIQUE KEY `AUTHORITIES_idx` (`account_id`,`role`),
-#                          CONSTRAINT `AUTHORITIES` FOREIGN KEY (`account_id`) REFERENCES `account` (`id`)
-# ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE IF NOT EXISTS `role` (
                         `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -116,6 +89,7 @@ CREATE TABLE IF NOT EXISTS `parking` (
                             `parking_spot_id` int DEFAULT NULL,
                             `payment_receipt_id` int DEFAULT NULL,
                             `account_id` int DEFAULT NULL,
+                            `booking_id` int DEFAULT NULL,
 
                             PRIMARY KEY (`id`),
 
@@ -135,7 +109,11 @@ CREATE TABLE IF NOT EXISTS `parking` (
                             CONSTRAINT `FK_ACCOUNT`
                                 FOREIGN KEY (`account_id`)
                                     REFERENCES `user` (`id`)
-                                    ON DELETE NO ACTION ON UPDATE NO ACTION
+                                    ON DELETE NO ACTION ON UPDATE NO ACTION,
+
+                            FOREIGN KEY (`booking_id`)
+                            REFERENCES `booking` (`id`)
+                            ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
 CREATE TABLE IF NOT EXISTS `payment_receipt` (
@@ -148,8 +126,10 @@ CREATE TABLE IF NOT EXISTS `payment_receipt` (
 CREATE TABLE IF NOT EXISTS `booking` (
                                               `id` int NOT NULL AUTO_INCREMENT,
                                               `date` date DEFAULT NULL,
+                                              `claimed` boolean DEFAULT FALSE,
                                               `payment_receipt_id` int DEFAULT NULL,
                                               `account_id` int DEFAULT NULL,
+                                              `parking_spot_id` int DEFAULT NULL,
 
                                               PRIMARY KEY (`id`),
 
@@ -158,9 +138,13 @@ CREATE TABLE IF NOT EXISTS `booking` (
                                               ON DELETE NO ACTION ON UPDATE NO ACTION,
 
 
-                                                  FOREIGN KEY (`account_id`)
-                                                  REFERENCES `user` (`id`)
-                                                  ON DELETE NO ACTION ON UPDATE NO ACTION
+                                               FOREIGN KEY (`parking_spot_id`)
+                                               REFERENCES `parking_spot` (`id`)
+                                               ON DELETE NO ACTION ON UPDATE NO ACTION,
+
+                                                FOREIGN KEY (`account_id`)
+                                                REFERENCES `user` (`id`)
+                                                ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
 

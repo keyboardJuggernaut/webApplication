@@ -2,6 +2,7 @@ package it.polimi.parkingService.webApplication.parking.services;
 
 import it.polimi.parkingService.webApplication.parking.enums.ParkingSpotStatus;
 import it.polimi.parkingService.webApplication.parking.exceptions.ParkingNotTerminated;
+import it.polimi.parkingService.webApplication.parking.models.Booking;
 import it.polimi.parkingService.webApplication.parking.models.Parking;
 import it.polimi.parkingService.webApplication.parking.models.ParkingSpot;
 import it.polimi.parkingService.webApplication.payment.models.PaymentReceipt;
@@ -18,5 +19,4 @@ public interface IParkingService extends BaseService<Parking> {
     void update(@Param(value = "id") long id, @Param(value = "estimatedTime") LocalTime estimatedTime);
 
     public Parking findById(Long id);
-
 }

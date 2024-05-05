@@ -32,6 +32,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests(configurer ->
                         configurer
                                 .requestMatchers("/register/**").permitAll()
+                                .requestMatchers("/parkingArea/map").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .formLogin(form ->

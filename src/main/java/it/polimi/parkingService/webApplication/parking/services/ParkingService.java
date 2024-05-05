@@ -4,6 +4,7 @@ import it.polimi.parkingService.webApplication.account.models.User;
 import it.polimi.parkingService.webApplication.parking.dao.ParkingRepository;
 import it.polimi.parkingService.webApplication.parking.enums.ParkingSpotStatus;
 import it.polimi.parkingService.webApplication.parking.exceptions.ParkingNotTerminated;
+import it.polimi.parkingService.webApplication.parking.models.Booking;
 import it.polimi.parkingService.webApplication.parking.models.Parking;
 import it.polimi.parkingService.webApplication.parking.models.ParkingSpot;
 import it.polimi.parkingService.webApplication.payment.models.PaymentReceipt;
@@ -59,6 +60,7 @@ public class ParkingService implements IParkingService{
 
         return parking;
     }
+
 
 
 

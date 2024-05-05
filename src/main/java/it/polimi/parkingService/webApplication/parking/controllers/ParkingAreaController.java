@@ -5,6 +5,7 @@ import com.google.zxing.WriterException;
 import it.polimi.parkingService.webApplication.account.models.User;
 import it.polimi.parkingService.webApplication.parking.enums.ParkingSpotStatus;
 import it.polimi.parkingService.webApplication.parking.exceptions.ParkingNotTerminated;
+import it.polimi.parkingService.webApplication.parking.models.Booking;
 import it.polimi.parkingService.webApplication.parking.models.Parking;
 import it.polimi.parkingService.webApplication.parking.models.ParkingSpot;
 import it.polimi.parkingService.webApplication.parking.services.*;
@@ -16,6 +17,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
@@ -100,5 +102,26 @@ public class ParkingAreaController {
         SseEmitter emitter = new SseEmitter(Long.MAX_VALUE);
         sseService.addEmitter(emitter);
         return emitter;
+    }
+
+    @GetMapping("/booking")
+    public String showBookingForm(Model model) {
+        model.addAttribute("booking", new Booking());
+        return "parkingArea/booking-form";
+    }
+
+    @PostMapping("/reserving")
+    public String processBookingForm(@ModelAttribute("booking") Booking booking, BindingResult theBindingResult, Model model) {
+
+        if (theBindingResult.hasErrors()){
+            return "parkingArea/booking-form";
+        }
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalUsername = authentication.getName();
+
+        Booking confirmedBooking = parkingAreaService.reserveParkingSpot(currentPrincipalUsername, booking);
+        model.addAttribute("confirmedBooking", confirmedBooking);
+
+        return "parkingArea/booking-confirmation";
     }
 }

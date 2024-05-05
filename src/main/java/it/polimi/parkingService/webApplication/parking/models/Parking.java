@@ -41,6 +41,12 @@ public class Parking extends BaseEntity {
     @JoinColumn(name="parking_spot_id")
     private ParkingSpot spot;
 
+    @OneToOne(
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL)
+    @JoinColumn(name = "booking_id")
+    private Booking booking;
+
     private final static double hourlyFee = 0.025;
 
     public Parking(User customerUser) {
@@ -124,4 +130,11 @@ public class Parking extends BaseEntity {
         this.paymentReceipt = paymentReceipt;
     }
 
+    public Booking getBooking() {
+        return booking;
+    }
+
+    public void setBooking(Booking booking) {
+        this.booking = booking;
+    }
 }

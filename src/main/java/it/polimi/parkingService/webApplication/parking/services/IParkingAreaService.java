@@ -3,6 +3,7 @@ package it.polimi.parkingService.webApplication.parking.services;
 import com.google.zxing.WriterException;
 import it.polimi.parkingService.webApplication.parking.exceptions.ParkingAlreadyInProgress;
 import it.polimi.parkingService.webApplication.parking.exceptions.ParkingNotTerminated;
+import it.polimi.parkingService.webApplication.parking.models.Booking;
 import it.polimi.parkingService.webApplication.parking.models.Parking;
 import it.polimi.parkingService.webApplication.parking.models.ParkingArea;
 import it.polimi.parkingService.webApplication.parking.models.ParkingSpot;
@@ -21,5 +22,5 @@ public interface IParkingAreaService extends BaseService<ParkingArea> {
 
     public Map<ParkingSpot, Parking> getSpotsWithParkings();
 
-
+    public Booking reserveParkingSpot(String username,  Booking booking);
 }

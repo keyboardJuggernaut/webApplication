@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Booking Confirmation</title>
+</head>
+
+<body>
+
+<h2>Booking registered successfully!</h2>
+
+<!-- display first name, last name and email -->
+<ul>
+    <li th:text="'Booking id: ' + ${confirmedBooking.id}"></li>
+    <li th:text="'Date: ' + ${confirmedBooking.date}"></li>
+    <li th:text="'Parking Spot Identifier: ' + ${confirmedBooking.parkingSpot.getSpotIdentifier()}"></li>
+</ul>
+
+<hr>
+
+<a th:href="@{/parkingArea/map}">See you soon</a>
+
+</body>
+
+</html>

@@ -2,6 +2,7 @@ package it.polimi.parkingService.webApplication.parking.dao;
 
 import it.polimi.parkingService.webApplication.account.models.User;
 import it.polimi.parkingService.webApplication.parking.enums.ParkingSpotStatus;
+import it.polimi.parkingService.webApplication.parking.models.Booking;
 import it.polimi.parkingService.webApplication.parking.models.Parking;
 import it.polimi.parkingService.webApplication.parking.models.ParkingSpot;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -28,4 +29,6 @@ public interface ParkingRepository extends JpaRepository<Parking, Long> {
     void update(@Param(value = "id") long id, @Param(value = "estimatedTime") LocalTime estimatedTime);
 
     Optional<Parking> findById(Long id);
+
+
 }
