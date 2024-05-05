@@ -8,6 +8,7 @@ import it.polimi.parkingService.webApplication.parking.dao.ParkingAreaRepository
 import it.polimi.parkingService.webApplication.parking.enums.ParkingSpotStatus;
 import it.polimi.parkingService.webApplication.parking.enums.StripeColor;
 import it.polimi.parkingService.webApplication.parking.exceptions.ParkingAlreadyInProgress;
+import it.polimi.parkingService.webApplication.parking.exceptions.ParkingNotTerminated;
 import it.polimi.parkingService.webApplication.parking.exceptions.UnavailableParkingSpot;
 import it.polimi.parkingService.webApplication.parking.models.Parking;
 import it.polimi.parkingService.webApplication.parking.models.ParkingArea;
@@ -16,6 +17,7 @@ import it.polimi.parkingService.webApplication.parking.strategy.LinearSearchPark
 import it.polimi.parkingService.webApplication.parking.strategy.ParkingSpotSearchCriteria;
 import it.polimi.parkingService.webApplication.parking.strategy.PriorityQueueParkingSpotResearch;
 import it.polimi.parkingService.webApplication.parking.strategy.SearchCriteria;
+import it.polimi.parkingService.webApplication.payment.models.PaymentReceipt;
 import it.polimi.parkingService.webApplication.payment.models.PaymentSystem;
 import it.polimi.parkingService.webApplication.utils.QRCodeGenerator;
 import it.polimi.parkingService.webApplication.utils.TokenGenerator;
@@ -26,6 +28,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -45,6 +48,7 @@ public class ParkingAreaService implements IParkingAreaService{
 
     private PaymentSystem paymentSystem;
     private SseService sseService;
+
 
 
 
@@ -82,7 +86,7 @@ public class ParkingAreaService implements IParkingAreaService{
     }
 
     public ParkingSpot findParkingSpot (String checkinToken){
-        long userId = tokenGenerator.decodeToken("userId", checkinToken);
+        long userId = getTokenPayload("userId", checkinToken);
         User user = userService.findById(userId);
 
 
@@ -118,7 +122,7 @@ public class ParkingAreaService implements IParkingAreaService{
         sseService.sendEvent(new Event(parkingSpot.getId(), parkingSpot.getStatus()));
 
         // create parking and save
-        Parking parking = new Parking(user, paymentSystem);
+        Parking parking = new Parking(user);
         parking.setSpot(parkingSpot);
         parkingService.save(parking);
 
@@ -151,5 +155,27 @@ public class ParkingAreaService implements IParkingAreaService{
     @Override
     public void deleteById(int id) {
         parkingAreaRepository.deleteById(id);
+    }
+
+    public Long getTokenPayload(String claimName, String token) {
+        return tokenGenerator.decodeToken(claimName, token);
+    }
+
+    @Override
+    public PaymentReceipt doCheckout(String token) throws ParkingNotTerminated {
+        Parking parking = parkingService.findById(getTokenPayload("parkingId", token));
+        parking.setLeaving(LocalDateTime.now());
+        parking.pay(paymentSystem);
+        parkingService.save(parking);
+        ParkingSpot parkingSpot = parking.getSpot();
+        parkingSpot.setStatus(ParkingSpotStatus.FREE);
+        parkingSpotService.save(parkingSpot);
+        sseService.sendEvent(new Event(parkingSpot.getId(), parkingSpot.getStatus()));
+        return parking.getPaymentReceipt();
+    }
+
+    @Override
+    public Map<ParkingSpot, Parking> getSpotsWithParkings() {
+        return parkingSpotService.getSpotsWithParkings();
     }
 }

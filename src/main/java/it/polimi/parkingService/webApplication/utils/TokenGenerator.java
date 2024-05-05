@@ -26,8 +26,8 @@ public class TokenGenerator {
         return JWT.create().withClaim(claimName, claimValue).withExpiresAt(Instant.now().plusSeconds(SECONDS_TO_EXPIRE)).sign(algorithm);
     }
 
-    public Integer decodeToken(String claimName,String token) {
+    public Long decodeToken(String claimName,String token) {
         DecodedJWT jwt = JWT.require(algorithm).build().verify(token);
-        return jwt.getClaim(claimName).asInt();
+        return jwt.getClaim(claimName).asLong();
     }
 }

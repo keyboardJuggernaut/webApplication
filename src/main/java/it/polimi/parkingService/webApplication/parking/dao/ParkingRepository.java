@@ -14,7 +14,7 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
-public interface ParkingRepository extends JpaRepository<Parking, Integer> {
+public interface ParkingRepository extends JpaRepository<Parking, Long> {
 
     @Query("SELECT p FROM Parking p WHERE p.customerUser = :user AND p.leaving IS null")
     Optional<Parking> findInProgressParkingsByUserId(User user);
@@ -22,9 +22,10 @@ public interface ParkingRepository extends JpaRepository<Parking, Integer> {
     @Query("SELECT p FROM Parking  p WHERE p.spot =:spot AND p.leaving IS null AND p.arrival > CURRENT_DATE")
     Parking findActualInProgressParkingBySpot(ParkingSpot spot);
 
-    Parking findBySpotEquals(ParkingSpot parkingSpot);
 
     @Modifying
     @Query("update Parking u set u.estimatedTime = :estimatedTime where u.id = :id")
     void update(@Param(value = "id") long id, @Param(value = "estimatedTime") LocalTime estimatedTime);
+
+    Optional<Parking> findById(Long id);
 }

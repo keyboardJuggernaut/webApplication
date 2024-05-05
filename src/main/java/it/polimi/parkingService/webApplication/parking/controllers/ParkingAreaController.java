@@ -2,12 +2,13 @@ package it.polimi.parkingService.webApplication.parking.controllers;
 
 import com.google.zxing.NotFoundException;
 import com.google.zxing.WriterException;
+import it.polimi.parkingService.webApplication.account.models.User;
+import it.polimi.parkingService.webApplication.parking.enums.ParkingSpotStatus;
+import it.polimi.parkingService.webApplication.parking.exceptions.ParkingNotTerminated;
 import it.polimi.parkingService.webApplication.parking.models.Parking;
 import it.polimi.parkingService.webApplication.parking.models.ParkingSpot;
-import it.polimi.parkingService.webApplication.parking.services.IParkingAreaService;
-import it.polimi.parkingService.webApplication.parking.services.IParkingService;
-import it.polimi.parkingService.webApplication.parking.services.IParkingSpotService;
-import it.polimi.parkingService.webApplication.parking.services.SseService;
+import it.polimi.parkingService.webApplication.parking.services.*;
+import it.polimi.parkingService.webApplication.payment.models.PaymentReceipt;
 import it.polimi.parkingService.webApplication.utils.QRCodeGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
@@ -30,26 +32,21 @@ import java.util.concurrent.CopyOnWriteArraySet;
 public class ParkingAreaController {
 
     private IParkingAreaService parkingAreaService;
-    private IParkingSpotService parkingSpotService;
     private IParkingService parkingService;
 
     private SseService sseService;
 
-    private final Set<SseEmitter> emitters = new CopyOnWriteArraySet<>();
-
-
 
     @Autowired
-    private ParkingAreaController(IParkingAreaService parkingAreaService, IParkingSpotService parkingSpotService, IParkingService parkingService, SseService sseService){
+    private ParkingAreaController(IParkingAreaService parkingAreaService, IParkingService parkingService, SseService sseService){
         this.parkingAreaService = parkingAreaService;
-        this.parkingSpotService = parkingSpotService;
         this.parkingService = parkingService;
         this.sseService = sseService;
     }
 
     @GetMapping("/map")
     public String showParkingArea(Model model) {
-         Map<ParkingSpot, Parking> spotWithParking = parkingSpotService.getSpotsWithParkings();
+         Map<ParkingSpot, Parking> spotWithParking = parkingAreaService.getSpotsWithParkings();
          model.addAttribute("spotWithParking", spotWithParking);
          return "parkingArea/map";
     }
@@ -76,14 +73,16 @@ public class ParkingAreaController {
     public String validateCheckInQRCode(@RequestParam("qrcode") String qrcode, Model model) throws NotFoundException, IOException {
         ParkingSpot parkingSpot = parkingAreaService.findParkingSpot(QRCodeGenerator.decodeQRCodeEncodedImage(qrcode));
         model.addAttribute("spotIdentifier", parkingSpot.getSpotIdentifier());
-        Parking parking = parkingService.findBySpotEquals(parkingSpot);
+        Parking parking = parkingService.findActualInProgressParkingBySpot(parkingSpot);
         model.addAttribute("parking", parking);
         return "parkingArea/parking-confirmation";
     }
     @GetMapping("/leaving")
-    public void validateCheckOutQRCode(@RequestParam("qrcode") String qrcode, Model model) throws NotFoundException, IOException {
-//        TODO: continua
-//        return "parkingArea/checkout-confirmation";
+    public String validateCheckOutQRCode(@RequestParam("qrcode") String qrcode, Model model) throws NotFoundException, IOException, ParkingNotTerminated {
+
+        PaymentReceipt receipt = parkingAreaService.doCheckout(QRCodeGenerator.decodeQRCodeEncodedImage(qrcode));
+        model.addAttribute("receipt", receipt);
+        return "parkingArea/checkout-confirmation";
     }
 
 

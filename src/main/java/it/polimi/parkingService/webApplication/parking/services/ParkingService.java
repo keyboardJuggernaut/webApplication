@@ -2,12 +2,17 @@ package it.polimi.parkingService.webApplication.parking.services;
 
 import it.polimi.parkingService.webApplication.account.models.User;
 import it.polimi.parkingService.webApplication.parking.dao.ParkingRepository;
+import it.polimi.parkingService.webApplication.parking.enums.ParkingSpotStatus;
+import it.polimi.parkingService.webApplication.parking.exceptions.ParkingNotTerminated;
 import it.polimi.parkingService.webApplication.parking.models.Parking;
 import it.polimi.parkingService.webApplication.parking.models.ParkingSpot;
+import it.polimi.parkingService.webApplication.payment.models.PaymentReceipt;
+import it.polimi.parkingService.webApplication.utils.QRCodeGenerator;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
@@ -17,9 +22,16 @@ public class ParkingService implements IParkingService{
 
     private ParkingRepository parkingRepository;
 
+
+
+    private SseService sseService;
+
+
+
     @Autowired
-    public ParkingService(ParkingRepository parkingRepository) {
+    public ParkingService(ParkingRepository parkingRepository, SseService sseService) {
         this.parkingRepository = parkingRepository;
+        this.sseService = sseService;
     }
 
     @Override
@@ -29,6 +41,10 @@ public class ParkingService implements IParkingService{
 
     @Override
     public Parking findById(int id) {
+        return null;
+    }
+
+    public Parking findById(Long id) {
         Optional<Parking> result = parkingRepository.findById(id);
 
         Parking parking = null;
@@ -44,6 +60,8 @@ public class ParkingService implements IParkingService{
         return parking;
     }
 
+
+
     @Override
     public Parking save(Parking entity) {
         return parkingRepository.save(entity);
@@ -51,6 +69,11 @@ public class ParkingService implements IParkingService{
 
     @Override
     public void deleteById(int id) {
+
+    }
+
+
+    public void deleteById(long id) {
         parkingRepository.deleteById(id);
     }
 
@@ -58,10 +81,6 @@ public class ParkingService implements IParkingService{
         return parkingRepository.findInProgressParkingsByUserId(user);
     }
 
-    @Override
-    public Parking findBySpotEquals(ParkingSpot parkingSpot) {
-        return parkingRepository.findBySpotEquals(parkingSpot);
-    }
 
     @Override
     public Parking findActualInProgressParkingBySpot(ParkingSpot spot) {

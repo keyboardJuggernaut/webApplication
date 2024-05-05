@@ -30,21 +30,22 @@ public class Parking extends BaseEntity {
     @JoinColumn(name = "payment_receipt_id")
     private PaymentReceipt paymentReceipt;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @ManyToOne( fetch = FetchType.EAGER,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name="account_id")
     private User customerUser;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @ManyToOne(
+            fetch = FetchType.EAGER,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name="parking_spot_id")
     private ParkingSpot spot;
-    @Transient
-    private PaymentSystem paymentSystem;
-    private final static double hourlyFee = 1.5;
 
-    public Parking(User customerUser,  PaymentSystem paymentSystem) {
+    private final static double hourlyFee = 0.025;
+
+    public Parking(User customerUser) {
         this.arrival = LocalDateTime.now();
         this.customerUser = customerUser;
-        this.paymentSystem = paymentSystem;
 
     }
     public Parking(){
@@ -66,15 +67,13 @@ public class Parking extends BaseEntity {
         if(leaving == null) {
             throw new ParkingNotTerminated("Parking still in progress");
         }
-        long parkingTime = Duration.between(arrival, leaving).toHours();
+        long parkingTime = Duration.between(arrival, leaving).toMinutes();
         return parkingTime * hourlyFee;
     }
 
-    public PaymentReceipt pay() throws ParkingNotTerminated, PaymentFailed {
+    public void pay(PaymentSystem paymentSystem) throws ParkingNotTerminated, PaymentFailed {
         double amount = getParkingCharge();
-        PaymentReceipt receipt = paymentSystem.processPayment(customerUser, amount);
-        setPaymentReceipt(receipt);
-        return receipt;
+        paymentReceipt = paymentSystem.processPayment(customerUser, amount);
     }
 
     public User getCustomerUser() {
@@ -125,11 +124,4 @@ public class Parking extends BaseEntity {
         this.paymentReceipt = paymentReceipt;
     }
 
-    public PaymentSystem getPaymentSystem() {
-        return paymentSystem;
-    }
-
-    public void setPaymentSystem(PaymentSystem paymentSystem) {
-        this.paymentSystem = paymentSystem;
-    }
 }

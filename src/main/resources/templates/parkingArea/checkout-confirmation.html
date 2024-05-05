@@ -1,10 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <title>Checkout Confirmation</title>
 </head>
+
 <body>
-$END$
+
+<h2>Check out done successfully!</h2>
+
+    <p>
+        Timestamp: <br><span th:text="${receipt.timestamp}"></span>
+    </p>
+    <p>
+        Total Amount: <br><span th:text="${receipt.amount}"></span>
+    </p>
+<hr>
+<a th:href="@{/parkingArea/review}">Leave a review</a>
+<a th:href="@{/parkingArea/map}">See map</a>
+
 </body>
+
 </html>

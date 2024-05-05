@@ -20,7 +20,12 @@
                 const data = JSON.parse(event.data)
                 const row = document.getElementById(data.id);
                 const spotStatusCell = row.querySelector('#spotStatus');
+                const spotEstimatedTime = row.querySelector('#estimatedTime')
                 spotStatusCell.textContent = data.status;
+
+                if(data.status === "FREE") {
+                    spotEstimatedTime.textContent = ""
+                }
 
                 eventSource.onerror = (error) => {
                     console.error("Error occurred:", error);
@@ -70,7 +75,7 @@
             <td id="spotStatus" th:text="${parkingSpot.status}" />
             <td th:text="${parkingSpot.stripeColor}" />
             <div th:if="${spotWithParking.get(parkingSpot) != null}">
-                <td th:text="${spotWithParking.get(parkingSpot).estimatedTime}"></td>
+                <td id="estimatedTime" th:text="${spotWithParking.get(parkingSpot).estimatedTime}"></td>
             </div>
 
         </tr>
