@@ -21,8 +21,8 @@ public class Review extends Message{
                     CascadeType.DETACH, CascadeType.REFRESH})
     private List<Response> linkedResponses;
 
-    public Review(LocalDateTime timestamp, String body, User author, Forum forum, int starsNumber) {
-        super(timestamp, body, author, forum);
+    public Review(LocalDateTime timestamp, String heading, String body, User author, Forum forum, int starsNumber) {
+        super(timestamp, heading, body, author, forum);
         this.starsNumber = starsNumber;
     }
 

@@ -11,13 +11,15 @@ import java.time.LocalDateTime;
 public abstract class Message {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "message_generator")
+    @TableGenerator(name = "message_generator", table = "id_generator", pkColumnName = "gen_name", valueColumnName = "gen_value", pkColumnValue = "message_id", allocationSize = 1)
     @Column(name = "id")
     private Long id;
 
     @Column(name="timestamp")
     private LocalDateTime timestamp;
-
+    @Column(name="heading")
+    private String heading;
     @Column(name="body")
     private String body;
 
@@ -30,11 +32,12 @@ public abstract class Message {
 
     public abstract void addResponse(Response response) throws AddingResponseForbidden;
 
-    public Message(LocalDateTime timestamp, String body, User author, Forum forum) {
+    public Message(LocalDateTime timestamp, String heading, String body, User author, Forum forum) {
         this.timestamp = timestamp;
         this.body = body;
         this.author = author;
         this.forum = forum;
+        this.heading = heading;
     }
 
     public Message(){}
@@ -79,5 +82,11 @@ public abstract class Message {
         this.id = id;
     }
 
+    public String getHeading() {
+        return heading;
+    }
 
+    public void setHeading(String heading) {
+        this.heading = heading;
+    }
 }

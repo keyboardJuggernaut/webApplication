@@ -152,9 +152,16 @@ CREATE TABLE IF NOT EXISTS `forum` (
                                               PRIMARY KEY (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
+CREATE TABLE IF NOT EXISTS id_generator (
+                              gen_name VARCHAR(50) NOT NULL,
+                              gen_value BIGINT,
+                              PRIMARY KEY (gen_name)
+);
+
 CREATE TABLE IF NOT EXISTS `review` (
                                               `id` int NOT NULL AUTO_INCREMENT,
                                               `timestamp` datetime DEFAULT NULL,
+                                              `heading` VARCHAR(100) DEFAULT NULL,
                                               `body` VARCHAR(300) DEFAULT NULL,
                                               `stars_number` int DEFAULT NULL,
 
@@ -174,6 +181,7 @@ CREATE TABLE IF NOT EXISTS `review` (
 CREATE TABLE IF NOT EXISTS `reporting` (
                                         `id` int NOT NULL AUTO_INCREMENT,
                                         `timestamp` datetime DEFAULT NULL,
+                                        `heading` VARCHAR(100) DEFAULT NULL,
                                         `body` VARCHAR(300) DEFAULT NULL,
                                         `severity` ENUM('LOW', 'MEDIUM', 'HIGH'),
                                         `status` ENUM('OPEN', 'CLOSED'),
