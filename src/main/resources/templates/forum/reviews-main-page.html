@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="head">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
+    <title>Parking Service</title>
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const eventSource = new EventSource("/parkingArea/sse");
+            eventSource.onmessage = (event) => {
+                console.log(`Event received: ${event.data}`)
+
+                const data = JSON.parse(event.data)
+                const row = document.getElementById(data.id);
+                const spotStatusCell = row.querySelector('#spotStatus');
+                const spotEstimatedTime = row.querySelector('#estimatedTime')
+                spotStatusCell.textContent = data.status;
+
+                if(data.status === "FREE") {
+                    spotEstimatedTime.textContent = ""
+                }
+
+                eventSource.onerror = (error) => {
+                    console.error("Error occurred:", error);
+                    eventSource.close();
+                };
+            };
+        });
+
+
+
+    </script>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h3>Reviews</h3>
+    <hr>
+    <div>
+        <a th:href="@{/forum/reviews/new}" class="btn btn-primary mt-3" role="button" aria-pressed="true">Add a review</a>
+    </div>
+
+    <div th:if="${reviews.size() != 0}">
+        <div th:each="review : ${reviews}">
+                <p>A review</p>
+            </div>
+    </div>
+    <div th:if="${reviews.size() == 0}">
+        <p>No available reviews yet</p>
+    </div>
+
+
+</div>
+
+</body>
+</html>

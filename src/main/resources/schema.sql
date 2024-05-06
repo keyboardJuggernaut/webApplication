@@ -147,6 +147,70 @@ CREATE TABLE IF NOT EXISTS `booking` (
                                                 ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
+CREATE TABLE IF NOT EXISTS `forum` (
+                                              `name` VARCHAR(100) NOT NULL,
+                                              PRIMARY KEY (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
+CREATE TABLE IF NOT EXISTS `review` (
+                                              `id` int NOT NULL AUTO_INCREMENT,
+                                              `timestamp` datetime DEFAULT NULL,
+                                              `body` VARCHAR(300) DEFAULT NULL,
+                                              `stars_number` int DEFAULT NULL,
+
+                                              `user_id` int DEFAULT NULL,
+                                              `forum_name` VARCHAR(100) DEFAULT NULL,
+                                              PRIMARY KEY (`id`),
+
+
+                                              FOREIGN KEY (`user_id`)
+                                                  REFERENCES `user` (`id`)
+                                                  ON DELETE NO ACTION ON UPDATE NO ACTION,
+                                              FOREIGN KEY (`forum_name`)
+                                                  REFERENCES `forum` (`name`)
+                                                  ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+
+CREATE TABLE IF NOT EXISTS `reporting` (
+                                        `id` int NOT NULL AUTO_INCREMENT,
+                                        `timestamp` datetime DEFAULT NULL,
+                                        `body` VARCHAR(300) DEFAULT NULL,
+                                        `severity` ENUM('LOW', 'MEDIUM', 'HIGH'),
+                                        `status` ENUM('OPEN', 'CLOSED'),
+
+                                        `user_id` int DEFAULT NULL,
+                                        `forum_name` VARCHAR(100) DEFAULT NULL,
+                                        PRIMARY KEY (`id`),
+
+
+                                        FOREIGN KEY (`user_id`)
+                                            REFERENCES `user` (`id`)
+                                            ON DELETE NO ACTION ON UPDATE NO ACTION,
+                                        FOREIGN KEY (`forum_name`)
+                                            REFERENCES `forum` (`name`)
+                                            ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+
+CREATE TABLE IF NOT EXISTS `response` (
+                                        `id` int NOT NULL AUTO_INCREMENT,
+                                        `timestamp` datetime DEFAULT NULL,
+                                        `body` VARCHAR(300) DEFAULT NULL,
+
+                                        `user_id` int DEFAULT NULL,
+                                        `review_id` int DEFAULT NULL,
+                                        `reporting_id` int DEFAULT NULL,
+                                        PRIMARY KEY (`id`),
+
+
+                                        FOREIGN KEY (`user_id`)
+                                            REFERENCES `user` (`id`)
+                                            ON DELETE NO ACTION ON UPDATE NO ACTION,
+                                        FOREIGN KEY (`review_id`)
+                                            REFERENCES `review` (`id`)
+                                            ON DELETE NO ACTION ON UPDATE NO ACTION,
+                                        FOREIGN KEY (`reporting_id`)
+                                            REFERENCES `reporting` (`id`)
+                                            ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
 SET FOREIGN_KEY_CHECKS = 1;
