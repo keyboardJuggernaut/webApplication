@@ -205,16 +205,12 @@ CREATE TABLE IF NOT EXISTS `response` (
                                         `body` VARCHAR(300) DEFAULT NULL,
 
                                         `user_id` int DEFAULT NULL,
-                                        `review_id` int DEFAULT NULL,
                                         `reporting_id` int DEFAULT NULL,
                                         PRIMARY KEY (`id`),
 
 
                                         FOREIGN KEY (`user_id`)
                                             REFERENCES `user` (`id`)
-                                            ON DELETE NO ACTION ON UPDATE NO ACTION,
-                                        FOREIGN KEY (`review_id`)
-                                            REFERENCES `review` (`id`)
                                             ON DELETE NO ACTION ON UPDATE NO ACTION,
                                         FOREIGN KEY (`reporting_id`)
                                             REFERENCES `reporting` (`id`)

@@ -18,7 +18,7 @@ public class Forum {
             fetch = FetchType.EAGER,
             cascade = {CascadeType.PERSIST, CascadeType.MERGE,
                     CascadeType.DETACH, CascadeType.REFRESH})
-    private List<Message> messages;
+    private List<Review> messages;
 
     public Forum(String name) {
         this.name = name;
@@ -26,7 +26,7 @@ public class Forum {
 
     public Forum(){}
 
-    public void addMessage(Message message){
+    public void addMessage(Review message){
         if(messages == null){
             messages = new ArrayList<>();
         }
@@ -34,11 +34,11 @@ public class Forum {
         message.setForum(this);
     }
 
-    public List<Message> getMessages() {
+    public List<Review> getMessages() {
         return messages;
     }
 
-    public void setMessages(List<Message> messages) {
+    public void setMessages(List<Review> messages) {
         this.messages = messages;
     }
 

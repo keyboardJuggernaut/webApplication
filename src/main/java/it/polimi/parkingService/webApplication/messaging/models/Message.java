@@ -6,13 +6,19 @@ import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
-@Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+//@Entity
+//@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@MappedSuperclass
 public abstract class Message {
 
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.TABLE, generator = "message_generator")
+//    @TableGenerator(name = "message_generator", table = "id_generator", pkColumnName = "gen_name", valueColumnName = "gen_value", pkColumnValue = "message_id", allocationSize = 1)
+//    @Column(name = "id")
+//    private Long id;
+
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = "message_generator")
-    @TableGenerator(name = "message_generator", table = "id_generator", pkColumnName = "gen_name", valueColumnName = "gen_value", pkColumnValue = "message_id", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 

@@ -25,12 +25,8 @@ public class Response {
     private User author;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-    @JoinColumn(name="review_id")
-    private Message reviewFirstMessage;
-
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name="reporting_id")
-    private Message reportingFirstMessage;
+    private Reporting reportingFirstMessage;
 
     public Response(String body, User author) {
         this.timestamp = LocalDateTime.now();
@@ -64,19 +60,12 @@ public class Response {
         this.author = author;
     }
 
-    public Message getReviewFirstMessage() {
-        return reviewFirstMessage;
-    }
 
-    public void setReviewFirstMessage(Message reviewFirstMessage) {
-        this.reviewFirstMessage = reviewFirstMessage;
-    }
-
-    public Message getReportingFirstMessage() {
+    public Reporting getReportingFirstMessage() {
         return reportingFirstMessage;
     }
 
-    public void setReportingFirstMessage(Message reportingFirstMessage) {
+    public void setReportingFirstMessage(Reporting reportingFirstMessage) {
         this.reportingFirstMessage = reportingFirstMessage;
     }
 

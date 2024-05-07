@@ -68,4 +68,5 @@ public class ForumController {
         reviewService.save(review);
         return "redirect:/forum/reviews";
     }
+
 }

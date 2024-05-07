@@ -30,9 +30,6 @@
             <span th:text="${review.timestamp}"> </span><span th:text="' From ' + ${review.author.userName}"> </span>
             <p th:text="${review.body}"></p>
             <p th:text="'Number of stars: ' +${review.starsNumber}"></p>
-            <div th:if="${review.linkedResponses.size() != 0}">
-                <a th:href="@{/forum/reviews/responses}" class="btn btn-primary mt-3" role="button" aria-pressed="true">See responses</a>
-            </div>
             <hr>
             </div>
     </div>
