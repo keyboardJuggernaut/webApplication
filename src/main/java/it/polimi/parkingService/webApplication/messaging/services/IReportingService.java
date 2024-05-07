@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface IReportingService {
     public List<Reporting> findAll();
-
-    void save(Reporting reporting);
+    public Reporting findById(long id);
+    public void save(Reporting reporting);
 }

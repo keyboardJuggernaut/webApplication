@@ -28,7 +28,10 @@
             <p th:text="${report.body}"></p>
             <p th:text="'Severity: ' +${report.severity}"></p>
             <div th:if="${report.linkedResponses.size() != 0}">
-                <a th:href="@{/reportings/responses(reportingId=${report.id})}" class="btn btn-primary mt-3" role="button" aria-pressed="true">See thread</a>
+                <a th:href="@{'/reportings/' + ${report.id}}" class="btn btn-primary mt-3" role="button" aria-pressed="true">See thread</a>
+            </div>
+            <div th:if="${report.linkedResponses.size() == 0}">
+                <a th:href="@{'/reportings/' + ${report.id} + '/responses/add'}" class="btn btn-primary mt-3" role="button" aria-pressed="true">Reply</a>
             </div>
             <hr>
         </div>

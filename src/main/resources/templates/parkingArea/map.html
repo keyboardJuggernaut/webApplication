@@ -54,6 +54,13 @@
     <div>
         <a th:href="@{/parkingArea/booking}" class="btn btn-primary mt-3" role="button" aria-pressed="true">Book</a>
     </div>
+    <div>
+    <a th:href="@{/forum/reviews}" class="btn btn-primary mt-3" role="button" aria-pressed="true">See review</a>
+    </div>
+    <div>
+    <a th:href="@{/reportings}" class="btn btn-primary mt-3" role="button" aria-pressed="true">See reportings</a>
+    </div>
+
     <form sec:authorize="isAuthenticated()" action="#" th:action="@{/logout}"
           method="POST">
 

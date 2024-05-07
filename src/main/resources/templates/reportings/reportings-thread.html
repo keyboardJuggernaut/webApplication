@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="head">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
+    <title>Report Details</title>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h3 th:text="'Report ' + ${report.id}"></h3>
+    <hr>
+
+    <!-- Report First message -->
+    <hr>
+    <h3 th:text="${report.heading}"></h3>
+    <span th:text="${report.timestamp}"> </span><span th:text="' From ' + ${report.author.userName}"> </span>
+    <p th:text="${report.body}"></p>
+    <p th:text="'Severity: ' +${report.severity}"></p>
+    <p th:text="'Status: ' +${report.status}"></p>
+        <a th:href="@{'/reportings/' + ${report.id} + '/responses/add'}" class="btn btn-primary mt-3" role="button" aria-pressed="true">Reply</a>
+    <hr>
+
+
+
+    <div th:if="${report.linkedResponses.size() != 0}">
+        <div th:each="response : ${report.linkedResponses}">
+            <hr>
+            <h3>
+            <span th:text="${response.timestamp}"> </span><span th:text="' From ' + ${response.author.userName}"> </span>
+            </h3>
+            <p th:text="${response.body}"></p>
+            <hr>
+        </div>
+    </div>
+
+    <a th:href="@{/reportings}">Go back</a>
+
+</div>
+
+</body>
+</html>
