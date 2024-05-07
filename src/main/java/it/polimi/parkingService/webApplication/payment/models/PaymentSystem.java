@@ -6,6 +6,7 @@ import it.polimi.parkingService.webApplication.payment.exceptions.RefundFailed;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Component
@@ -25,7 +26,7 @@ public class PaymentSystem {
             throw new PaymentFailed("Invalid payment method");
         }
         isSucceeded = true;
-        return new PaymentReceipt(LocalDateTime.now(), amount, customerUser);
+        return new PaymentReceipt(LocalDate.now(), amount, customerUser);
     }
 
     public void undoPayment(User customerUser, PaymentReceipt paymentReceipt) throws RefundFailed {

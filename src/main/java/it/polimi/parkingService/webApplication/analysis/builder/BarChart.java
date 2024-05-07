@@ -1,24 +1,25 @@
 package it.polimi.parkingService.webApplication.analysis.builder;
 
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class BarChartGraphData {
+public class BarChart implements Chart {
     private Map<String, Double> chartData;
 
     private Integer periods;
 
-    private Map<String, Double[]> rawData;
+    private Map<String, List<Double>> rawData;
 
-    public BarChartGraphData() {
+    public BarChart() {
         this.chartData = new TreeMap<>();
     }
 
-    public Map<String, Double[]> getRawData() {
+    public Map<String, List<Double>> getRawData() {
         return rawData;
     }
 
-    public void setRawData(Map<String, Double[]> rawData) {
+    public void setRawData(Map<String, List<Double>> rawData) {
         this.rawData = rawData;
     }
 

@@ -118,7 +118,7 @@ CREATE TABLE IF NOT EXISTS `parking` (
 
 CREATE TABLE IF NOT EXISTS `payment_receipt` (
                                                  `id` int NOT NULL AUTO_INCREMENT,
-                                                 `timestamp` datetime DEFAULT NULL,
+                                                 `timestamp` date DEFAULT NULL,
                                                  `amount` double DEFAULT NULL,
                                                  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;

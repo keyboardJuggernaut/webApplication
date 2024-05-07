@@ -1,17 +1,21 @@
 package it.polimi.parkingService.webApplication;
 
+import it.polimi.parkingService.webApplication.analysis.DataAnalyzer;
 import it.polimi.parkingService.webApplication.messaging.models.Forum;
 import it.polimi.parkingService.webApplication.messaging.services.IForumService;
 import it.polimi.parkingService.webApplication.parking.models.ParkingArea;
 import it.polimi.parkingService.webApplication.parking.models.ParkingSpot;
 import it.polimi.parkingService.webApplication.parking.enums.StripeColor;
 import it.polimi.parkingService.webApplication.parking.services.IParkingAreaService;
+import it.polimi.parkingService.webApplication.payment.services.IPaymentReceiptService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableScheduling;
+
+import java.util.Map;
 
 
 @SpringBootApplication
@@ -34,10 +38,11 @@ public class WebApplication {
 	}
 
 	@Bean
-	public CommandLineRunner commandLineRunner(IParkingAreaService parkingAreaService, IForumService forumService) {
+	public CommandLineRunner commandLineRunner(IParkingAreaService parkingAreaService, IForumService forumService, IPaymentReceiptService paymentReceiptService) {
 
 		return runner -> {
 			initApplication(parkingAreaService, forumService);
+			checkBuilder(paymentReceiptService);
 		};
 	}
 
@@ -68,13 +73,13 @@ public class WebApplication {
 			forumService.save(reviewForum);
 
 		}
-		if(forumService.findById(REPORTING_FORUM_NAME) == null) {
-			Forum reportingForum = new Forum(REPORTING_FORUM_NAME);
 
-			forumService.save(reportingForum);
-		}
 	}
 
-
+	private void checkBuilder(IPaymentReceiptService paymentReceiptService) {
+		DataAnalyzer analyzer = new DataAnalyzer(paymentReceiptService);
+		Map<String, Double> result =  analyzer.getPeriodicIncome();
+		System.out.println(result);
+	}
 
 }

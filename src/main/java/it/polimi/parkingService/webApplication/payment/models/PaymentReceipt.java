@@ -5,6 +5,7 @@ import it.polimi.parkingService.webApplication.parking.models.Booking;
 import it.polimi.parkingService.webApplication.utils.BaseEntity;
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -12,7 +13,7 @@ import java.time.LocalDateTime;
 public class PaymentReceipt extends BaseEntity {
 
     @Column(name="timestamp")
-    private LocalDateTime timestamp;
+    private LocalDate timestamp;
     @Column(name="amount")
     private double amount;
 
@@ -21,7 +22,7 @@ public class PaymentReceipt extends BaseEntity {
     @Transient
     private User customerUser;
 
-    public PaymentReceipt(LocalDateTime timestamp, double amount, User customerUser) {
+    public PaymentReceipt(LocalDate timestamp, double amount, User customerUser) {
         this.timestamp = timestamp;
         this.amount = amount;
         this.customerUser = customerUser;
@@ -37,11 +38,11 @@ public class PaymentReceipt extends BaseEntity {
         this.customerUser = customerUser;
     }
 
-    public LocalDateTime getTimestamp() {
+    public LocalDate getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(LocalDateTime timestamp) {
+    public void setTimestamp(LocalDate timestamp) {
         this.timestamp = timestamp;
     }
 

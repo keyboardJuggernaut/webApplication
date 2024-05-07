@@ -10,6 +10,6 @@ public abstract class DataChartBuilder {
     public abstract void getData();
     public abstract void processData(String operation);
 
-    public abstract Map<String, Double> getResult();
+    public abstract Chart getResult();
 
 }
