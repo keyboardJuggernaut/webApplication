@@ -16,4 +16,6 @@ public interface IBookingService {
     Booking findByCustomerUserAndClaimedFalseAndDate(User customerUser, LocalDate date);
 
     void update(@Param(value = "id") long id, @Param(value = "claimed") boolean claimed);
+
+    public Integer countBookingByDate(LocalDate actualDate);
 }

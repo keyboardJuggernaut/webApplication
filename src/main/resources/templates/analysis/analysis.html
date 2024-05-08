@@ -3,7 +3,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="ISO-8859-1">
-    <title>Google Charts Example - Spring Boot</title>
+    <title>Parking Analysis</title>
     <script
             src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <link rel="stylesheet"
@@ -13,12 +13,11 @@
 </head>
 <body>
 <div align="center" style="width: 1000px;">
-    <h2>Spring Boot Google Charts Example</h2>
+    <h2>Parking Analysis</h2>
     <div id="chart_div"></div>
     <div id="piechart" style="width: 900px; height: 500px;"></div>
 </div>
 <script th:inline="javascript">
-    var real_data = /*[[${barChartData}]]*/'noValue';
     $(document).ready(function() {
         google.charts.load('current', {
             packages : [ 'corechart', 'bar' ]
@@ -27,19 +26,21 @@
         google.charts.setOnLoadCallback(drawPieChart);
     });
     function drawColumnChart() {
+        var real_data = /*[[${barChartData}]]*/'noValue';
+
         var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Year');
-        data.addColumn('number', 'Views');
+        data.addColumn('string', 'Day');
+        data.addColumn('number', 'Amount');
         Object.keys(real_data).forEach(function(key) {
             data.addRow([ key, real_data[key] ]);
         });
         var options = {
-            title : 'Blog stats',
+            title : 'Total amount per day',
             hAxis : {
-                title : 'Years',
+                title : 'Days',
             },
             vAxis : {
-                title : 'View Count'
+                title : 'Total Amount'
             }
         };
         var chart = new google.visualization.ColumnChart(document
@@ -47,14 +48,16 @@
         chart.draw(data, options);
     }
     function drawPieChart() {
+        var real_data = /*[[${pieChartData}]]*/'noValue';
+
         var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Year');
-        data.addColumn('number', 'Views');
+        data.addColumn('string', 'Days');
+        data.addColumn('number', '# Bookings');
         Object.keys(real_data).forEach(function(key) {
             data.addRow([ key, real_data[key] ]);
         });
         var options = {
-            title : 'Blog stats'
+            title : 'Booking stats'
         };
         var chart = new google.visualization.PieChart(document
             .getElementById('piechart'));

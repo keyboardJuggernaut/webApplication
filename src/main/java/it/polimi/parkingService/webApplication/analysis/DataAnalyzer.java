@@ -1,9 +1,7 @@
 package it.polimi.parkingService.webApplication.analysis;
 
-import it.polimi.parkingService.webApplication.analysis.builder.BarChartBuilder;
-import it.polimi.parkingService.webApplication.analysis.builder.Chart;
-import it.polimi.parkingService.webApplication.analysis.builder.ChartMaker;
-import it.polimi.parkingService.webApplication.analysis.builder.DataChartBuilder;
+import it.polimi.parkingService.webApplication.analysis.builder.*;
+import it.polimi.parkingService.webApplication.parking.services.IBookingService;
 import it.polimi.parkingService.webApplication.payment.services.IPaymentReceiptService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,18 +12,28 @@ import java.util.Map;
 public class DataAnalyzer {
     private IPaymentReceiptService paymentReceiptService;
 
+    private IBookingService bookingService;
+
+    private ChartMaker director;
+
     @Autowired
-    public DataAnalyzer(IPaymentReceiptService paymentReceiptService) {
+    public DataAnalyzer(IPaymentReceiptService paymentReceiptService, ChartMaker director, IBookingService bookingService) {
         this.paymentReceiptService = paymentReceiptService;
+        this.director = director;
+        this.bookingService = bookingService;
     }
 
     public Map<String, Double> getPeriodicIncome() {
-        ChartMaker director = new ChartMaker();
         DataChartBuilder builder = new BarChartBuilder(paymentReceiptService);
         director.makePaymentBarChart(builder);
         Chart barChar = builder.getResult();
-        return barChar.getChartData();
+        return barChar.getChartDoubleData();
     }
 
-//    TODO: fai il pie chart
+   public Map<String, Integer> getPeriodicBooking() {
+       DataChartBuilder builder = new PieChartBuilder(bookingService);
+       director.makeBookingPieChart(builder);
+       Chart pieChart = builder.getResult();
+       return pieChart.getChartIntegerData();
+   }
 }

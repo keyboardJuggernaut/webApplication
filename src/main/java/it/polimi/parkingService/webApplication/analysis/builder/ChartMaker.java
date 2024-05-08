@@ -1,6 +1,9 @@
 package it.polimi.parkingService.webApplication.analysis.builder;
 
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class ChartMaker {
     public void makePaymentBarChart(DataChartBuilder builder) {
         builder.reset();
@@ -9,7 +12,9 @@ public class ChartMaker {
         builder.processData("sum");
     }
 
-    public void  makeParkingPieChart(DataChartBuilder builder) {
-
+    public void  makeBookingPieChart(DataChartBuilder builder) {
+        builder.reset();
+        builder.setPeriods(7);
+        builder.getData();
     }
 }

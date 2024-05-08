@@ -1,36 +1,36 @@
 package it.polimi.parkingService.webApplication.analysis.builder;
 
-import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class BarChart implements Chart {
-    private Map<String, Double> chartData;
+public class PieChart implements Chart {
+
+    private Map<String, Integer> chartData;
 
     private Integer periods;
 
-    private Map<String, List<Double>> rawData;
+    private Map<String, Integer> rawData;
 
-    public BarChart() {
+    public PieChart() {
         this.chartData = new TreeMap<>();
     }
 
-    public Map<String, List<Double>> getRawData() {
+    public Map<String, Integer> getRawData() {
         return rawData;
     }
 
-    public void setRawData(Map<String, List<Double>> rawData) {
+    public void setRawData(Map<String, Integer> rawData) {
         this.rawData = rawData;
     }
 
     public Map<String, Double> getChartDoubleData() {
 
-        return chartData;
+        return null;
     }
 
     @Override
     public Map<String, Integer> getChartIntegerData() {
-        return null;
+        return chartData;
     }
 
     public Integer getPeriods() {
@@ -41,7 +41,7 @@ public class BarChart implements Chart {
         this.periods = periods;
     }
 
-    public void setChartData(Map<String, Double> chartData) {
+    public void setChartData(Map<String, Integer> chartData) {
         this.chartData = chartData;
     }
 }

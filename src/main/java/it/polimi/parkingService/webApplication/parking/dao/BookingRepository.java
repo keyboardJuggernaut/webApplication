@@ -21,5 +21,6 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     @Query("update Booking u set u.claimed = :claimed where u.id = :id")
     void update(@Param(value = "id") long id, @Param(value = "claimed") boolean claimed);
 
-
+//    @Query("SELECT COUNT(*) FROM Booking b WHERE b.date = :actualDate")
+    public Integer countBookingByDate(LocalDate actualDate);
 }

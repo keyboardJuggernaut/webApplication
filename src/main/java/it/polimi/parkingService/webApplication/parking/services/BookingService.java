@@ -46,4 +46,9 @@ public class BookingService implements IBookingService {
     public void update(long id, boolean claimed) {
         bookingRepository.update(id, claimed);
     }
+
+    @Override
+    public Integer countBookingByDate(LocalDate actualDate) {
+        return bookingRepository.countBookingByDate(actualDate);
+    }
 }

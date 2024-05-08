@@ -23,8 +23,9 @@ public class AnalysisController {
     @GetMapping("/analysis")
     public String showAnalysis(Model model) {
         Map<String, Double> barChartData = analyzer.getPeriodicIncome();
-
+        Map<String, Integer> pieChartData = analyzer.getPeriodicBooking();
         model.addAttribute("barChartData", barChartData);
+        model.addAttribute("pieChartData", pieChartData);
         return "analysis/analysis";
     }
  }
