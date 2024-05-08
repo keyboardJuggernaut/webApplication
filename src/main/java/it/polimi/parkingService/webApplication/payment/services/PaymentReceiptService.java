@@ -17,7 +17,7 @@ public class PaymentReceiptService implements IPaymentReceiptService{
     }
 
     @Override
-    public List<Double> findAmountByDate(LocalDate actualDate, LocalDate followingDate) {
-        return paymentReceiptRepository.findAmountByDate(actualDate, followingDate);
+    public List<Double> findAmountByDate(LocalDate actualDate) {
+        return paymentReceiptRepository.findAmountByDate(actualDate);
     }
 }

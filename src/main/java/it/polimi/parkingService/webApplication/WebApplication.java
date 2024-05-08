@@ -42,7 +42,7 @@ public class WebApplication {
 
 		return runner -> {
 			initApplication(parkingAreaService, forumService);
-			checkBuilder(paymentReceiptService);
+//			checkBuilder(paymentReceiptService);
 		};
 	}
 
@@ -76,10 +76,10 @@ public class WebApplication {
 
 	}
 
-	private void checkBuilder(IPaymentReceiptService paymentReceiptService) {
-		DataAnalyzer analyzer = new DataAnalyzer(paymentReceiptService);
-		Map<String, Double> result =  analyzer.getPeriodicIncome();
-		System.out.println(result);
-	}
+//	private void checkBuilder(IPaymentReceiptService paymentReceiptService) {
+//		DataAnalyzer analyzer = new DataAnalyzer(paymentReceiptService);
+//		Map<String, Double> result =  analyzer.getPeriodicIncome();
+//		System.out.println(result);
+//	}
 
 }

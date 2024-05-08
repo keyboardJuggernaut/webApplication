@@ -33,6 +33,8 @@ public class SecurityConfig {
                         configurer
                                 .requestMatchers("/register/**").permitAll()
                                 .requestMatchers("/parkingArea/map").permitAll()
+                                .requestMatchers("/analysis").permitAll()
+
                                 .anyRequest().authenticated()
                 )
                 .formLogin(form ->

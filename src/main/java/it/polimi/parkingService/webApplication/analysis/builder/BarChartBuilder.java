@@ -35,7 +35,7 @@ public class BarChartBuilder extends DataChartBuilder {
         Map<String, List<Double>> amountsPerDay = new TreeMap<>();
         for (int i = graphData.getPeriods() -1 ; i >= 0 ; i--) {
             LocalDate date = LocalDate.now().minusDays(i);
-            List<Double> amounts = paymentReceiptService.findAmountByDate(date, date.plusDays(1));
+            List<Double> amounts = paymentReceiptService.findAmountByDate(date);
             amountsPerDay.put(date.toString(), amounts);
         }
         graphData.setRawData(amountsPerDay);

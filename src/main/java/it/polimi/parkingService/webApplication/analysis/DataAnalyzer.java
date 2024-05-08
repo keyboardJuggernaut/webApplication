@@ -22,8 +22,10 @@ public class DataAnalyzer {
     public Map<String, Double> getPeriodicIncome() {
         ChartMaker director = new ChartMaker();
         DataChartBuilder builder = new BarChartBuilder(paymentReceiptService);
-        director.makePaymentBarChartData(builder);
+        director.makePaymentBarChart(builder);
         Chart barChar = builder.getResult();
         return barChar.getChartData();
     }
+
+//    TODO: fai il pie chart
 }

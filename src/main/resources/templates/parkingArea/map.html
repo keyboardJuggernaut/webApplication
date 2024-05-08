@@ -60,6 +60,10 @@
     <div>
     <a th:href="@{/reportings}" class="btn btn-primary mt-3" role="button" aria-pressed="true">See reportings</a>
     </div>
+    <div>
+        <a th:href="@{/analysis}" class="btn btn-primary mt-3" role="button" aria-pressed="true">See analysis</a>
+    </div>
+
 
     <form sec:authorize="isAuthenticated()" action="#" th:action="@{/logout}"
           method="POST">

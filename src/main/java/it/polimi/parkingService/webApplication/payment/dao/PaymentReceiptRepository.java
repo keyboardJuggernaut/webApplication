@@ -9,8 +9,8 @@ import java.util.List;
 
 public interface PaymentReceiptRepository extends JpaRepository<PaymentReceipt, Long> {
 
-    @Query("SELECT p.amount FROM PaymentReceipt p WHERE p.timestamp > :actualDate AND p.timestamp < :followingDate")
-    public List<Double> findAmountByDate(LocalDate actualDate, LocalDate followingDate);
+    @Query("SELECT p.amount FROM PaymentReceipt p WHERE p.timestamp = :actualDate")
+    public List<Double> findAmountByDate(LocalDate actualDate);
 
     // se non torna amount, valuta se tornare lista receipt di quella giornata e poi creare lista degli amounts
 }
