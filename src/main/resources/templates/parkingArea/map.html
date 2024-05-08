@@ -79,6 +79,8 @@
             <th>Status</th>
             <th>Color</th>
             <th>Estimated Time</th>
+            <th sec:authorize="hasRole('ADMIN')">Actions</th>
+
         </tr>
         </thead>
 
@@ -91,6 +93,21 @@
             <div th:if="${spotWithParking.get(parkingSpot) != null}">
                 <td id="estimatedTime" th:text="${spotWithParking.get(parkingSpot).estimatedTime}"></td>
             </div>
+
+
+
+                <td >
+                    <div sec:authorize="hasRole('ADMIN')">
+                    <form
+                            action="#" th:action="@{'/parkingArea/spots/' + ${parkingSpot.id} + '/block'}"
+                            method="POST">
+
+                            <button type="submit" class="btn btn-danger">Toggle availability</button>
+
+                    </form>
+                    </div>
+
+                </td>
 
         </tr>
         </tbody>

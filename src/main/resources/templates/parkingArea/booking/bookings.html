@@ -39,10 +39,7 @@
             <td th:text="${booking.parkingSpot.getSpotIdentifier()}" />
             <td th:text="${booking.claimed}" />
             <td>
-<!--                <div>-->
-<!--                    <a th:href="@{'/parkingArea/bookings/' + ${booking.id}}" class="btn btn-primary mt-3" role="button" aria-pressed="true">Cancel</a>-->
-<!--                </div>-->
-<!--                -->
+
                 <form
                         action="#" th:action="@{'/parkingArea/bookings/' + ${booking.id}}"
                         method="POST"

@@ -212,6 +212,17 @@ public class ParkingAreaService implements IParkingAreaService{
         return booking;
     }
 
+    @Override
+    public void toggleBlock(long id) {
+        ParkingSpot spot = parkingSpotService.findById(id);
+        if(spot.getStatus() == ParkingSpotStatus.UNAVAILABLE) {
+            spot.setStatus(ParkingSpotStatus.FREE);
+        } else {
+            spot.setStatus(ParkingSpotStatus.UNAVAILABLE);
+        }
+        parkingSpotService.save(spot);
+    }
+
     private List<ParkingSpot> bindSpotsWithDailyReservation(List<ParkingSpot> spots, LocalDate date) {
         List<Booking> bookings = bookingService.findByDate(date);
 

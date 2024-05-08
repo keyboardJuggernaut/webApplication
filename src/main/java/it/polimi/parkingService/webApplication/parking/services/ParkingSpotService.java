@@ -35,20 +35,15 @@ public class ParkingSpotService implements IParkingSpotService{
     }
 
     @Override
+     @Transactional
     public ParkingSpot findById(int id) {
-        Optional<ParkingSpot> result = parkingSpotRepository.findById(id);
+        ParkingSpot spot = parkingSpotRepository.findById(id);
 
-        ParkingSpot parkingSpot = null;
-
-        if (result.isPresent()) {
-            parkingSpot = result.get();
-        }
-        else {
-            // we didn't find the employee
+        if (spot == null) {
             throw new RuntimeException("Did not find parking spot - " + id);
         }
 
-        return parkingSpot;
+        return spot;
     }
 
     @Override
@@ -96,5 +91,10 @@ public class ParkingSpotService implements IParkingSpotService{
             }
         }
         return pairs;
+    }
+
+    @Override
+    public ParkingSpot findById(long id) {
+        return parkingSpotRepository.findById(id);
     }
 }

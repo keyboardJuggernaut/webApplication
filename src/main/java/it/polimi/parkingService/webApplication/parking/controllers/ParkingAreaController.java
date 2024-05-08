@@ -53,6 +53,12 @@ public class ParkingAreaController {
          return "parkingArea/map";
     }
 
+    @PostMapping("/spots/{id}/block")
+    public String blockSpot(@PathVariable long id) {
+        parkingAreaService.toggleBlock(id);
+        return "redirect:/parkingArea/map";
+    }
+
     @GetMapping("/checkin")
     public String showCheckInQRCode(Model model) throws IOException, WriterException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

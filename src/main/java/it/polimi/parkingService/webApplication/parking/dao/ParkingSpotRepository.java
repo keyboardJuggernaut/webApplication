@@ -23,4 +23,7 @@ public interface ParkingSpotRepository extends JpaRepository<ParkingSpot, Intege
     @Query("update ParkingSpot u set u.status = :status where u.id = :id")
     void update(@Param(value = "id") long id, @Param(value = "status") ParkingSpotStatus status);
 
+    ParkingSpot findById(long id);
+
+
 }

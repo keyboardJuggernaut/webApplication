@@ -11,4 +11,7 @@ import java.util.Map;
 public interface IParkingSpotService extends BaseService<ParkingSpot> {
     void update(@Param(value = "id") long id, @Param(value = "status") ParkingSpotStatus status);
     public Map<ParkingSpot, Parking> getSpotsWithParkings();
+
+    ParkingSpot findById(long id);
+
 }

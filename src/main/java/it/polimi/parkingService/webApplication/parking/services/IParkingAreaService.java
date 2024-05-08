@@ -14,13 +14,16 @@ import java.io.IOException;
 import java.util.Map;
 
 public interface IParkingAreaService extends BaseService<ParkingArea> {
-    public String getCheckInQRCode(String username) throws ParkingAlreadyInProgress, IOException, WriterException;
-    public String getCheckOutQRCode(String username) throws ParkingAlreadyInProgress, IOException, WriterException;
-    public ParkingSpot findParkingSpot (String checkinToken);
-    public Long getTokenPayload(String claimName, String token);
-    public PaymentReceipt doCheckout(String token) throws ParkingNotTerminated;
+    String getCheckInQRCode(String username) throws ParkingAlreadyInProgress, IOException, WriterException;
+    String getCheckOutQRCode(String username) throws ParkingAlreadyInProgress, IOException, WriterException;
+    ParkingSpot findParkingSpot (String checkinToken);
+    Long getTokenPayload(String claimName, String token);
+    PaymentReceipt doCheckout(String token) throws ParkingNotTerminated;
 
-    public Map<ParkingSpot, Parking> getSpotsWithParkings();
+    Map<ParkingSpot, Parking> getSpotsWithParkings();
 
-    public Booking reserveParkingSpot(String username,  Booking booking);
+    Booking reserveParkingSpot(String username,  Booking booking);
+
+
+    void toggleBlock(long id);
 }

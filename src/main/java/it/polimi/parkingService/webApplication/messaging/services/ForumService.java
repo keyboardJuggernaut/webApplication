@@ -2,6 +2,7 @@ package it.polimi.parkingService.webApplication.messaging.services;
 
 import it.polimi.parkingService.webApplication.messaging.dao.ForumRepository;
 import it.polimi.parkingService.webApplication.messaging.models.Forum;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -29,6 +30,7 @@ public class ForumService implements IForumService{
     }
 
     @Override
+    @Transactional
     public void save(Forum forum) {
         forumRepository.save(forum);
     }
