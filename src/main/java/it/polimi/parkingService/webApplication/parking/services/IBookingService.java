@@ -6,6 +6,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public interface IBookingService {
     List<Booking> findByDate(LocalDate date);
@@ -17,5 +18,11 @@ public interface IBookingService {
 
     void update(@Param(value = "id") long id, @Param(value = "claimed") boolean claimed);
 
-    public Integer countBookingByDate(LocalDate actualDate);
+    Integer countBookingByDate(LocalDate actualDate);
+
+    List<Booking> findAll();
+
+    void deleteById(Long id);
+
+    Optional<Booking> findById(Long id);
 }

@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head th:fragment="head">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
+    <title>Bookings Admin</title>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h3>Bookings Management</h3>
+    <hr>
+
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+        <tr>
+            <th>Username</th>
+            <th>Date</th>
+            <th>Parking Spot</th>
+            <th>Claimed</th>
+            <th></th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="booking : ${bookings}" th:id="${booking.id}">
+
+            <td th:text="${booking.customerUser.userName}"></td>
+            <td th:text="${booking.date}" />
+            <td th:text="${booking.parkingSpot.getSpotIdentifier()}" />
+            <td th:text="${booking.claimed}" />
+            <td>
+<!--                <div>-->
+<!--                    <a th:href="@{'/parkingArea/bookings/' + ${booking.id}}" class="btn btn-primary mt-3" role="button" aria-pressed="true">Cancel</a>-->
+<!--                </div>-->
+<!--                -->
+                <form
+                        action="#" th:action="@{'/parkingArea/bookings/' + ${booking.id}}"
+                        method="POST"
+                >
+                    <button type="submit" class="btn btn-danger">Cancel</button>
+                </form>
+            </td>
+
+        </tr>
+    </table>
+
+</div>
+
+</body>
+</html>

@@ -10,6 +10,7 @@ import jakarta.persistence.*;
 
 import java.time.Duration;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 @Entity
 @Table(name="booking")
@@ -35,7 +36,7 @@ public class Booking extends BaseEntity {
     @Column(name="claimed")
     private Boolean claimed;
 
-    public final static long HOURS_TO_REFUND = 48;
+    public final static long DAYS_TO_REFUND = 1;
 
 
     public Booking(LocalDate date) {
@@ -52,10 +53,16 @@ public class Booking extends BaseEntity {
         paymentReceipt = paymentSystem.processPayment(customerUser, DAILY_CHARGE);
     }
 
-    public void refund(PaymentSystem paymentSystem) throws RefundFailed {
-        long remainingHours = Duration.between(date, LocalDate.now()).toHours();
-        if(remainingHours < HOURS_TO_REFUND) {
-            paymentSystem.undoPayment(customerUser, paymentReceipt);
+    public void refund(PaymentSystem paymentSystem, Boolean adminAction) throws RefundFailed {
+        if(!claimed) {
+            if (!adminAction) {
+                long remainingDays = ChronoUnit.DAYS.between(date, LocalDate.now());
+                if (remainingDays < DAYS_TO_REFUND) {
+                    paymentSystem.undoPayment(customerUser, paymentReceipt);
+                }
+            } else {
+                paymentSystem.undoPayment(customerUser, paymentReceipt);
+            }
         }
     }
 

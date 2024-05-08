@@ -104,24 +104,4 @@ public class ParkingAreaController {
         return emitter;
     }
 
-    @GetMapping("/booking")
-    public String showBookingForm(Model model) {
-        model.addAttribute("booking", new Booking());
-        return "parkingArea/booking-form";
-    }
-
-    @PostMapping("/reserving")
-    public String processBookingForm(@ModelAttribute("booking") Booking booking, BindingResult theBindingResult, Model model) {
-
-        if (theBindingResult.hasErrors()){
-            return "parkingArea/booking-form";
-        }
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentPrincipalUsername = authentication.getName();
-
-        Booking confirmedBooking = parkingAreaService.reserveParkingSpot(currentPrincipalUsername, booking);
-        model.addAttribute("confirmedBooking", confirmedBooking);
-
-        return "parkingArea/booking-confirmation";
-    }
 }

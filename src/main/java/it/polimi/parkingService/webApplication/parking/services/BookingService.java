@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BookingService implements IBookingService {
@@ -50,5 +51,21 @@ public class BookingService implements IBookingService {
     @Override
     public Integer countBookingByDate(LocalDate actualDate) {
         return bookingRepository.countBookingByDate(actualDate);
+    }
+
+    @Override
+    public List<Booking> findAll() {
+        return bookingRepository.findAll();
+    }
+
+    @Override
+    @Transactional
+    public void deleteById(Long id) {
+        bookingRepository.deleteById(id);
+    }
+
+    @Override
+    public Optional<Booking> findById(Long id) {
+        return bookingRepository.findById(id);
     }
 }
