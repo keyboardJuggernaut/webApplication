@@ -184,16 +184,16 @@ CREATE TABLE IF NOT EXISTS `reporting` (
                                         `heading` VARCHAR(100) DEFAULT NULL,
                                         `body` VARCHAR(300) DEFAULT NULL,
                                         `severity` ENUM('LOW', 'MEDIUM', 'HIGH'),
-                                        `status` ENUM('OPEN', 'CLOSED'),
-
-                                        `user_id` int DEFAULT NULL,
+                                        `open` BOOLEAN DEFAULT TRUE,
                                         `forum_name` VARCHAR(100) DEFAULT NULL,
+                                        `user_id` int DEFAULT NULL,
                                         PRIMARY KEY (`id`),
 
 
                                         FOREIGN KEY (`user_id`)
                                             REFERENCES `user` (`id`)
                                             ON DELETE NO ACTION ON UPDATE NO ACTION,
+
                                         FOREIGN KEY (`forum_name`)
                                             REFERENCES `forum` (`name`)
                                             ON DELETE NO ACTION ON UPDATE NO ACTION

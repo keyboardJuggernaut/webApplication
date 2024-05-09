@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <head th:fragment="head">
     <meta charset="utf-8">
@@ -23,9 +23,20 @@
     <span th:text="${report.timestamp}"> </span><span th:text="' From ' + ${report.author.userName}"> </span>
     <p th:text="${report.body}"></p>
     <p th:text="'Severity: ' +${report.severity}"></p>
-    <p th:text="'Status: ' +${report.status}"></p>
-        <a th:href="@{'/reportings/' + ${report.id} + '/responses/add'}" class="btn btn-primary mt-3" role="button" aria-pressed="true">Reply</a>
-    <hr>
+    <p th:text="'Status: ' +${report.open}"></p>
+        <a th:if="${report.open}" th:href="@{'/reportings/' + ${report.id} + '/responses/add'}" class="btn btn-primary mt-3" role="button" aria-pressed="true">Reply</a>
+
+    <div sec:authorize="hasRole('GUARDIAN')">
+
+        <form th:if="${report.open}"
+                action="#" th:action="@{'/reportings/' + ${report.id} + '/close'}"
+                method="POST">
+
+            <button type="submit" class="btn btn-danger">Close thread</button>
+
+        </form>
+    </div>
+        <hr>
 
 
 

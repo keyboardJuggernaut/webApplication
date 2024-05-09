@@ -19,9 +19,8 @@ public class Reporting extends Message {
     @Enumerated(EnumType.STRING)
     private ReportingSeverity severity;
 
-    @Column(name="status")
-    @Enumerated(EnumType.STRING)
-    private ReportingStatus status = ReportingStatus.OPEN;
+    @Column(name="open")
+    private boolean open = true;
 
     @OneToMany(
             mappedBy = "reportingFirstMessage",
@@ -30,10 +29,10 @@ public class Reporting extends Message {
                     CascadeType.DETACH, CascadeType.REFRESH})
     private List<Response> linkedResponses;
 
-    public Reporting(LocalDateTime timestamp, String heading, String body, User author, Forum forum, ReportingSeverity severity, ReportingStatus status) {
+    public Reporting(LocalDateTime timestamp, String heading, String body, User author, Forum forum, ReportingSeverity severity, boolean open) {
         super(timestamp, heading, body, author, forum);
         this.severity = severity;
-        this.status = status;
+        this.open = open;
     }
 
     public Reporting() {
@@ -45,7 +44,7 @@ public class Reporting extends Message {
         if(linkedResponses == null){
             linkedResponses = new ArrayList<>();
         }
-        if(status == ReportingStatus.CLOSED) {
+        if(!open) {
             throw new AddingResponseForbidden("The thread has been closed");
         }
         linkedResponses.add(response);
@@ -60,14 +59,13 @@ public class Reporting extends Message {
         this.severity = severity;
     }
 
-    public ReportingStatus getStatus() {
-        return status;
+    public boolean isOpen() {
+        return open;
     }
 
-    public void setStatus(ReportingStatus status) {
-        this.status = status;
+    public void setOpen(boolean open) {
+        this.open = open;
     }
-
 
     public List<Response> getLinkedResponses() {
         return linkedResponses;

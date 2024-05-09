@@ -8,6 +8,8 @@ import it.polimi.parkingService.webApplication.messaging.models.Reporting;
 import it.polimi.parkingService.webApplication.messaging.models.Response;
 import it.polimi.parkingService.webApplication.messaging.services.IReportingService;
 import it.polimi.parkingService.webApplication.messaging.services.IResponseService;
+import it.polimi.parkingService.webApplication.parking.enums.ParkingSpotStatus;
+import it.polimi.parkingService.webApplication.parking.models.ParkingSpot;
 import jakarta.validation.Valid;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -45,6 +47,18 @@ public class ReportingController {
         Reporting reporting = reportingService.findById(id);
         model.addAttribute("report", reporting);
         return "/reportings/reportings-thread";
+    }
+
+    @PostMapping("/reportings/{id}/close")
+    public String closeThread(@PathVariable("id") Long id) {
+        Reporting report = reportingService.findById(id);
+        if(report.isOpen()) {
+            report.setOpen(false);
+        } else {
+            throw new RuntimeException("Thread already closed");
+        }
+        reportingService.save(report);
+        return "redirect:/reportings/" + id;
     }
 
 
