@@ -29,8 +29,8 @@ public class Reporting extends Message {
                     CascadeType.DETACH, CascadeType.REFRESH})
     private List<Response> linkedResponses;
 
-    public Reporting(LocalDateTime timestamp, String heading, String body, User author, Forum forum, ReportingSeverity severity, boolean open) {
-        super(timestamp, heading, body, author, forum);
+    public Reporting(LocalDateTime timestamp, String heading, String body, User author, ReportingSeverity severity, boolean open) {
+        super(timestamp, heading, body, author);
         this.severity = severity;
         this.open = open;
     }

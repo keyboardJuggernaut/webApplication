@@ -32,17 +32,13 @@ public abstract class Message {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private User author;
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-    @JoinColumn(name="forum_name")
-    private Forum forum;
 
     public abstract void addResponse(Response response) throws AddingResponseForbidden;
 
-    public Message(LocalDateTime timestamp, String heading, String body, User author, Forum forum) {
+    public Message(LocalDateTime timestamp, String heading, String body, User author) {
         this.timestamp = timestamp;
         this.body = body;
         this.author = author;
-        this.forum = forum;
         this.heading = heading;
     }
 
@@ -72,13 +68,6 @@ public abstract class Message {
         this.author = author;
     }
 
-    public Forum getForum() {
-        return forum;
-    }
-
-    public void setForum(Forum forum) {
-        this.forum = forum;
-    }
 
     public Long getId() {
         return id;

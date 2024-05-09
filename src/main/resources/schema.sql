@@ -147,10 +147,6 @@ CREATE TABLE IF NOT EXISTS `booking` (
                                                 ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
-CREATE TABLE IF NOT EXISTS `forum` (
-                                              `name` VARCHAR(100) NOT NULL,
-                                              PRIMARY KEY (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
 CREATE TABLE IF NOT EXISTS id_generator (
                               gen_name VARCHAR(50) NOT NULL,
@@ -166,15 +162,11 @@ CREATE TABLE IF NOT EXISTS `review` (
                                               `stars_number` int DEFAULT NULL,
 
                                               `user_id` int DEFAULT NULL,
-                                              `forum_name` VARCHAR(100) DEFAULT NULL,
                                               PRIMARY KEY (`id`),
 
 
                                               FOREIGN KEY (`user_id`)
                                                   REFERENCES `user` (`id`)
-                                                  ON DELETE NO ACTION ON UPDATE NO ACTION,
-                                              FOREIGN KEY (`forum_name`)
-                                                  REFERENCES `forum` (`name`)
                                                   ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
@@ -185,17 +177,12 @@ CREATE TABLE IF NOT EXISTS `reporting` (
                                         `body` VARCHAR(300) DEFAULT NULL,
                                         `severity` ENUM('LOW', 'MEDIUM', 'HIGH'),
                                         `open` BOOLEAN DEFAULT TRUE,
-                                        `forum_name` VARCHAR(100) DEFAULT NULL,
                                         `user_id` int DEFAULT NULL,
                                         PRIMARY KEY (`id`),
 
 
                                         FOREIGN KEY (`user_id`)
                                             REFERENCES `user` (`id`)
-                                            ON DELETE NO ACTION ON UPDATE NO ACTION,
-
-                                        FOREIGN KEY (`forum_name`)
-                                            REFERENCES `forum` (`name`)
                                             ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 

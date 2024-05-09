@@ -3,7 +3,6 @@ package it.polimi.parkingService.webApplication.messaging.controllers;
 import it.polimi.parkingService.webApplication.account.service.IUserService;
 import it.polimi.parkingService.webApplication.messaging.enums.ReportingSeverity;
 import it.polimi.parkingService.webApplication.messaging.exceptions.AddingResponseForbidden;
-import it.polimi.parkingService.webApplication.messaging.models.Forum;
 import it.polimi.parkingService.webApplication.messaging.models.Reporting;
 import it.polimi.parkingService.webApplication.messaging.models.Response;
 import it.polimi.parkingService.webApplication.messaging.services.IReportingService;

@@ -1,11 +1,11 @@
 package it.polimi.parkingService.webApplication.messaging.services;
 
 import it.polimi.parkingService.webApplication.messaging.dao.ReviewRepository;
-import it.polimi.parkingService.webApplication.messaging.models.Forum;
 import it.polimi.parkingService.webApplication.messaging.models.Review;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -15,6 +15,11 @@ public class ReviewService implements IReviewService{
 
     public ReviewService(ReviewRepository reviewRepository) {
         this.reviewRepository = reviewRepository;
+    }
+
+    @Override
+    public List<Review> findAll() {
+        return reviewRepository.findAll();
     }
 
     @Override

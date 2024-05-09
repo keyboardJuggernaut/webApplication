@@ -16,8 +16,8 @@ public class Review extends Message{
     private int starsNumber;
 
 
-    public Review(LocalDateTime timestamp, String heading, String body, User author, Forum forum, int starsNumber) {
-        super(timestamp, heading, body, author, forum);
+    public Review(LocalDateTime timestamp, String heading, String body, User author,  int starsNumber) {
+        super(timestamp, heading, body, author);
         this.starsNumber = starsNumber;
     }
 
@@ -35,8 +35,5 @@ public class Review extends Message{
     public void setStarsNumber(int starsNumber) {
         this.starsNumber = starsNumber;
     }
-
-
-
 
 }
