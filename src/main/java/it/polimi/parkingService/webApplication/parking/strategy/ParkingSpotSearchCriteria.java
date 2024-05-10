@@ -1,41 +1,41 @@
 package it.polimi.parkingService.webApplication.parking.strategy;
 
 import it.polimi.parkingService.webApplication.parking.enums.ParkingSpotStatus;
-import it.polimi.parkingService.webApplication.parking.enums.StripeColor;
+import it.polimi.parkingService.webApplication.parking.enums.ParkingStripes;
 import it.polimi.parkingService.webApplication.parking.models.ParkingSpot;
 
 public class ParkingSpotSearchCriteria implements SearchCriteria {
     private  ParkingSpotStatus status;
-    private  StripeColor stripeColor;
+    private ParkingStripes parkingStripes;
 
     public ParkingSpotSearchCriteria() {
         this.status = ParkingSpotStatus.FREE;
-        this.stripeColor = StripeColor.WHITE;
+        this.parkingStripes = ParkingStripes.WHITE;
     }
 
-    public ParkingSpotSearchCriteria( ParkingSpotStatus status, StripeColor stripeColor) {
+    public ParkingSpotSearchCriteria( ParkingSpotStatus status, ParkingStripes parkingStripes) {
         this.status = status;
-        this.stripeColor = stripeColor;
+        this.parkingStripes = parkingStripes;
     }
 
     @Override
     public boolean meetCriteria(ParkingSpot parkingSpot) {
-        return status == parkingSpot.getStatus() && stripeColor == parkingSpot.getStripeColor();
+        return status == parkingSpot.getStatus() && parkingStripes == parkingSpot.getStripeColor();
     }
 
     public ParkingSpotStatus getStatus() {
         return status;
     }
 
-    public StripeColor getStripeColor() {
-        return stripeColor;
+    public ParkingStripes getStripeColor() {
+        return parkingStripes;
     }
 
     public void setStatus(ParkingSpotStatus status) {
         this.status = status;
     }
 
-    public void setStripeColor(StripeColor stripeColor) {
-        this.stripeColor = stripeColor;
+    public void setStripeColor(ParkingStripes parkingStripes) {
+        this.parkingStripes = parkingStripes;
     }
 }

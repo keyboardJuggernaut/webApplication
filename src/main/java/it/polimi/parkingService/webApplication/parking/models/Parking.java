@@ -9,12 +9,14 @@ import it.polimi.parkingService.webApplication.payment.models.PaymentReceipt;
 import it.polimi.parkingService.webApplication.payment.models.PaymentSystem;
 import it.polimi.parkingService.webApplication.utils.BaseEntity;
 import jakarta.persistence.*;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+/**
+ * The {@code Parking} represents parking model
+ */
 @Entity
 @Table(name="parking")
 public class Parking extends BaseEntity {
@@ -47,6 +49,9 @@ public class Parking extends BaseEntity {
     @JoinColumn(name = "booking_id")
     private Booking booking;
 
+    /**
+     * Hourly parking fee
+     */
     private final static double hourlyFee = 0.025;
 
     public Parking(User customerUser) {
@@ -58,16 +63,7 @@ public class Parking extends BaseEntity {
         this.arrival = LocalDateTime.now();
     }
 
-    public LocalTime getEstimatedLeavingHour() throws MissingEstimatedTime, ParkingSpotNotFoundYet{
-        if(spot == null) {
-            throw new ParkingSpotNotFoundYet("Parking spot not found yet");
-        }
-        if(estimatedTime == null) {
-            throw new MissingEstimatedTime("Missing estimated time for " + spot.getSpotIdentifier() + "parking spot");
-        }
-
-        return arrival.toLocalTime().plusHours(estimatedTime.getHour()).plusMinutes(estimatedTime.getMinute());
-    }
+    // TODO: continua, setter e getter vanno tenuti tutti
 
     private double getParkingCharge() throws ParkingNotTerminated {
         if(leaving == null) {

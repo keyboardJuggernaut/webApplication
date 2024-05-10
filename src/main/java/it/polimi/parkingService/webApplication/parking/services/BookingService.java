@@ -2,7 +2,9 @@ package it.polimi.parkingService.webApplication.parking.services;
 
 import it.polimi.parkingService.webApplication.account.models.User;
 import it.polimi.parkingService.webApplication.parking.dao.BookingRepository;
+import it.polimi.parkingService.webApplication.parking.exceptions.ResourceNotFound;
 import it.polimi.parkingService.webApplication.parking.models.Booking;
+import it.polimi.parkingService.webApplication.payment.models.PaymentSystem;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,13 +13,49 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The {@code BookingService} handles any booking related business logic
+ */
 @Service
 public class BookingService implements IBookingService {
 
-    private BookingRepository bookingRepository;
+    private final BookingRepository bookingRepository;
 
-    public BookingService(BookingRepository bookingRepository) {
+    private final PaymentSystem paymentSystem;
+
+
+    /**
+     * Constructs the service
+     * @param bookingRepository the repository handling booking persistence logic
+     * @param paymentSystem the service handling payment business logic
+     */
+    @Autowired
+    public BookingService(BookingRepository bookingRepository, PaymentSystem paymentSystem) {
         this.bookingRepository = bookingRepository;
+        this.paymentSystem = paymentSystem;
+    }
+
+    /**
+     * Cancels a booking, checking for refund eligibility
+     * @param id the booking id
+     * @throws ResourceNotFound when booking is not present
+     */
+    @Override
+    public void cancelBooking(long id) throws ResourceNotFound {
+        Booking booking = findById(id);
+        booking.refundCheck(paymentSystem, true);
+        deleteById(id);
+    }
+
+    @Override
+    public Booking findById(long id) {
+        Optional<Booking> result = bookingRepository.findById(id);
+
+        if(result.isEmpty()) {
+            throw new RuntimeException("Did not find booking id - " + id);
+        }
+
+        return result.get();
     }
 
     @Override
@@ -31,11 +69,9 @@ public class BookingService implements IBookingService {
     }
 
     @Override
-    public void save(Booking booking) {
-        bookingRepository.save(booking);
+    public Booking save(Booking booking) {
+        return bookingRepository.save(booking);
     }
-
-
 
     @Override
     public Booking findByCustomerUserAndClaimedFalseAndDate(User customerUser, LocalDate date) {
@@ -59,13 +95,9 @@ public class BookingService implements IBookingService {
     }
 
     @Override
-    @Transactional
-    public void deleteById(Long id) {
+    public void deleteById(long id) {
         bookingRepository.deleteById(id);
     }
 
-    @Override
-    public Optional<Booking> findById(Long id) {
-        return bookingRepository.findById(id);
-    }
+
 }

@@ -3,73 +3,93 @@ package it.polimi.parkingService.webApplication.parking.controllers;
 import it.polimi.parkingService.webApplication.parking.exceptions.ResourceNotFound;
 import it.polimi.parkingService.webApplication.parking.models.Booking;
 import it.polimi.parkingService.webApplication.parking.services.IBookingService;
-import it.polimi.parkingService.webApplication.parking.services.IParkingAreaService;
-import it.polimi.parkingService.webApplication.payment.models.PaymentSystem;
+import it.polimi.parkingService.webApplication.parking.services.IParkingSpotService;
+import it.polimi.parkingService.webApplication.utils.AuthenticationFacadeUserUnauthenticated;
+import it.polimi.parkingService.webApplication.utils.IAuthenticationFacade;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
+/**
+ * The {@code BookingController} handles any booking related requests
+ */
 @Controller
-@RequestMapping("/parkingArea")
+@RequestMapping("/bookings")
 public class BookingController {
 
-    private IParkingAreaService parkingAreaService;
-    private IBookingService bookingService;
+    private final IParkingSpotService parkingSpotService;
+    private final IBookingService bookingService;
 
-    private PaymentSystem paymentSystem;
+    private final IAuthenticationFacade authenticationFacade;
 
+    /**
+     * Constructs the controller
+     * @param parkingSpotService the service handling parking spot business logic
+     * @param bookingService the service handling booking business logic
+     * @param authenticationFacade the service handling authentication info retrieval logic
+     */
     @Autowired
-    private BookingController(IParkingAreaService parkingAreaService, IBookingService bookingService, PaymentSystem paymentSystem){
-        this.parkingAreaService = parkingAreaService;
+    public BookingController(IParkingSpotService parkingSpotService, IBookingService bookingService, IAuthenticationFacade authenticationFacade) {
+        this.parkingSpotService = parkingSpotService;
         this.bookingService = bookingService;
-        this.paymentSystem = paymentSystem;
+        this.authenticationFacade = authenticationFacade;
     }
 
-
-    @GetMapping("/bookings")
+    /**
+     * Handle any request for new booking form request
+     * @param model the model for booking
+     * @return view reference
+     */
+    @GetMapping("/new")
     public String showBookingForm(Model model) {
         model.addAttribute("booking", new Booking());
-        return "parkingArea/booking/booking-form";
+        return "parking/booking/booking-form";
     }
 
-    @GetMapping("/bookings/admin")
+    /**
+     * Handle any request for booking list request
+     * @param model the model for booking
+     * @return view reference
+     */
+    @GetMapping("/admin")
     public String showBookingMonitoring(Model model) {
         List<Booking> bookings = bookingService.findAll();
         model.addAttribute("bookings", bookings);
-        return "parkingArea/booking/bookings";
+        return "parking/booking/bookings";
     }
 
-    @PostMapping("/bookings/{id}")
-    public String cancelBooking(@PathVariable("id") Long id, Model model) {
-        Optional<Booking> result = bookingService.findById(id);
-        if(result.isEmpty()) {
-            throw new ResourceNotFound("Booking with id " + id + "is not present");
-        }
-        Booking booking = result.get();
-        booking.refund(paymentSystem, true);
-        bookingService.deleteById(id);
-        return "redirect:/parkingArea/bookings/admin";
+    /**
+     * Handle any request for booking cancellation request
+     * @param id the booking id
+     * @return redirecting reference
+     */
+    @PostMapping("/{id}")
+    public String cancelBooking(@PathVariable("id") Long id) throws ResourceNotFound  {
+        bookingService.cancelBooking(id);
+        return "redirect:/bookings/admin";
     }
 
-    @PostMapping("/reserving")
-    public String processBookingForm(@ModelAttribute("booking") Booking booking, BindingResult theBindingResult, Model model) {
+    /**
+     * Handle any request for new booking request
+     * @param booking the booking instance
+     * @param theBindingResult the validation results
+     * @param model the model for booking
+     * @return view reference
+     */
+    @PostMapping("")
+    public String addBooking(@Valid @ModelAttribute("booking") Booking booking, BindingResult theBindingResult, Model model) throws AuthenticationFacadeUserUnauthenticated {
 
         if (theBindingResult.hasErrors()){
-            return "parkingArea/booking/booking-form";
+            return "parking/booking/booking-form";
         }
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentPrincipalUsername = authentication.getName();
-
-        Booking confirmedBooking = parkingAreaService.reserveParkingSpot(currentPrincipalUsername, booking);
+        String username = authenticationFacade.getAuthenticatedUsername();
+        Booking confirmedBooking = parkingSpotService.reserveParkingSpot(username, booking);
         model.addAttribute("confirmedBooking", confirmedBooking);
-
-        return "parkingArea/booking/booking-confirmation";
+        return "parking/booking/booking-confirmation";
     }
 }

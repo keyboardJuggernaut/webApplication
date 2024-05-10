@@ -46,13 +46,13 @@
     <h3>Parking Area Map</h3>
     <hr>
     <div>
-        <a th:href="@{/parkingArea/checkin}" class="btn btn-primary mt-3" role="button" aria-pressed="true">Check In</a>
+        <a th:href="@{/parkings/checkin}" class="btn btn-primary mt-3" role="button" aria-pressed="true">Check In</a>
     </div>
     <div>
-        <a th:href="@{/parkingArea/checkout}" class="btn btn-primary mt-3" role="button" aria-pressed="true">Check Out</a>
+        <a th:href="@{/parkings/checkout}" class="btn btn-primary mt-3" role="button" aria-pressed="true">Check Out</a>
     </div>
     <div>
-        <a th:href="@{/parkingArea/bookings}" class="btn btn-primary mt-3" role="button" aria-pressed="true">Book</a>
+        <a th:href="@{/templates/parking/bookings}" class="btn btn-primary mt-3" role="button" aria-pressed="true">Book</a>
     </div>
     <div>
     <a th:href="@{/reviews}" class="btn btn-primary mt-3" role="button" aria-pressed="true">See review</a>
@@ -85,13 +85,13 @@
         </thead>
 
         <tbody>
-        <tr th:each="parkingSpot : ${spotWithParking.keySet()}" th:id="${parkingSpot.id}">
+        <tr th:each="parkingSpot : ${parkingArea.keySet()}" th:id="${parkingSpot.id}">
 
             <td><span th:text="${parkingSpot.rowNumber}"></span><span th:text="${parkingSpot.columnNumber}"></span></td>
             <td id="spotStatus" th:text="${parkingSpot.status}" />
             <td th:text="${parkingSpot.stripeColor}" />
-            <div th:if="${spotWithParking.get(parkingSpot) != null}">
-                <td id="estimatedTime" th:text="${spotWithParking.get(parkingSpot).estimatedTime}"></td>
+            <div th:if="${parkingArea.get(parkingSpot) != null}">
+                <td id="estimatedTime" th:text="${parkingArea.get(parkingSpot).estimatedTime}"></td>
             </div>
 
 
@@ -99,7 +99,7 @@
                 <td >
                     <div sec:authorize="hasRole('ADMIN')">
                     <form
-                            action="#" th:action="@{'/parkingArea/spots/' + ${parkingSpot.id} + '/block'}"
+                            action="#" th:action="@{'/parkingArea/spots/' + ${parkingSpot.id} + '/toggleAvailability'}"
                             method="POST">
 
                             <button type="submit" class="btn btn-danger">Toggle availability</button>

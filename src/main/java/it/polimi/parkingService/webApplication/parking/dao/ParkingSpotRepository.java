@@ -25,5 +25,5 @@ public interface ParkingSpotRepository extends JpaRepository<ParkingSpot, Intege
 
     ParkingSpot findById(long id);
 
-
+    void deleteById(long id);
 }

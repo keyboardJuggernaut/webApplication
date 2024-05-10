@@ -1,18 +1,17 @@
 package it.polimi.parkingService.webApplication.parking.services;
 
 import it.polimi.parkingService.webApplication.account.models.User;
+import it.polimi.parkingService.webApplication.parking.exceptions.ResourceNotFound;
 import it.polimi.parkingService.webApplication.parking.models.Booking;
+import it.polimi.parkingService.webApplication.utils.BaseService;
 import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
-public interface IBookingService {
+public interface IBookingService extends BaseService<Booking> {
     List<Booking> findByDate(LocalDate date);
     int countBookingByCustomerUserAndDate(User customerUser, LocalDate date);
-
-    void save(Booking booking);
 
     Booking findByCustomerUserAndClaimedFalseAndDate(User customerUser, LocalDate date);
 
@@ -20,9 +19,6 @@ public interface IBookingService {
 
     Integer countBookingByDate(LocalDate actualDate);
 
-    List<Booking> findAll();
+    void cancelBooking(long id) throws ResourceNotFound;
 
-    void deleteById(Long id);
-
-    Optional<Booking> findById(Long id);
 }

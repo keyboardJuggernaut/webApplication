@@ -1,7 +1,6 @@
 package it.polimi.parkingService.webApplication.parking.dao;
 
 import it.polimi.parkingService.webApplication.account.models.User;
-import it.polimi.parkingService.webApplication.parking.enums.ParkingSpotStatus;
 import it.polimi.parkingService.webApplication.parking.models.Booking;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -22,4 +21,5 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     void update(@Param(value = "id") long id, @Param(value = "claimed") boolean claimed);
 
     Integer countBookingByDate(LocalDate actualDate);
+
 }

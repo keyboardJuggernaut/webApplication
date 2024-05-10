@@ -8,9 +8,9 @@
 <h1>QR Code</h1>
 <img th:src="'data:image/png;base64,' + ${qrcode}" alt="QR Code">
 <div>
-    <a th:href="@{/parkingArea/leaving(qrcode=${qrcode})}" class="btn btn-primary mt-3" role="button" aria-pressed="true">Scan</a>
+    <a th:href="@{/templates/parking/leaving(qrcode=${qrcode})}" class="btn btn-primary mt-3" role="button" aria-pressed="true">Scan</a>
     <br><br>
-    <a th:href="@{/parkingArea/map}">Go back</a>
+    <a th:href="@{/spots}">Go back</a>
 </div>
 </body>
 </html>

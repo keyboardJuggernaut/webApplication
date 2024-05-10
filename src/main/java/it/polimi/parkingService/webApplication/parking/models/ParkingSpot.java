@@ -1,7 +1,7 @@
 package it.polimi.parkingService.webApplication.parking.models;
 
 import it.polimi.parkingService.webApplication.parking.enums.ParkingSpotStatus;
-import it.polimi.parkingService.webApplication.parking.enums.StripeColor;
+import it.polimi.parkingService.webApplication.parking.enums.ParkingStripes;
 import it.polimi.parkingService.webApplication.utils.BaseEntity;
 import jakarta.persistence.*;
 
@@ -21,7 +21,7 @@ public class ParkingSpot extends BaseEntity {
     private ParkingSpotStatus status = ParkingSpotStatus.FREE;
     @Column(name="stripe_color")
     @Enumerated(EnumType.STRING)
-    private StripeColor stripeColor = StripeColor.WHITE;
+    private ParkingStripes stripeColor = ParkingStripes.WHITE;
     @Column(name="row_index")
     private int rowNumber;
     @Column(name="column_index")
@@ -69,11 +69,11 @@ public class ParkingSpot extends BaseEntity {
         this.status = status;
     }
 
-    public StripeColor getStripeColor() {
+    public ParkingStripes getStripeColor() {
         return stripeColor;
     }
 
-    public void setStripeColor(StripeColor stripeColor) {
+    public void setStripeColor(ParkingStripes stripeColor) {
         this.stripeColor = stripeColor;
     }
 
@@ -104,7 +104,7 @@ public class ParkingSpot extends BaseEntity {
     @Override
     public String toString() {
         return "ParkingSpot{" +
-                "parkingArea=" + parkingArea +
+                "parking=" + parkingArea +
                 ", status=" + status +
                 ", stripeColor=" + stripeColor +
                 ", rowNumber=" + rowNumber +

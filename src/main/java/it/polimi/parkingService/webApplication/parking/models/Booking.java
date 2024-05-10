@@ -8,22 +8,22 @@ import it.polimi.parkingService.webApplication.payment.models.PaymentSystem;
 import it.polimi.parkingService.webApplication.utils.BaseEntity;
 import jakarta.persistence.*;
 
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
+/**
+ * The {@code Booking} represents booking model
+ */
 @Entity
 @Table(name="booking")
 public class Booking extends BaseEntity {
 
     @Column(name="date")
     private LocalDate date;
-    public final static double DAILY_CHARGE = 15;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name="account_id")
     private User customerUser;
-
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "payment_receipt_id")
@@ -36,6 +36,14 @@ public class Booking extends BaseEntity {
     @Column(name="claimed")
     private Boolean claimed;
 
+    /**
+     * Amount to pay for a booking (daily)
+     */
+    public final static double DAILY_CHARGE = 15;
+
+    /**
+     * Minimum remaining days to booking date for refund check
+     */
     public final static long DAYS_TO_REFUND = 1;
 
 
@@ -45,19 +53,31 @@ public class Booking extends BaseEntity {
 
     public Booking(){}
 
-    public LocalDate getDate() {
-        return date;
-    }
 
+    /**
+     * Pays booking
+     * @param paymentSystem the payment system
+     * @throws PaymentFailed when payment fails
+     */
     public void pay(PaymentSystem paymentSystem) throws PaymentFailed {
         paymentReceipt = paymentSystem.processPayment(customerUser, DAILY_CHARGE);
     }
 
-    public void refund(PaymentSystem paymentSystem, Boolean adminAction) throws RefundFailed {
+    /**
+     * Refunds the customer if is eligible
+     * @param paymentSystem the payment system
+     * @param adminAction true if action was throwed by admin
+     * @throws RefundFailed if payment fails
+     */
+    public void refundCheck(PaymentSystem paymentSystem, Boolean adminAction) throws RefundFailed {
+        // check booking has not already been claimed
         if(!claimed) {
+            // if admin action, do not check temporal criteria for eligibility
             if (!adminAction) {
+                // refund when the request arrives at least a certain time before booking date
                 long remainingDays = ChronoUnit.DAYS.between(date, LocalDate.now());
-                if (remainingDays < DAYS_TO_REFUND) {
+                if (remainingDays > DAYS_TO_REFUND) {
+                    // refund
                     paymentSystem.undoPayment(customerUser, paymentReceipt);
                 }
             } else {
@@ -65,7 +85,9 @@ public class Booking extends BaseEntity {
             }
         }
     }
-
+    public LocalDate getDate() {
+        return date;
+    }
     public void setDate(LocalDate date) {
         this.date = date;
     }
