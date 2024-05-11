@@ -126,7 +126,7 @@ CREATE TABLE IF NOT EXISTS `payment_receipt` (
 CREATE TABLE IF NOT EXISTS `booking` (
                                               `id` int NOT NULL AUTO_INCREMENT,
                                               `date` date DEFAULT NULL,
-                                              `claimed` boolean DEFAULT FALSE,
+                                              `redeemed` boolean DEFAULT FALSE,
                                               `payment_receipt_id` int DEFAULT NULL,
                                               `account_id` int DEFAULT NULL,
                                               `parking_spot_id` int DEFAULT NULL,

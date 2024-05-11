@@ -11,7 +11,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface ParkingSpotRepository extends JpaRepository<ParkingSpot, Integer> {
+public interface ParkingSpotRepository extends JpaRepository<ParkingSpot, Long> {
 
     @Query("SELECT p FROM Parking p WHERE p.spot = :parkingSpotId")
     List<Parking> findParkingsByParkingSpotId(Long parkingSpotId);

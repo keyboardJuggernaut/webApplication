@@ -1,17 +1,16 @@
 package it.polimi.parkingService.webApplication.parking.models;
 
-import it.polimi.parkingService.webApplication.parking.strategy.LinearSearchParkingSpotResearchStrategy;
+import it.polimi.parkingService.webApplication.parking.exceptions.SearchStrategyUndefined;
 import it.polimi.parkingService.webApplication.parking.strategy.ParkingSpotResearchStrategy;
 import it.polimi.parkingService.webApplication.parking.strategy.SearchCriteria;
 import it.polimi.parkingService.webApplication.utils.BaseEntity;
 import jakarta.persistence.*;
-import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Class model for parking area
+ * The {@code ParkingArea} represents parking area model
  * Note: the set of parking spots is represented as a quadratic matrix
  */
 @Entity
@@ -61,9 +60,15 @@ public class ParkingArea extends BaseEntity {
         this.parkingSpotResearchStrategy = parkingSpotResearchStrategy;
     }
 
-    public ParkingSpot searchForParkingSpot(SearchCriteria searchCriteria) {
+    /**
+     * Chooses a spot based on certain criteria with a certain strategy
+     * @param searchCriteria custom criteria
+     * @return spot found
+     * @throws SearchStrategyUndefined if strategy has not been set
+     */
+    public ParkingSpot searchForParkingSpot(SearchCriteria searchCriteria) throws SearchStrategyUndefined {
         if(parkingSpotResearchStrategy == null) {
-            parkingSpotResearchStrategy = new LinearSearchParkingSpotResearchStrategy();
+            throw new SearchStrategyUndefined("Search strategy has not been set");
         }
         return parkingSpotResearchStrategy.findSpot(convertToMatrix(), searchCriteria);
     }

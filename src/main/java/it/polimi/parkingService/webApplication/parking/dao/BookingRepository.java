@@ -14,11 +14,11 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     List<Booking> findByDate(LocalDate date);
 
     int countBookingByCustomerUserAndDate(User customerUser, LocalDate date);
-    Booking findByCustomerUserAndClaimedFalseAndDate(User customerUser, LocalDate date);
+    Booking findByCustomerUserAndRedeemedFalseAndDate(User customerUser, LocalDate date);
 
     @Modifying
-    @Query("update Booking u set u.claimed = :claimed where u.id = :id")
-    void update(@Param(value = "id") long id, @Param(value = "claimed") boolean claimed);
+    @Query("update Booking u set u.redeemed = :redeemed where u.id = :id")
+    void update(@Param(value = "id") long id, @Param(value = "redeemed") boolean redeemed);
 
     Integer countBookingByDate(LocalDate actualDate);
 

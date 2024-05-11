@@ -5,9 +5,11 @@ import it.polimi.parkingService.webApplication.parking.enums.ParkingStripes;
 import it.polimi.parkingService.webApplication.utils.BaseEntity;
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The {@code ParkingSpot} represents parking spot model
+ */
 @Entity
 @Table(name="parking_spot")
 public class ParkingSpot extends BaseEntity {
@@ -42,15 +44,7 @@ public class ParkingSpot extends BaseEntity {
     }
 
     public String getSpotIdentifier() {
-        return String.valueOf(rowNumber) + String.valueOf(columnNumber);
-    }
-
-    public void addParking(Parking parking){
-        if(parkings == null) {
-            parkings = new ArrayList<>();
-        }
-        parkings.add(parking);
-        parking.setSpot(this);
+        return rowNumber + String.valueOf(columnNumber);
     }
 
     public ParkingArea getParkingArea() {
@@ -81,25 +75,11 @@ public class ParkingSpot extends BaseEntity {
         return rowNumber;
     }
 
-    public void setRowNumber(int rowNumber) {
-        this.rowNumber = rowNumber;
-    }
 
     public int getColumnNumber() {
         return columnNumber;
     }
 
-    public void setColumnNumber(int columnNumber) {
-        this.columnNumber = columnNumber;
-    }
-
-    public List<Parking> getParkings() {
-        return parkings;
-    }
-
-    public void setParkings(List<Parking> parkings) {
-        this.parkings = parkings;
-    }
 
     @Override
     public String toString() {

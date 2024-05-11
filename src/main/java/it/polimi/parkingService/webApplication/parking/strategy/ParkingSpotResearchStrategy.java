@@ -4,6 +4,6 @@ import it.polimi.parkingService.webApplication.parking.models.ParkingSpot;
 
 public abstract class ParkingSpotResearchStrategy {
 
-    // pass parkingSpots data structure chosen
+    // Note: default fixed spots data structure is matrix
     public abstract ParkingSpot findSpot(ParkingSpot[][] parkingSpots, SearchCriteria criteria);
 }

@@ -1,9 +1,7 @@
 package it.polimi.parkingService.webApplication.parking.models;
 
 import it.polimi.parkingService.webApplication.account.models.User;
-import it.polimi.parkingService.webApplication.parking.exceptions.MissingEstimatedTime;
 import it.polimi.parkingService.webApplication.parking.exceptions.ParkingNotTerminated;
-import it.polimi.parkingService.webApplication.parking.exceptions.ParkingSpotNotFoundYet;
 import it.polimi.parkingService.webApplication.payment.exceptions.PaymentFailed;
 import it.polimi.parkingService.webApplication.payment.models.PaymentReceipt;
 import it.polimi.parkingService.webApplication.payment.models.PaymentSystem;
@@ -52,7 +50,9 @@ public class Parking extends BaseEntity {
     /**
      * Hourly parking fee
      */
-    private final static double hourlyFee = 0.025;
+    private final static double FEE_PER_MINUTE = 0.025;
+
+    private final static double MINIMUM_CHARGE = 0.5;
 
     public Parking(User customerUser) {
         this.arrival = LocalDateTime.now();
@@ -63,24 +63,35 @@ public class Parking extends BaseEntity {
         this.arrival = LocalDateTime.now();
     }
 
-    // TODO: continua, setter e getter vanno tenuti tutti
-
+    /**
+     * Computes parking charge based on elapsed time
+     * @return parking charge amount
+     * @throws ParkingNotTerminated if parking has not been checked out
+     */
     private double getParkingCharge() throws ParkingNotTerminated {
+        // check if check out has been done
         if(leaving == null) {
             throw new ParkingNotTerminated("Parking still in progress");
         }
+        // compute duration
         long parkingTime = Duration.between(arrival, leaving).toMinutes();
-        return parkingTime * hourlyFee;
+        // compute charge
+        if(parkingTime <= 0) {
+            return MINIMUM_CHARGE;
+        }
+        return parkingTime * FEE_PER_MINUTE;
     }
 
+    /**
+     * Pays for the parking
+     * @param paymentSystem the payment system
+     * @throws ParkingNotTerminated if parking is still in progress
+     * @throws PaymentFailed if payment fails
+     */
     public void pay(PaymentSystem paymentSystem) throws ParkingNotTerminated, PaymentFailed {
-        double amount = getParkingCharge();
-        paymentReceipt = paymentSystem.processPayment(customerUser, amount);
+        paymentReceipt = paymentSystem.processPayment(customerUser, getParkingCharge());
     }
 
-    public User getCustomerUser() {
-        return customerUser;
-    }
 
     public void setCustomerUser(User account) {
         this.customerUser = account;
@@ -98,20 +109,8 @@ public class Parking extends BaseEntity {
         return estimatedTime;
     }
 
-    public void setEstimatedTime(LocalTime estimatedTime) {
-        this.estimatedTime = estimatedTime;
-    }
-
     public LocalDateTime getArrival() {
         return arrival;
-    }
-
-    public void setArrival(LocalDateTime arrival) {
-        this.arrival = arrival;
-    }
-
-    public LocalDateTime getLeaving() {
-        return leaving;
     }
 
     public void setLeaving(LocalDateTime leaving) {
@@ -120,10 +119,6 @@ public class Parking extends BaseEntity {
 
     public PaymentReceipt getPaymentReceipt() {
         return paymentReceipt;
-    }
-
-    public void setPaymentReceipt(PaymentReceipt paymentReceipt) {
-        this.paymentReceipt = paymentReceipt;
     }
 
     public Booking getBooking() {

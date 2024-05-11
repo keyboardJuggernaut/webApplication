@@ -2,6 +2,7 @@ package it.polimi.parkingService.webApplication.parking.services;
 
 import it.polimi.parkingService.webApplication.parking.enums.ParkingSpotStatus;
 import it.polimi.parkingService.webApplication.parking.exceptions.ParkingNotTerminated;
+import it.polimi.parkingService.webApplication.parking.exceptions.SearchStrategyUndefined;
 import it.polimi.parkingService.webApplication.parking.models.Booking;
 import it.polimi.parkingService.webApplication.parking.models.Parking;
 import it.polimi.parkingService.webApplication.parking.models.ParkingSpot;
@@ -15,14 +16,13 @@ public interface IParkingSpotService extends BaseService<ParkingSpot> {
     void update(@Param(value = "id") long id, @Param(value = "status") ParkingSpotStatus status);
     Map<ParkingSpot, Parking> getSpotsWithParkings();
 
-    ParkingSpot findById(long id);
     void toggleSpotAvailability(long id);
 
-    ParkingSpot findParkingSpot (String checkinToken);
+    Parking startParking (String checkinToken) throws SearchStrategyUndefined;
 
     PaymentReceipt doCheckout(String token) throws ParkingNotTerminated;
 
-    Booking reserveParkingSpot(String username, Booking booking);
+    Booking reserveParkingSpot(String username, Booking booking) throws SearchStrategyUndefined;
 
 
 }

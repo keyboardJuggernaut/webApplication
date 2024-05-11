@@ -10,7 +10,7 @@
 <h2>Parking spot found successfully!</h2>
 
 <ul >
-    <li th:text="'Spot: ' + ${spotIdentifier}"></li>
+    <li th:text="'Spot: ' + ${parking.getSpot().getSpotIdentifier()}"></li>
 </ul>
     <form action="#" th:action="@{/templates/parking/estimatedTime}"
           th:object="${parking}"

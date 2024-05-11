@@ -1,6 +1,7 @@
 package it.polimi.parkingService.webApplication.parking.controllers;
 
 import it.polimi.parkingService.webApplication.parking.exceptions.ResourceNotFound;
+import it.polimi.parkingService.webApplication.parking.exceptions.SearchStrategyUndefined;
 import it.polimi.parkingService.webApplication.parking.models.Booking;
 import it.polimi.parkingService.webApplication.parking.services.IBookingService;
 import it.polimi.parkingService.webApplication.parking.services.IParkingSpotService;
@@ -57,7 +58,7 @@ public class BookingController {
      * @return view reference
      */
     @GetMapping("/admin")
-    public String showBookingMonitoring(Model model) {
+    public String showBookings(Model model) {
         List<Booking> bookings = bookingService.findAll();
         model.addAttribute("bookings", bookings);
         return "parking/booking/bookings";
@@ -82,7 +83,7 @@ public class BookingController {
      * @return view reference
      */
     @PostMapping("")
-    public String addBooking(@Valid @ModelAttribute("booking") Booking booking, BindingResult theBindingResult, Model model) throws AuthenticationFacadeUserUnauthenticated {
+    public String addBooking(@Valid @ModelAttribute("booking") Booking booking, BindingResult theBindingResult, Model model) throws AuthenticationFacadeUserUnauthenticated, SearchStrategyUndefined {
 
         if (theBindingResult.hasErrors()){
             return "parking/booking/booking-form";

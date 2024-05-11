@@ -33,8 +33,8 @@ public class Booking extends BaseEntity {
     @JoinColumn(name = "parking_spot_id")
     private ParkingSpot parkingSpot;
 
-    @Column(name="claimed")
-    private Boolean claimed;
+    @Column(name="redeemed")
+    private Boolean redeemed;
 
     /**
      * Amount to pay for a booking (daily)
@@ -70,8 +70,8 @@ public class Booking extends BaseEntity {
      * @throws RefundFailed if payment fails
      */
     public void refundCheck(PaymentSystem paymentSystem, Boolean adminAction) throws RefundFailed {
-        // check booking has not already been claimed
-        if(!claimed) {
+        // check booking has not already been redeemed
+        if(!redeemed) {
             // if admin action, do not check temporal criteria for eligibility
             if (!adminAction) {
                 // refund when the request arrives at least a certain time before booking date
@@ -105,10 +105,6 @@ public class Booking extends BaseEntity {
         return paymentReceipt;
     }
 
-    public void setPaymentReceipt(PaymentReceipt paymentReceipt) {
-        this.paymentReceipt = paymentReceipt;
-    }
-
     public ParkingSpot getParkingSpot() {
         return parkingSpot;
     }
@@ -117,11 +113,11 @@ public class Booking extends BaseEntity {
         this.parkingSpot = parkingSpot;
     }
 
-    public Boolean getClaimed() {
-        return claimed;
+    public Boolean getRedeemed() {
+        return redeemed;
     }
 
-    public void setClaimed(Boolean claimed) {
-        this.claimed = claimed;
+    public void setRedeemed(Boolean redeemed) {
+        this.redeemed = redeemed;
     }
 }

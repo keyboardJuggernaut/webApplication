@@ -2,9 +2,9 @@ package it.polimi.parkingService.webApplication.parking.controllers;
 
 import com.google.zxing.NotFoundException;
 import it.polimi.parkingService.webApplication.parking.exceptions.ParkingNotTerminated;
+import it.polimi.parkingService.webApplication.parking.exceptions.SearchStrategyUndefined;
 import it.polimi.parkingService.webApplication.parking.models.Parking;
 import it.polimi.parkingService.webApplication.parking.models.ParkingSpot;
-import it.polimi.parkingService.webApplication.parking.services.IParkingService;
 import it.polimi.parkingService.webApplication.parking.services.IParkingSpotService;
 import it.polimi.parkingService.webApplication.payment.models.PaymentReceipt;
 import it.polimi.parkingService.webApplication.utils.QRCodeGenerator;
@@ -24,17 +24,14 @@ import java.util.Map;
 public class ParkingSpotController {
 
     private final IParkingSpotService parkingSpotService;
-    private final IParkingService parkingService;
 
     /**
      * Constructs the controller
      * @param parkingSpotService the service handling parking spot business logic
-     * @param parkingService the service handling parking business logic
      */
     @Autowired
-    public ParkingSpotController(IParkingSpotService parkingSpotService,IParkingService parkingService) {
+    public ParkingSpotController(IParkingSpotService parkingSpotService) {
         this.parkingSpotService = parkingSpotService;
-        this.parkingService = parkingService;
     }
 
     /**
@@ -43,28 +40,39 @@ public class ParkingSpotController {
      * @return view reference
      */
     @GetMapping("")
-    public String showParkingArea(Model model) {
+    public String showSpots(Model model) {
         Map<ParkingSpot, Parking> parkingArea = parkingSpotService.getSpotsWithParkings();
         model.addAttribute("parkingArea", parkingArea);
         return "parking/map";
     }
 
-    // TODO: comment after refactoring service related
+    /**
+     * Handle any request for starting a parking
+     * @param qrcode the qrcode to authorize
+     * @param model component
+     * @return view reference
+     * @throws NotFoundException if user is not present
+     * @throws IOException if IO fails
+     * @throws SearchStrategyUndefined if search spot strategy is undefined
+     */
     @PostMapping("/checkin")
-    public String doCheckIn(@RequestParam("qrcode") String qrcode, Model model) throws NotFoundException, IOException {
-        ParkingSpot parkingSpot = parkingSpotService.findParkingSpot(QRCodeGenerator.decodeQRCodeEncodedImage(qrcode));
-
-        Parking parking = parkingService.findActualInProgressParkingBySpot(parkingSpot);
-
-        model.addAttribute("spotIdentifier", parkingSpot.getSpotIdentifier());
+    public String doCheckIn(@RequestParam("qrcode") String qrcode, Model model) throws NotFoundException, IOException, SearchStrategyUndefined {
+        Parking parking = parkingSpotService.startParking(QRCodeGenerator.decodeQRCodeEncodedImage(qrcode));
         model.addAttribute("parking", parking);
         return "parking/parking-confirmation";
     }
 
-    // TODO: comment after refactoring service related
+    /**
+     * Handle any request for terminating a parking
+     * @param qrcode the qrcode to authorize
+     * @param model component
+     * @return view reference
+     * @throws NotFoundException if user is not present
+     * @throws IOException if IO fails
+     * @throws ParkingNotTerminated if parking leaving time is undefined
+     */
     @PostMapping("/checkout")
     public String doCheckout(@RequestParam("qrcode") String qrcode, Model model) throws NotFoundException, IOException, ParkingNotTerminated {
-
         PaymentReceipt receipt = parkingSpotService.doCheckout(QRCodeGenerator.decodeQRCodeEncodedImage(qrcode));
         model.addAttribute("receipt", receipt);
         return "parking/checkout-confirmation";

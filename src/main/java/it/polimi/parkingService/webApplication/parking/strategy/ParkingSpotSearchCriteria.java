@@ -4,6 +4,9 @@ import it.polimi.parkingService.webApplication.parking.enums.ParkingSpotStatus;
 import it.polimi.parkingService.webApplication.parking.enums.ParkingStripes;
 import it.polimi.parkingService.webApplication.parking.models.ParkingSpot;
 
+/**
+ * The {@code ParkingSpotSearchCriteria} represents user criteria model
+ */
 public class ParkingSpotSearchCriteria implements SearchCriteria {
     private  ParkingSpotStatus status;
     private ParkingStripes parkingStripes;
@@ -13,11 +16,11 @@ public class ParkingSpotSearchCriteria implements SearchCriteria {
         this.parkingStripes = ParkingStripes.WHITE;
     }
 
-    public ParkingSpotSearchCriteria( ParkingSpotStatus status, ParkingStripes parkingStripes) {
-        this.status = status;
-        this.parkingStripes = parkingStripes;
-    }
-
+    /**
+     * Check if spot matches the user criteria
+     * @param parkingSpot the parking spot to evaluate
+     * @return the outcome of the check
+     */
     @Override
     public boolean meetCriteria(ParkingSpot parkingSpot) {
         return status == parkingSpot.getStatus() && parkingStripes == parkingSpot.getStripeColor();
@@ -25,10 +28,6 @@ public class ParkingSpotSearchCriteria implements SearchCriteria {
 
     public ParkingSpotStatus getStatus() {
         return status;
-    }
-
-    public ParkingStripes getStripeColor() {
-        return parkingStripes;
     }
 
     public void setStatus(ParkingSpotStatus status) {

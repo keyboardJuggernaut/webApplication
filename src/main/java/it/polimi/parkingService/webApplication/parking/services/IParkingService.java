@@ -25,5 +25,4 @@ public interface IParkingService extends BaseService<Parking> {
     String getCheckOutQRCode(String username) throws ParkingAlreadyInProgress, IOException, WriterException, ParkingNotInProgress;
     Optional<Parking> findInProgressParkingsByUserId(User user);
 
-
 }

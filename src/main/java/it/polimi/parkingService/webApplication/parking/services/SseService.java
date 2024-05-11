@@ -1,7 +1,5 @@
 package it.polimi.parkingService.webApplication.parking.services;
 
-import it.polimi.parkingService.webApplication.parking.enums.ParkingSpotStatus;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
@@ -9,6 +7,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+/**
+ * The {@code SseService} handles any server-sent emitter related business logic
+ */
 @Service
 public class SseService {
     private final List<SseEmitter> emitters = new CopyOnWriteArrayList<>();

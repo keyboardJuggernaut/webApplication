@@ -2,6 +2,9 @@ package it.polimi.parkingService.webApplication.parking.services;
 
 import it.polimi.parkingService.webApplication.parking.enums.ParkingSpotStatus;
 
+/**
+ * The {@code Event} represents parking area event
+ */
 public class Event {
     private Long id;
     private ParkingSpotStatus status;
