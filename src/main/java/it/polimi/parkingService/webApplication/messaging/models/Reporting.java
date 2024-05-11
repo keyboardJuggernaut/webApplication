@@ -2,15 +2,16 @@ package it.polimi.parkingService.webApplication.messaging.models;
 
 import it.polimi.parkingService.webApplication.account.models.User;
 import it.polimi.parkingService.webApplication.messaging.enums.ReportingSeverity;
-import it.polimi.parkingService.webApplication.messaging.enums.ReportingStatus;
 import it.polimi.parkingService.webApplication.messaging.exceptions.AddingResponseForbidden;
 import jakarta.persistence.*;
-import org.hibernate.annotations.Type;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The {@code Reporting} represents reporting model
+ */
 @Entity
 @Table(name="reporting")
 public class Reporting extends Message {

@@ -5,9 +5,10 @@ import it.polimi.parkingService.webApplication.messaging.exceptions.AddingRespon
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
+/**
+ * The {@code Review} represents review model
+ */
 @Entity
 @Table(name="review")
 public class Review extends Message{
@@ -22,7 +23,7 @@ public class Review extends Message{
     }
 
     @Override
-    public void addResponse(Response response) throws AddingResponseForbidden {
+    public void addResponse(Response response)  {
 
     }
 

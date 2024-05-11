@@ -5,6 +5,9 @@ import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
+/**
+ * The {@code Response} represents response model
+ */
 @Entity
 @Table(name="response")
 public class Response {

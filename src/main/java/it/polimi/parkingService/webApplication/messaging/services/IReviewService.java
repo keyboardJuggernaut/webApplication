@@ -1,13 +1,9 @@
 package it.polimi.parkingService.webApplication.messaging.services;
 
 import it.polimi.parkingService.webApplication.messaging.models.Review;
+import it.polimi.parkingService.webApplication.utils.BaseService;
 
-import java.util.List;
 
-public interface IReviewService {
-
-    List<Review> findAll();
-
-    public Review findById(long id);
-    public void save(Review review);
+public interface IReviewService extends BaseService<Review> {
+    void completeReview(Review review, String username);
 }

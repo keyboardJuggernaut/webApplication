@@ -24,7 +24,7 @@
     <p th:text="${report.body}"></p>
     <p th:text="'Severity: ' +${report.severity}"></p>
     <p th:text="'Status: ' +${report.open}"></p>
-        <a th:if="${report.open}" th:href="@{'/reportings/' + ${report.id} + '/responses/add'}" class="btn btn-primary mt-3" role="button" aria-pressed="true">Reply</a>
+        <a th:if="${report.open}" th:href="@{'/reportings/' + ${report.id} + '/responses/new'}" class="btn btn-primary mt-3" role="button" aria-pressed="true">Reply</a>
 
     <div sec:authorize="hasRole('GUARDIAN')">
 

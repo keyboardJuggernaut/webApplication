@@ -17,7 +17,7 @@
     <h3>Reviews</h3>
     <hr>
     <div>
-        <a th:href="@{/reportings/add}" class="btn btn-primary mt-3" role="button" aria-pressed="true">Report something</a>
+        <a th:href="@{/reportings/new}" class="btn btn-primary mt-3" role="button" aria-pressed="true">Report something</a>
     </div>
 
     <div th:if="${reportings.size() != 0}">
@@ -31,7 +31,7 @@
                 <a th:href="@{'/reportings/' + ${report.id}}" class="btn btn-primary mt-3" role="button" aria-pressed="true">See thread</a>
             </div>
             <div th:if="${report.linkedResponses.size() == 0}">
-                <a th:href="@{'/reportings/' + ${report.id} + '/responses/add'}" class="btn btn-primary mt-3" role="button" aria-pressed="true">Reply</a>
+                <a th:href="@{'/reportings/' + ${report.id} + '/responses/new'}" class="btn btn-primary mt-3" role="button" aria-pressed="true">Reply</a>
             </div>
             <hr>
         </div>
