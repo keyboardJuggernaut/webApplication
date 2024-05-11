@@ -62,7 +62,7 @@
                                 <li th:each="err : ${#fields.errors('date')}" th:text="'Date ' + ${err}" />
                             </ul>
                         </div>
-                        <input type="checkbox" th:checked="*{claimed}" th:field="*{claimed}" checked hidden/>
+                        <input type="checkbox" th:checked="*{redeemed}" th:field="*{redeemed}" checked hidden/>
 
 
                         <!-- Registration Button -->

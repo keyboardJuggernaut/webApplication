@@ -8,7 +8,12 @@
 <h1>QR Code</h1>
 <img th:src="'data:image/png;base64,' + ${qrcode}" alt="QR Code">
 <div>
-    <a th:href="@{/templates/parking/leaving(qrcode=${qrcode})}" class="btn btn-primary mt-3" role="button" aria-pressed="true">Scan</a>
+    <form  action="#" th:action="@{/spots/checkout}"
+           method="POST">
+        <input type="text" id="qrcode" name="qrcode" th:value="${qrcode}" hidden>
+        <button type="submit">Scan</button>
+    </form>
+<!--    <a th:href="@{/templates/parking/leaving(qrcode=${qrcode})}" class="btn btn-primary mt-3" role="button" aria-pressed="true">Scan</a>-->
     <br><br>
     <a th:href="@{/spots}">Go back</a>
 </div>

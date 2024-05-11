@@ -3,6 +3,7 @@ package it.polimi.parkingService.webApplication;
 import it.polimi.parkingService.webApplication.utils.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -30,7 +31,7 @@ public class AppExceptionHandler {
 
 
     @ExceptionHandler
-    public String handleException(Exception exc) {
+    public String handleException(Exception exc, Model model) {
         exc.printStackTrace();
         // create a ErrorResponse
         ErrorResponse error = new ErrorResponse();
@@ -38,6 +39,8 @@ public class AppExceptionHandler {
         error.setStatus(HttpStatus.BAD_REQUEST.value());
         error.setMessage(exc.getMessage());
         error.setTimeStamp(System.currentTimeMillis());
+
+        model.addAttribute("message", exc.getMessage());
 
         // return ResponseEntity
         return "error";

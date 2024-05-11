@@ -8,7 +8,8 @@
 <h1>QR Code</h1>
 <img th:src="'data:image/png;base64,' + ${qrcode}" alt="QR Code">
 <div>
-    <form action="/parkings" method="post">
+    <form  action="#" th:action="@{/spots/checkin}"
+          method="POST">
         <input type="text" id="qrcode" name="qrcode" th:value="${qrcode}" hidden>
         <button type="submit">Scan</button>
     </form>

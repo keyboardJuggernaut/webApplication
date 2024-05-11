@@ -12,7 +12,7 @@
 <ul >
     <li th:text="'Spot: ' + ${parking.getSpot().getSpotIdentifier()}"></li>
 </ul>
-    <form action="#" th:action="@{/templates/parking/estimatedTime}"
+    <form action="#" th:action="@{/parkings}"
           th:object="${parking}"
           method="POST" class="form-horizontal">
 

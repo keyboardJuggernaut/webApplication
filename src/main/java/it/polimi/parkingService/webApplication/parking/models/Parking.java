@@ -109,6 +109,10 @@ public class Parking extends BaseEntity {
         return estimatedTime;
     }
 
+    public void setEstimatedTime(LocalTime estimatedTime) {
+        this.estimatedTime = estimatedTime;
+    }
+
     public LocalDateTime getArrival() {
         return arrival;
     }

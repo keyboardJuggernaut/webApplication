@@ -19,6 +19,7 @@ import it.polimi.parkingService.webApplication.parking.strategy.PriorityQueuePar
 import it.polimi.parkingService.webApplication.parking.strategy.SearchCriteria;
 import it.polimi.parkingService.webApplication.payment.models.PaymentReceipt;
 import it.polimi.parkingService.webApplication.payment.models.PaymentSystem;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -153,6 +154,8 @@ public class ParkingSpotService implements IParkingSpotService{
      * @return parking
      * @throws SearchStrategyUndefined if a search spot strategy has not been defined
      */
+    @Transactional
+
     public Parking startParking (String checkinToken) throws SearchStrategyUndefined {
         // check token and retrieve authorized user
         long userId = qrCodeService.getTokenPayload("userId", checkinToken);

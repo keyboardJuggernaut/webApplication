@@ -14,6 +14,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class SseService {
     private final List<SseEmitter> emitters = new CopyOnWriteArrayList<>();
 
+    public SseService(){}
+
     public void addEmitter(SseEmitter emitter) {
         emitters.add(emitter);
         emitter.onCompletion(() -> emitters.remove(emitter));
