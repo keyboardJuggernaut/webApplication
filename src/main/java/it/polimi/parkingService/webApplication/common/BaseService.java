@@ -1,4 +1,4 @@
-package it.polimi.parkingService.webApplication.utils;
+package it.polimi.parkingService.webApplication.common;
 
 import java.util.List;
 

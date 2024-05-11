@@ -2,12 +2,14 @@ package it.polimi.parkingService.webApplication.payment.models;
 
 import it.polimi.parkingService.webApplication.account.models.User;
 import it.polimi.parkingService.webApplication.parking.models.Booking;
-import it.polimi.parkingService.webApplication.utils.BaseEntity;
+import it.polimi.parkingService.webApplication.common.BaseEntity;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
+/**
+ * The {@code PaymentReceipt} represents PaymentReceipt method model
+ */
 @Entity
 @Table(name="payment_receipt")
 public class PaymentReceipt extends BaseEntity {

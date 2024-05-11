@@ -6,20 +6,31 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.util.ArrayList;
-import java.util.List;
+
 import java.util.Map;
 
+/**
+ * The {@code AnalysisController} handles any analysis related requests
+ */
 @Controller
 public class AnalysisController {
 
-    private DataAnalyzer analyzer;
+    private final DataAnalyzer analyzer;
 
+    /**
+     * Constructs the controller
+     * @param analyzer the data analyzer
+     */
     @Autowired
     public AnalysisController(DataAnalyzer analyzer) {
         this.analyzer = analyzer;
     }
 
+    /**
+     * Handle any request for analysis request
+     * @param model the model for charts
+     * @return the view reference
+     */
     @GetMapping("/analysis")
     public String showAnalysis(Model model) {
         Map<String, Double> barChartData = analyzer.getPeriodicIncome();

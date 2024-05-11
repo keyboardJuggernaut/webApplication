@@ -1,12 +1,15 @@
 package it.polimi.parkingService.webApplication.payment.models;
 
-import it.polimi.parkingService.webApplication.utils.BaseEntity;
+import it.polimi.parkingService.webApplication.common.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
 import java.time.LocalDate;
 
+/**
+ * The {@code PaymentMethod} represents payment method model
+ */
 @Entity
 @Table(name="payment_method")
 public class PaymentMethod extends BaseEntity {

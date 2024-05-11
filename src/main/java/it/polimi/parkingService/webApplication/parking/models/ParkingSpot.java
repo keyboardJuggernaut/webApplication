@@ -2,7 +2,7 @@ package it.polimi.parkingService.webApplication.parking.models;
 
 import it.polimi.parkingService.webApplication.parking.enums.ParkingSpotStatus;
 import it.polimi.parkingService.webApplication.parking.enums.ParkingStripes;
-import it.polimi.parkingService.webApplication.utils.BaseEntity;
+import it.polimi.parkingService.webApplication.common.BaseEntity;
 import jakarta.persistence.*;
 
 import java.util.List;

@@ -99,7 +99,7 @@
                 <td >
                     <div sec:authorize="hasRole('ADMIN')">
                     <form
-                            action="#" th:action="@{'/parkingArea/spots/' + ${parkingSpot.id} + '/toggleAvailability'}"
+                            action="#" th:action="@{'/spots/' + ${parkingSpot.id} + '/toggleAvailability'}"
                             method="POST">
 
                             <button type="submit" class="btn btn-danger">Toggle availability</button>

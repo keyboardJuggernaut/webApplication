@@ -4,9 +4,7 @@ import it.polimi.parkingService.webApplication.messaging.exceptions.AddingRespon
 import it.polimi.parkingService.webApplication.messaging.exceptions.InvalidThreadStatus;
 import it.polimi.parkingService.webApplication.messaging.models.Reporting;
 import it.polimi.parkingService.webApplication.messaging.models.Response;
-import it.polimi.parkingService.webApplication.utils.BaseService;
-
-import java.util.List;
+import it.polimi.parkingService.webApplication.common.BaseService;
 
 public interface IReportingService extends BaseService<Reporting> {
     Reporting completeReporting(Reporting reporting, String username);

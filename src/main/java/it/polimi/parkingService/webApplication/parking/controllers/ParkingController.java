@@ -5,8 +5,8 @@ import it.polimi.parkingService.webApplication.parking.exceptions.ParkingAlready
 import it.polimi.parkingService.webApplication.parking.exceptions.ParkingNotInProgress;
 import it.polimi.parkingService.webApplication.parking.models.Parking;
 import it.polimi.parkingService.webApplication.parking.services.IParkingService;
-import it.polimi.parkingService.webApplication.utils.AuthenticationFacadeUserUnauthenticated;
-import it.polimi.parkingService.webApplication.utils.IAuthenticationFacade;
+import it.polimi.parkingService.webApplication.common.AuthenticationFacadeUserUnauthenticated;
+import it.polimi.parkingService.webApplication.common.IAuthenticationFacade;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

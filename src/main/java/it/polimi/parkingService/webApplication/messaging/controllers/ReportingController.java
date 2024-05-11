@@ -5,8 +5,8 @@ import it.polimi.parkingService.webApplication.messaging.exceptions.InvalidThrea
 import it.polimi.parkingService.webApplication.messaging.models.Reporting;
 import it.polimi.parkingService.webApplication.messaging.models.Response;
 import it.polimi.parkingService.webApplication.messaging.services.IReportingService;
-import it.polimi.parkingService.webApplication.utils.AuthenticationFacadeUserUnauthenticated;
-import it.polimi.parkingService.webApplication.utils.IAuthenticationFacade;
+import it.polimi.parkingService.webApplication.common.AuthenticationFacadeUserUnauthenticated;
+import it.polimi.parkingService.webApplication.common.IAuthenticationFacade;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

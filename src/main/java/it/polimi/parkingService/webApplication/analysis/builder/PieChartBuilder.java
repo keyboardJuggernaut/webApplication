@@ -1,17 +1,18 @@
 package it.polimi.parkingService.webApplication.analysis.builder;
 
 import it.polimi.parkingService.webApplication.parking.services.IBookingService;
-import it.polimi.parkingService.webApplication.parking.services.IParkingService;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+/**
+ * The {@code PieChartBuilder} builds pie chart model
+ */
 public class PieChartBuilder extends  DataChartBuilder{
 
     private PieChart pieChart;
-    private IBookingService bookingService;
+    private final IBookingService bookingService;
 
     public PieChartBuilder(IBookingService bookingService) {
         this.bookingService = bookingService;
@@ -28,6 +29,9 @@ public class PieChartBuilder extends  DataChartBuilder{
         pieChart.setPeriods(number);
     }
 
+    /**
+     * Retrieves data to visualize
+     */
     @Override
     public void getData() {
         Map<String, Integer> bookingsperDay = new TreeMap<>();
@@ -39,6 +43,10 @@ public class PieChartBuilder extends  DataChartBuilder{
         pieChart.setChartData(bookingsperDay);
     }
 
+    /**
+     * Process data to visualize
+     * @param operation the operation to do
+     */
     @Override
     public void processData(String operation) {
         // do nothing

@@ -32,13 +32,12 @@ public class WebApplication {
 
 		return runner -> {
 			initApplication(parkingAreaService);
-//			checkBuilder(paymentReceiptService);
 		};
 	}
 
 	private void initApplication(IParkingAreaService parkingAreaService)  {
 
-		// init parking area
+		// default parking area initialization
 		ParkingArea parkingArea = parkingAreaService.findByName(PARKING_AREA_NAME);
 		if(parkingArea == null) {
 			parkingArea = new ParkingArea(PARKING_AREA_NAME, ORDER);

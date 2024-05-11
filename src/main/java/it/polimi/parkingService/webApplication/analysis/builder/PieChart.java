@@ -3,6 +3,9 @@ package it.polimi.parkingService.webApplication.analysis.builder;
 import java.util.Map;
 import java.util.TreeMap;
 
+/**
+ * The {@code PieChart} defines pie chart model
+ */
 public class PieChart implements Chart {
 
     private Map<String, Integer> chartData;

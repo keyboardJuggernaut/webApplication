@@ -3,8 +3,8 @@ package it.polimi.parkingService.webApplication.messaging.controllers;
 
 import it.polimi.parkingService.webApplication.messaging.models.Review;
 import it.polimi.parkingService.webApplication.messaging.services.IReviewService;
-import it.polimi.parkingService.webApplication.utils.AuthenticationFacadeUserUnauthenticated;
-import it.polimi.parkingService.webApplication.utils.IAuthenticationFacade;
+import it.polimi.parkingService.webApplication.common.AuthenticationFacadeUserUnauthenticated;
+import it.polimi.parkingService.webApplication.common.IAuthenticationFacade;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

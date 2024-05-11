@@ -3,7 +3,7 @@ package it.polimi.parkingService.webApplication.parking.models;
 import it.polimi.parkingService.webApplication.parking.exceptions.SearchStrategyUndefined;
 import it.polimi.parkingService.webApplication.parking.strategy.ParkingSpotResearchStrategy;
 import it.polimi.parkingService.webApplication.parking.strategy.SearchCriteria;
-import it.polimi.parkingService.webApplication.utils.BaseEntity;
+import it.polimi.parkingService.webApplication.common.BaseEntity;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;

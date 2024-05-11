@@ -5,7 +5,7 @@ import it.polimi.parkingService.webApplication.payment.exceptions.PaymentFailed;
 import it.polimi.parkingService.webApplication.payment.exceptions.RefundFailed;
 import it.polimi.parkingService.webApplication.payment.models.PaymentReceipt;
 import it.polimi.parkingService.webApplication.payment.models.PaymentSystem;
-import it.polimi.parkingService.webApplication.utils.BaseEntity;
+import it.polimi.parkingService.webApplication.common.BaseEntity;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;

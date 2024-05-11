@@ -8,14 +8,23 @@ import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
+/**
+ * The {@code DataAnalyzer} handles data analysis functionality
+ */
 @Component
 public class DataAnalyzer {
-    private IPaymentReceiptService paymentReceiptService;
+    private final IPaymentReceiptService paymentReceiptService;
 
-    private IBookingService bookingService;
+    private final IBookingService bookingService;
 
-    private ChartMaker director;
+    private final ChartMaker director;
 
+    /**
+     * Constructs the class
+     * @param paymentReceiptService the service handling payment receipt business logic
+     * @param director the building director
+     * @param bookingService the service handling booking business logic
+     */
     @Autowired
     public DataAnalyzer(IPaymentReceiptService paymentReceiptService, ChartMaker director, IBookingService bookingService) {
         this.paymentReceiptService = paymentReceiptService;
@@ -23,6 +32,10 @@ public class DataAnalyzer {
         this.bookingService = bookingService;
     }
 
+    /**
+     * Returns periodic income analysis
+     * @return chart data
+     */
     public Map<String, Double> getPeriodicIncome() {
         DataChartBuilder builder = new BarChartBuilder(paymentReceiptService);
         director.makePaymentBarChart(builder);
@@ -30,6 +43,10 @@ public class DataAnalyzer {
         return barChar.getChartDoubleData();
     }
 
+    /**
+     * Returns periodic booking analysis
+      * @return chart data
+     */
    public Map<String, Integer> getPeriodicBooking() {
        DataChartBuilder builder = new PieChartBuilder(bookingService);
        director.makeBookingPieChart(builder);

@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+/**
+ * The {@code BarChart} defines bar chart model
+ */
 public class BarChart implements Chart {
     private Map<String, Double> chartData;
 

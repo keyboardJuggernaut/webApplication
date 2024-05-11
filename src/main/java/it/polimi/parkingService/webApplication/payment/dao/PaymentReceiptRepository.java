@@ -10,6 +10,6 @@ import java.util.List;
 public interface PaymentReceiptRepository extends JpaRepository<PaymentReceipt, Long> {
 
     @Query("SELECT p.amount FROM PaymentReceipt p WHERE p.timestamp = :actualDate")
-    public List<Double> findAmountByDate(LocalDate actualDate);
+    List<Double> findAmountByDate(LocalDate actualDate);
 
 }

@@ -44,33 +44,3 @@ WHERE NOT EXISTS (
     SELECT 1 FROM `parking_project_directory`.`users_roles`
     WHERE (user_id, role_id) IN ((1, 1), (1, 2), (1, 3), (2, 1), (2, 2))
 );
-
-# INSERT INTO `parking_project_directory`.`roles` (role, account_id)
-# SELECT * FROM (SELECT 'ROLE_USER', 1) AS temp
-# WHERE NOT EXISTS (
-#     SELECT 1 FROM `parking_project_directory`.`roles` WHERE role = 'ROLE_USER' AND account_id = 1
-# ) LIMIT 1;
-#
-# INSERT INTO `parking_project_directory`.`roles` (role, account_id)
-# SELECT * FROM (SELECT 'ROLE_GUARDIAN', 1) AS temp
-# WHERE NOT EXISTS (
-#     SELECT 1 FROM `parking_project_directory`.`roles` WHERE role = 'ROLE_GUARDIAN' AND account_id = 1
-# ) LIMIT 1;
-#
-# INSERT INTO `parking_project_directory`.`roles` (role, account_id)
-# SELECT * FROM (SELECT 'ROLE_ADMIN', 1) AS temp
-# WHERE NOT EXISTS (
-#     SELECT 1 FROM `parking_project_directory`.`roles` WHERE role = 'ROLE_ADMIN' AND account_id = 1
-# ) LIMIT 1;
-#
-# INSERT INTO `parking_project_directory`.`roles` (role, account_id)
-# SELECT * FROM (SELECT 'ROLE_USER', 2) AS temp
-# WHERE NOT EXISTS (
-#     SELECT 1 FROM `parking_project_directory`.`roles` WHERE role = 'ROLE_USER' AND account_id = 2
-# ) LIMIT 1;
-#
-# INSERT INTO `parking_project_directory`.`roles` (role, account_id)
-# SELECT * FROM (SELECT 'ROLE_GUARDIAN', 2) AS temp
-# WHERE NOT EXISTS (
-#     SELECT 1 FROM `parking_project_directory`.`roles` WHERE role = 'ROLE_GUARDIAN' AND account_id = 2
-# ) LIMIT 1;

@@ -7,7 +7,7 @@ import it.polimi.parkingService.webApplication.parking.models.Booking;
 import it.polimi.parkingService.webApplication.parking.models.Parking;
 import it.polimi.parkingService.webApplication.parking.models.ParkingSpot;
 import it.polimi.parkingService.webApplication.payment.models.PaymentReceipt;
-import it.polimi.parkingService.webApplication.utils.BaseService;
+import it.polimi.parkingService.webApplication.common.BaseService;
 import org.springframework.data.repository.query.Param;
 
 import java.util.Map;

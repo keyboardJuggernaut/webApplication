@@ -5,8 +5,8 @@ import it.polimi.parkingService.webApplication.parking.exceptions.SearchStrategy
 import it.polimi.parkingService.webApplication.parking.models.Booking;
 import it.polimi.parkingService.webApplication.parking.services.IBookingService;
 import it.polimi.parkingService.webApplication.parking.services.IParkingSpotService;
-import it.polimi.parkingService.webApplication.utils.AuthenticationFacadeUserUnauthenticated;
-import it.polimi.parkingService.webApplication.utils.IAuthenticationFacade;
+import it.polimi.parkingService.webApplication.common.AuthenticationFacadeUserUnauthenticated;
+import it.polimi.parkingService.webApplication.common.IAuthenticationFacade;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

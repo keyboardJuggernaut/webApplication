@@ -1,7 +1,5 @@
 package it.polimi.parkingService.webApplication.analysis.builder;
 
-import java.util.List;
-import java.util.Map;
 
 public abstract class DataChartBuilder {
 

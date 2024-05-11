@@ -2,16 +2,11 @@ package it.polimi.parkingService.webApplication.parking.services;
 
 import com.google.zxing.WriterException;
 import it.polimi.parkingService.webApplication.account.models.User;
-import it.polimi.parkingService.webApplication.parking.enums.ParkingSpotStatus;
 import it.polimi.parkingService.webApplication.parking.exceptions.ParkingAlreadyInProgress;
 import it.polimi.parkingService.webApplication.parking.exceptions.ParkingNotInProgress;
-import it.polimi.parkingService.webApplication.parking.exceptions.ParkingNotTerminated;
-import it.polimi.parkingService.webApplication.parking.models.Booking;
 import it.polimi.parkingService.webApplication.parking.models.Parking;
 import it.polimi.parkingService.webApplication.parking.models.ParkingSpot;
-import it.polimi.parkingService.webApplication.payment.models.PaymentReceipt;
-import it.polimi.parkingService.webApplication.utils.BaseService;
-import org.springframework.data.jpa.repository.Query;
+import it.polimi.parkingService.webApplication.common.BaseService;
 import org.springframework.data.repository.query.Param;
 
 import java.io.IOException;
