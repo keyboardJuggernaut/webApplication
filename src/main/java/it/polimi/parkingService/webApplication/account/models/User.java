@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * The {@code User} represents user model
+ */
 @Entity
 @Table(name = "user")
 public class User {

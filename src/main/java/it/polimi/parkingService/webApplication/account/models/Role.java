@@ -1,6 +1,9 @@
 package it.polimi.parkingService.webApplication.account.models;
 import jakarta.persistence.*;
 
+/**
+ * The {@code Role} represents role model
+ */
 @Entity
 @Table(name = "role")
 public class Role {

@@ -13,11 +13,18 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * The {@code RegistrationController} handles any registration related requests
+ */
 @Controller
 @RequestMapping("/register")
 public class RegistrationController {
-    private UserService userService;
+    private final UserService userService;
 
+    /**
+     * Constructs the controller
+     * @param userService the service handling user business logic
+     */
     @Autowired
     public RegistrationController(UserService userService) {
         this.userService = userService;
@@ -27,33 +34,31 @@ public class RegistrationController {
     public void initBinder(WebDataBinder dataBinder) {
 
         StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
-
         dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
     }
 
-    @GetMapping("/showRegistrationForm")
-    public String showMyLoginPage(Model theModel) {
-
-        theModel.addAttribute("user", new User());
-        theModel.addAttribute("paymentMethod", new PaymentMethod());
+    @GetMapping("")
+    public String showRegistrationForm(Model model) {
+        model.addAttribute("user", new User());
+        model.addAttribute("paymentMethod", new PaymentMethod());
         return "account/registration-form";
     }
 
-    @PostMapping("/processRegistrationForm")
+    @PostMapping("")
     public String processRegistrationForm(
-            @Valid @ModelAttribute("user") User theUser,
+            @Valid @ModelAttribute("user") User user,
             @Valid @ModelAttribute("paymentMethod") PaymentMethod paymentMethod,
             BindingResult theBindingResult,
             HttpSession session, Model theModel) {
 
-        String userName = theUser.getUserName();
+        String userName = user.getUserName();
 
         // form validation
         if (theBindingResult.hasErrors()){
             return "account/registration-form";
         }
 
-        // check the database if user already exists
+        // check  if user already exists
         User existing = userService.findByUserName(userName);
         if (existing != null){
             theModel.addAttribute("user", new User());
@@ -62,13 +67,12 @@ public class RegistrationController {
             return "account/registration-form";
         }
 
-        theUser.setPaymentMethod(paymentMethod);
-        // create user account and store in the database
-        userService.save(theUser);
+        user.setPaymentMethod(paymentMethod);
+        userService.save(user);
 
 
         // place user in the web http session for later use
-        session.setAttribute("user", theUser);
+        session.setAttribute("user", user);
 
         return "account/registration-confirmation";
     }

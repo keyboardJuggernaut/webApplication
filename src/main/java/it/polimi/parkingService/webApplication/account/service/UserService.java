@@ -1,7 +1,7 @@
 package it.polimi.parkingService.webApplication.account.service;
 
-import it.polimi.parkingService.webApplication.account.dao.RoleDao;
-import it.polimi.parkingService.webApplication.account.dao.UserDao;
+import it.polimi.parkingService.webApplication.account.dao.IRoleDao;
+import it.polimi.parkingService.webApplication.account.dao.IUserDao;
 import it.polimi.parkingService.webApplication.account.models.Role;
 import it.polimi.parkingService.webApplication.account.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,35 +14,37 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.stream.Collectors;
 
-
+/**
+ * The {@code UserService} handles any user related business logic
+ */
 @Service
 public class UserService implements IUserService {
 
-    private UserDao userDao;
+    private final IUserDao IUserDao;
 
-    private RoleDao roleDao;
+    private final IRoleDao IRoleDao;
 
-    private BCryptPasswordEncoder passwordEncoder;
+    private final BCryptPasswordEncoder passwordEncoder;
 
 
     @Autowired
-    public UserService(UserDao userDao, RoleDao roleDao, BCryptPasswordEncoder passwordEncoder) {
-        this.userDao = userDao;
-        this.roleDao = roleDao;
+    public UserService(IUserDao IUserDao, IRoleDao IRoleDao, BCryptPasswordEncoder passwordEncoder) {
+        this.IUserDao = IUserDao;
+        this.IRoleDao = IRoleDao;
         this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public User findByUserName(String userName) {
-        // check the database if the user already exists
-        return userDao.findByUserName(userName);
+        return IUserDao.findByUserName(userName);
     }
 
     @Override
     public User findById(Long id) {
-        return userDao.findById(id);
+        return IUserDao.findById(id);
     }
 
     @Override
@@ -60,17 +62,16 @@ public class UserService implements IUserService {
         user.setIsPregnant(webUser.getIsPregnant());
         user.setPaymentMethod(webUser.getPaymentMethod());
 
-        // give user default role of "employee"
-        user.setRoles(Arrays.asList(roleDao.findRoleByName("ROLE_CUSTOMER")));
+        // give user default role of "customer"
+        user.setRoles(Collections.singletonList(IRoleDao.findRoleByName("ROLE_CUSTOMER")));
 
-        // save user in the database
-        userDao.save(user);
+        IUserDao.save(user);
     }
 
 
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        User user = userDao.findByUserName(userName);
+        User user = IUserDao.findByUserName(userName);
         if (user == null) {
             throw new UsernameNotFoundException("Invalid username or password.");
         }
