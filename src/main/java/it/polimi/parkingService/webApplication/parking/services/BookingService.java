@@ -30,9 +30,9 @@ public class BookingService implements IBookingService {
 
 
     /**
-     * Constructs the service
+     * Constructs the services
      * @param bookingRepository the repository handling booking persistence logic
-     * @param paymentSystem the service handling payment business logic
+     * @param paymentSystem the services handling payment business logic
      */
     @Autowired
     public BookingService(BookingRepository bookingRepository, PaymentSystem paymentSystem) {

@@ -1,7 +1,7 @@
 package it.polimi.parkingService.webApplication.security;
 
 import it.polimi.parkingService.webApplication.account.models.User;
-import it.polimi.parkingService.webApplication.account.service.UserService;
+import it.polimi.parkingService.webApplication.account.services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;

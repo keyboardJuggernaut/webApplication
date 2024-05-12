@@ -28,8 +28,8 @@ public class ReportingController {
 
     /**
      * Constructs the controller
-     * @param reportingService the service handling reporting business logic
-     * @param authenticationFacade the service handling authentication info retrieval logic
+     * @param reportingService the services handling reporting business logic
+     * @param authenticationFacade the services handling authentication info retrieval logic
      */
     public ReportingController(IReportingService reportingService, IAuthenticationFacade authenticationFacade ) {
         this.reportingService = reportingService;

@@ -16,7 +16,7 @@ public class ResponseService implements IResponseService {
     private final ResponseRepository responseRepository;
 
     /**
-     * Constructs the service
+     * Constructs the services
      * @param responseRepository the repository handling response persistence logic
      */
     @Autowired

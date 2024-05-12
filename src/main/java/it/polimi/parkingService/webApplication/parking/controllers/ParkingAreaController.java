@@ -18,7 +18,7 @@ public class ParkingAreaController {
 
     /**
      * Constructs the controller
-     * @param sseService the service handling server-sent events logic
+     * @param sseService the services handling server-sent events logic
      */
     @Autowired
     private ParkingAreaController(SseService sseService){

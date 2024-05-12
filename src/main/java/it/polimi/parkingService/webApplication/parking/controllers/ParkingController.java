@@ -28,8 +28,8 @@ public class ParkingController {
 
     /**
      * Constructs the controller
-     * @param parkingService the service handling parking business logic
-     * @param authenticationFacade the service handling authentication info retrieval logic
+     * @param parkingService the services handling parking business logic
+     * @param authenticationFacade the services handling authentication info retrieval logic
      */
     public ParkingController(IParkingService parkingService, IAuthenticationFacade authenticationFacade) {
         this.parkingService = parkingService;

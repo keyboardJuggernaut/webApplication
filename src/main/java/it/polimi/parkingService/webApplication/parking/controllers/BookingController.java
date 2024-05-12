@@ -30,9 +30,9 @@ public class BookingController {
 
     /**
      * Constructs the controller
-     * @param parkingSpotService the service handling parking spot business logic
-     * @param bookingService the service handling booking business logic
-     * @param authenticationFacade the service handling authentication info retrieval logic
+     * @param parkingSpotService the services handling parking spot business logic
+     * @param bookingService the services handling booking business logic
+     * @param authenticationFacade the services handling authentication info retrieval logic
      */
     @Autowired
     public BookingController(IParkingSpotService parkingSpotService, IBookingService bookingService, IAuthenticationFacade authenticationFacade) {

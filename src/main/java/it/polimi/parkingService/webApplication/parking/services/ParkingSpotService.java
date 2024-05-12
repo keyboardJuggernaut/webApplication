@@ -1,7 +1,7 @@
 package it.polimi.parkingService.webApplication.parking.services;
 
 import it.polimi.parkingService.webApplication.account.models.User;
-import it.polimi.parkingService.webApplication.account.service.IUserService;
+import it.polimi.parkingService.webApplication.account.services.IUserService;
 import it.polimi.parkingService.webApplication.parking.dao.ParkingSpotRepository;
 import it.polimi.parkingService.webApplication.parking.enums.ParkingSpotStatus;
 import it.polimi.parkingService.webApplication.parking.enums.ParkingStripes;
@@ -54,15 +54,15 @@ public class ParkingSpotService implements IParkingSpotService{
     private final PaymentSystem paymentSystem;
 
     /**
-     * Constructs the service
-     * @param parkingSpotRepository the service handling parking spot business logic
-     * @param parkingService the service handling parking business logic
-     * @param bookingService the service handling booking business logic
-     * @param userService the service handling account business logic
-     * @param qrCodeService the service handling qrcode business logic
-     * @param sseService the service handling server-sent business logic
-     * @param parkingAreaService the service handling parking area business logic
-     * @param paymentSystem the service handling payment system business logic
+     * Constructs the services
+     * @param parkingSpotRepository the services handling parking spot business logic
+     * @param parkingService the services handling parking business logic
+     * @param bookingService the services handling booking business logic
+     * @param userService the services handling account business logic
+     * @param qrCodeService the services handling qrcode business logic
+     * @param sseService the services handling server-sent business logic
+     * @param parkingAreaService the services handling parking area business logic
+     * @param paymentSystem the services handling payment system business logic
      */
     @Autowired
     public ParkingSpotService(ParkingSpotRepository parkingSpotRepository, IParkingService parkingService, IBookingService bookingService, IUserService userService, IQRCodeService qrCodeService, SseService sseService, IParkingAreaService parkingAreaService, PaymentSystem paymentSystem) {

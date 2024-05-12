@@ -1,7 +1,7 @@
 package it.polimi.parkingService.webApplication.messaging.services;
 
 import it.polimi.parkingService.webApplication.account.models.User;
-import it.polimi.parkingService.webApplication.account.service.IUserService;
+import it.polimi.parkingService.webApplication.account.services.IUserService;
 import it.polimi.parkingService.webApplication.messaging.dao.ReviewRepository;
 import it.polimi.parkingService.webApplication.messaging.models.Review;
 import it.polimi.parkingService.webApplication.parking.exceptions.ResourceNotFound;
@@ -21,9 +21,9 @@ public class ReviewService implements IReviewService {
     private final IUserService userService;
 
     /**
-     * Constructs the service
+     * Constructs the services
      * @param reviewRepository the repository handling review persistence logic
-     * @param userService the service handling user business logic
+     * @param userService the services handling user business logic
      */
     public ReviewService(ReviewRepository reviewRepository, IUserService userService) {
         this.reviewRepository = reviewRepository;

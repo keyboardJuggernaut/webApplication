@@ -85,15 +85,12 @@ public class ParkingArea extends BaseEntity {
             throw new IllegalArgumentException("Array size does not match matrix dimensions");
         }
 
-        // Initialize matrix with the given dimensions
         ParkingSpot[][] parkingSpotsMatrix = new ParkingSpot[order][order];
 
-        // Populate matrix from 1D array
         for (int i = 0; i < order; i++) {
             for (int j = 0; j < order; j++) {
                 // Calculate index in the 1D array
                 int index = i * order + j;
-                // Set the corresponding element in the matrix
                 parkingSpotsMatrix[i][j] = parkingSpots.get(index);
             }
         }

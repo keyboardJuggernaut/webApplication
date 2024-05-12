@@ -27,7 +27,7 @@ public class ParkingSpotController {
 
     /**
      * Constructs the controller
-     * @param parkingSpotService the service handling parking spot business logic
+     * @param parkingSpotService the services handling parking spot business logic
      */
     @Autowired
     public ParkingSpotController(IParkingSpotService parkingSpotService) {

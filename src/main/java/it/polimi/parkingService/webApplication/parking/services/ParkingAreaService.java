@@ -20,7 +20,7 @@ public class ParkingAreaService implements IParkingAreaService {
     private final ParkingAreaRepository parkingAreaRepository;
 
     /**
-     * Constructs the service
+     * Constructs the services
      * @param parkingAreaRepository the repository handling parking area persistence logic
      */
     @Autowired

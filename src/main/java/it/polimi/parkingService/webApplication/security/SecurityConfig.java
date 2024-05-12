@@ -1,6 +1,6 @@
 package it.polimi.parkingService.webApplication.security;
 
-import it.polimi.parkingService.webApplication.account.service.UserService;
+import it.polimi.parkingService.webApplication.account.services.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -25,7 +25,7 @@ public class SecurityConfig {
 
     /**
      * Defines the authentication provider
-     * @param userService the user service
+     * @param userService the user services
      * @return auth provider
      */
     @Bean

@@ -16,7 +16,7 @@ public class QRCodeService implements IQRCodeService {
     private final TokenGenerator tokenGenerator;
 
     /**
-     * Constructs the service
+     * Constructs the services
      * @param tokenGenerator the class handling jwt related business logic
      */
     @Autowired

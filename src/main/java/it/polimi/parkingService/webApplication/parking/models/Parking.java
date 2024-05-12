@@ -50,9 +50,9 @@ public class Parking extends BaseEntity {
     /**
      * Hourly parking fee
      */
-    private final static double FEE_PER_MINUTE = 0.025;
+    public final static double FEE_PER_MINUTE = 0.025;
 
-    private final static double MINIMUM_CHARGE = 0.5;
+    public final static double MINIMUM_CHARGE = 0.5;
 
     public Parking(User customerUser) {
         this.arrival = LocalDateTime.now();

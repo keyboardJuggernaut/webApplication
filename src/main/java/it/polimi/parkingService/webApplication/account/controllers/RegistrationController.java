@@ -1,7 +1,7 @@
 package it.polimi.parkingService.webApplication.account.controllers;
 
 import it.polimi.parkingService.webApplication.account.models.User;
-import it.polimi.parkingService.webApplication.account.service.UserService;
+import it.polimi.parkingService.webApplication.account.services.UserService;
 import it.polimi.parkingService.webApplication.payment.models.PaymentMethod;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -23,7 +23,7 @@ public class RegistrationController {
 
     /**
      * Constructs the controller
-     * @param userService the service handling user business logic
+     * @param userService the services handling user business logic
      */
     @Autowired
     public RegistrationController(UserService userService) {

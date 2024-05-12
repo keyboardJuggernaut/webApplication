@@ -1,4 +1,4 @@
-package it.polimi.parkingService.webApplication.account.service;
+package it.polimi.parkingService.webApplication.account.services;
 
 import it.polimi.parkingService.webApplication.account.dao.IRoleDao;
 import it.polimi.parkingService.webApplication.account.dao.IUserDao;
@@ -12,7 +12,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.stream.Collectors;

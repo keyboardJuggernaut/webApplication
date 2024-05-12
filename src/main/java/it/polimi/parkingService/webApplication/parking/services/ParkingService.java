@@ -2,7 +2,7 @@ package it.polimi.parkingService.webApplication.parking.services;
 
 import com.google.zxing.WriterException;
 import it.polimi.parkingService.webApplication.account.models.User;
-import it.polimi.parkingService.webApplication.account.service.IUserService;
+import it.polimi.parkingService.webApplication.account.services.IUserService;
 import it.polimi.parkingService.webApplication.parking.dao.ParkingRepository;
 import it.polimi.parkingService.webApplication.parking.exceptions.ParkingAlreadyInProgress;
 import it.polimi.parkingService.webApplication.parking.exceptions.ParkingNotInProgress;
@@ -30,10 +30,10 @@ public class ParkingService implements IParkingService{
     private final IQRCodeService qrCodeService;
 
     /**
-     * Constructs the service
+     * Constructs the services
      * @param parkingRepository the repository handling parking persistence logic
-     * @param userService the service handling user business logic
-     * @param qrCodeService the service handling qrcode business logic
+     * @param userService the services handling user business logic
+     * @param qrCodeService the services handling qrcode business logic
      */
     @Autowired
     public ParkingService(ParkingRepository parkingRepository, IUserService userService, IQRCodeService qrCodeService) {

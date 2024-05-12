@@ -29,8 +29,8 @@ public class ReviewController {
 
     /**
      * Constructs the controller
-     * @param reviewService the service handling review business logic
-     * @param authenticationFacade the service handling authentication info retrieval logic
+     * @param reviewService the services handling review business logic
+     * @param authenticationFacade the services handling authentication info retrieval logic
      */
     public ReviewController(IReviewService reviewService, IAuthenticationFacade authenticationFacade) {
         this.reviewService = reviewService;

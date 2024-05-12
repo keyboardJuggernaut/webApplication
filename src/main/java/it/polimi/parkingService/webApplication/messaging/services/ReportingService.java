@@ -1,7 +1,7 @@
 package it.polimi.parkingService.webApplication.messaging.services;
 
 import it.polimi.parkingService.webApplication.account.models.User;
-import it.polimi.parkingService.webApplication.account.service.IUserService;
+import it.polimi.parkingService.webApplication.account.services.IUserService;
 import it.polimi.parkingService.webApplication.messaging.dao.ReportingRepository;
 import it.polimi.parkingService.webApplication.messaging.exceptions.AddingResponseForbidden;
 import it.polimi.parkingService.webApplication.messaging.exceptions.InvalidThreadStatus;
@@ -23,9 +23,9 @@ public class ReportingService implements IReportingService{
     private final IUserService userService;
 
     /**
-     * Constructs the service
+     * Constructs the services
      * @param reportingRepository the repository handling reporting persistence logic
-     * @param userService the service handling user business logic
+     * @param userService the services handling user business logic
      */
     public ReportingService(ReportingRepository reportingRepository, IUserService userService) {
         this.reportingRepository = reportingRepository;

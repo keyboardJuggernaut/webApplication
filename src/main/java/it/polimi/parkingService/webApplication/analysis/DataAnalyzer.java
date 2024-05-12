@@ -21,9 +21,9 @@ public class DataAnalyzer {
 
     /**
      * Constructs the class
-     * @param paymentReceiptService the service handling payment receipt business logic
+     * @param paymentReceiptService the services handling payment receipt business logic
      * @param director the building director
-     * @param bookingService the service handling booking business logic
+     * @param bookingService the services handling booking business logic
      */
     @Autowired
     public DataAnalyzer(IPaymentReceiptService paymentReceiptService, ChartMaker director, IBookingService bookingService) {
