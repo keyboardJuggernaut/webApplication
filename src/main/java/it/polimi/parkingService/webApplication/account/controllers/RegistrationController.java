@@ -48,13 +48,13 @@ public class RegistrationController {
     public String processRegistrationForm(
             @Valid @ModelAttribute("user") User user,
             @Valid @ModelAttribute("paymentMethod") PaymentMethod paymentMethod,
-            BindingResult theBindingResult,
+            BindingResult bindingResult,
             HttpSession session, Model theModel) {
 
         String userName = user.getUserName();
 
         // form validation
-        if (theBindingResult.hasErrors()){
+        if (bindingResult.hasErrors()){
             return "account/registration-form";
         }
 

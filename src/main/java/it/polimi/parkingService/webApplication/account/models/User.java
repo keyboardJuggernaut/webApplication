@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * The {@code User} represents user model
@@ -82,21 +83,6 @@ public class User {
         this.roles = roles;
     }
 
-    public void addParking(Parking parking) {
-        if(parkings == null) {
-            parkings = new ArrayList<>();
-        }
-        parkings.add(parking);
-        parking.setCustomerUser(this);
-    }
-
-    public void addBooking(Booking booking) {
-        if(bookings == null) {
-            bookings = new ArrayList<>();
-        }
-        bookings.add(booking);
-        booking.setCustomerUser(this);
-    }
 
     public Long getId() {
         return id;
@@ -203,6 +189,19 @@ public class User {
 
     public void setBookings(List<Booking> bookings) {
         this.bookings = bookings;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return enabled == user.enabled && isDisabled == user.isDisabled && isPregnant == user.isPregnant && Objects.equals(id, user.id) && Objects.equals(userName, user.userName) && Objects.equals(password, user.password) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(licensePlate, user.licensePlate) && Objects.equals(roles, user.roles) && Objects.equals(paymentMethod, user.paymentMethod) && Objects.equals(parkings, user.parkings) && Objects.equals(bookings, user.bookings);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, userName, password, enabled, firstName, lastName, licensePlate, isDisabled, isPregnant, roles, paymentMethod, parkings, bookings);
     }
 
     @Override
