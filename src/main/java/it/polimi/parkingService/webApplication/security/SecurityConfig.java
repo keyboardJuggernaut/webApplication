@@ -49,7 +49,6 @@ public class SecurityConfig {
         http.authorizeHttpRequests(configurer ->
                         configurer
                                 .requestMatchers("/analysis").hasRole("ADMIN")
-                                .requestMatchers("/bookings").hasRole("GUARDIAN")
                                 .requestMatchers("/register/**").permitAll()
                                 .requestMatchers("/spots").permitAll()
                                 .anyRequest().authenticated()

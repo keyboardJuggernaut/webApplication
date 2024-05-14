@@ -51,4 +51,8 @@ public class TokenGenerator {
         DecodedJWT jwt = JWT.require(algorithm).build().verify(token);
         return jwt.getClaim(claimName).asLong();
     }
+
+    public long getSECONDS_TO_EXPIRE() {
+        return SECONDS_TO_EXPIRE;
+    }
 }

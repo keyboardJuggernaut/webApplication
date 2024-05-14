@@ -31,4 +31,8 @@ public class SseService {
             }
         }
     }
+
+    public List<SseEmitter> getEmitters() {
+        return emitters;
+    }
 }
