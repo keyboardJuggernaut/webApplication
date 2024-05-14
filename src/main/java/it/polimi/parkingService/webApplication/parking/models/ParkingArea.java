@@ -80,7 +80,7 @@ public class ParkingArea extends BaseEntity {
         return row * order + column;
     }
 
-    private ParkingSpot[][] convertToMatrix() {
+    ParkingSpot[][] convertToMatrix() {
         if (parkingSpots.size() != order * order) {
             throw new IllegalArgumentException("Array size does not match matrix dimensions");
         }

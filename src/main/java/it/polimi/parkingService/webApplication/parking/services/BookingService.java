@@ -22,106 +22,106 @@ import java.util.Set;
  * The {@code BookingService} handles any booking related business logic
  */
 @Service
-public class BookingService implements IBookingService {
+    public class BookingService implements IBookingService {
 
-    private final BookingRepository bookingRepository;
+        private final BookingRepository bookingRepository;
 
-    private final PaymentSystem paymentSystem;
+        private final PaymentSystem paymentSystem;
 
 
-    /**
-     * Constructs the services
-     * @param bookingRepository the repository handling booking persistence logic
-     * @param paymentSystem the services handling payment business logic
-     */
-    @Autowired
-    public BookingService(BookingRepository bookingRepository, PaymentSystem paymentSystem) {
-        this.bookingRepository = bookingRepository;
-        this.paymentSystem = paymentSystem;
-    }
+        /**
+         * Constructs the services
+         * @param bookingRepository the repository handling booking persistence logic
+         * @param paymentSystem the services handling payment business logic
+         */
+        @Autowired
+        public BookingService(BookingRepository bookingRepository, PaymentSystem paymentSystem) {
+            this.bookingRepository = bookingRepository;
+            this.paymentSystem = paymentSystem;
+        }
 
-    /**
-     * Cancels a booking, checking for refund eligibility
-     * @param id the booking id
-     * @throws ResourceNotFound when booking is not present
-     */
-    @Override
-    public void cancelBooking(long id) throws ResourceNotFound {
-        Booking booking = findById(id);
-        booking.refundCheck(paymentSystem, true);
-        deleteById(id);
-    }
+        /**
+         * Cancels a booking, checking for refund eligibility
+         * @param id the booking id
+         * @throws ResourceNotFound when booking is not present
+         */
+        @Override
+        public void cancelBooking(long id) throws ResourceNotFound {
+            Booking booking = findById(id);
+            booking.refundCheck(paymentSystem, true);
+            deleteById(id);
+        }
 
-    /**
-     * Updates spots status if there are bookings in a certain date
-     * @param parkingArea parking area including spots
-     * @param date the date to inspect
-     * @return updated spots
-     */
-    public ParkingArea updateSpotsWithDailyBooking(ParkingArea parkingArea, LocalDate date) {
-        // find daily bookings
-        List<Booking> bookings = findByDate(date);
+        /**
+         * Updates spots status if there are bookings in a certain date
+         * @param parkingArea parking area including spots
+         * @param date the date to inspect
+         * @return updated spots
+         */
+        public ParkingArea updateSpotsWithDailyBooking(ParkingArea parkingArea, LocalDate date) {
+            // find daily bookings
+            List<Booking> bookings = findByDate(date);
 
-        // if there are bookings
-        if(!bookings.isEmpty()) {
+            // if there are bookings
+            if(!bookings.isEmpty()) {
 
-            // Note: hash set data structure was chosen to do search operation with constant time complexity
-            Set<Long> reservedSpotIds = new HashSet<>();
+                // Note: hash set data structure was chosen to do search operation with constant time complexity
+                Set<Long> reservedSpotIds = new HashSet<>();
 
-            // get booked spot ids
-            for (Booking reservation : bookings) {
-                reservedSpotIds.add(reservation.getParkingSpot().getId());
-            }
+                // get booked spot ids
+                for (Booking reservation : bookings) {
+                    reservedSpotIds.add(reservation.getParkingSpot().getId());
+                }
 
-            // update spot status if is booked
-            for (ParkingSpot spot : parkingArea.getParkingSpots()) {
-                if (reservedSpotIds.contains(spot.getId())) {
-                    spot.setStatus(ParkingSpotStatus.RESERVED);
+                // update spot status if is booked
+                for (ParkingSpot spot : parkingArea.getParkingSpots()) {
+                    if (reservedSpotIds.contains(spot.getId())) {
+                        spot.setStatus(ParkingSpotStatus.RESERVED);
+                    }
                 }
             }
-        }
-        // no bookings
-        return parkingArea;
-    }
-
-    @Override
-    public Booking findById(long id) {
-        Optional<Booking> result = bookingRepository.findById(id);
-
-        if(result.isEmpty()) {
-            throw new RuntimeException("Did not find booking id - " + id);
+            // no bookings
+            return parkingArea;
         }
 
-        return result.get();
-    }
+        @Override
+        public Booking findById(long id) {
+            Optional<Booking> result = bookingRepository.findById(id);
 
-    @Override
-    public List<Booking> findByDate(LocalDate date) {
-        return bookingRepository.findByDate(date);
-    }
+            if(result.isEmpty()) {
+                throw new RuntimeException("Did not find booking id - " + id);
+            }
 
-    @Override
-    public int countBookingByCustomerUserAndDate(User customerUser, LocalDate date) {
-        return bookingRepository.countBookingByCustomerUserAndDate(customerUser, date);
-    }
+            return result.get();
+        }
 
-    @Override
-    public Booking save(Booking booking) {
-        return bookingRepository.save(booking);
-    }
+        @Override
+        public List<Booking> findByDate(LocalDate date) {
+            return bookingRepository.findByDate(date);
+        }
 
-    @Override
-    public Booking findByCustomerUserAndRedeemedFalseAndDate(User customerUser, LocalDate date) {
-        return bookingRepository.findByCustomerUserAndRedeemedFalseAndDate(customerUser, date);
-    }
+        @Override
+        public int countBookingByCustomerUserAndDate(User customerUser, LocalDate date) {
+            return bookingRepository.countBookingByCustomerUserAndDate(customerUser, date);
+        }
 
-    @Override
-    @Transactional
-    public void update(long id, boolean redeemed) {
-        bookingRepository.update(id, redeemed);
-    }
+        @Override
+        public Booking save(Booking booking) {
+            return bookingRepository.save(booking);
+        }
 
-    @Override
+        @Override
+        public Booking findByCustomerUserAndRedeemedFalseAndDate(User customerUser, LocalDate date) {
+            return bookingRepository.findByCustomerUserAndRedeemedFalseAndDate(customerUser, date);
+        }
+
+        @Override
+        @Transactional
+        public void update(long id, boolean redeemed) {
+            bookingRepository.update(id, redeemed);
+        }
+
+        @Override
     public Integer countBookingByDate(LocalDate actualDate) {
         return bookingRepository.countBookingByDate(actualDate);
     }

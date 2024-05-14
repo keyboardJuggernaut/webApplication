@@ -120,4 +120,8 @@ public class Booking extends BaseEntity {
     public void setRedeemed(Boolean redeemed) {
         this.redeemed = redeemed;
     }
+
+    public void setPaymentReceipt(PaymentReceipt paymentReceipt) {
+        this.paymentReceipt = paymentReceipt;
+    }
 }

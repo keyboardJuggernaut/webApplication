@@ -68,7 +68,7 @@ public class Parking extends BaseEntity {
      * @return parking charge amount
      * @throws ParkingNotTerminated if parking has not been checked out
      */
-    private double getParkingCharge() throws ParkingNotTerminated {
+    public double getParkingCharge() throws ParkingNotTerminated {
         // check if check out has been done
         if(leaving == null) {
             throw new ParkingNotTerminated("Parking still in progress");
@@ -131,5 +131,9 @@ public class Parking extends BaseEntity {
 
     public void setBooking(Booking booking) {
         this.booking = booking;
+    }
+
+    public void setPaymentReceipt(PaymentReceipt paymentReceipt) {
+        this.paymentReceipt = paymentReceipt;
     }
 }

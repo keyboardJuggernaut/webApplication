@@ -30,11 +30,12 @@ public class ParkingSpotSearchCriteria implements SearchCriteria {
         return status;
     }
 
+    public void setParkingStripes(ParkingStripes parkingStripes) {
+        this.parkingStripes = parkingStripes;
+    }
+
     public void setStatus(ParkingSpotStatus status) {
         this.status = status;
     }
 
-    public void setStripeColor(ParkingStripes parkingStripes) {
-        this.parkingStripes = parkingStripes;
-    }
 }

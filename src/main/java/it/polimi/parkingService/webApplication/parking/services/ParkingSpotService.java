@@ -155,7 +155,6 @@ public class ParkingSpotService implements IParkingSpotService{
      * @throws SearchStrategyUndefined if a search spot strategy has not been defined
      */
     @Transactional
-
     public Parking startParking (String checkinToken) throws SearchStrategyUndefined {
         // check token and retrieve authorized user
         long userId = qrCodeService.getTokenPayload("userId", checkinToken);
@@ -219,7 +218,7 @@ public class ParkingSpotService implements IParkingSpotService{
 
         // if reserved spots for user needing assistance are not available, search in normal spots using a different strategy
         if(parkingSpot == null && (user.getIsPregnant() || user.getIsDisabled())) {
-            userSearchCriteria.setStripeColor(ParkingStripes.WHITE);
+            userSearchCriteria.setParkingStripes(ParkingStripes.WHITE);
             parkingArea.setParkingSpotResearchStrategy(new PriorityQueueParkingSpotResearch());
             parkingSpot = parkingArea.searchForParkingSpot(userSearchCriteria);
         }
@@ -240,10 +239,10 @@ public class ParkingSpotService implements IParkingSpotService{
         ParkingSpotSearchCriteria userSearchCriteria = new ParkingSpotSearchCriteria();
         // is user has both disability and pregnancy condition, set disability as priority
         if(user.getIsPregnant()) {
-            userSearchCriteria.setStripeColor(ParkingStripes.PINK);
+            userSearchCriteria.setParkingStripes(ParkingStripes.PINK);
         }
         if(user.getIsDisabled()) {
-            userSearchCriteria.setStripeColor(ParkingStripes.YELLOW);
+            userSearchCriteria.setParkingStripes(ParkingStripes.YELLOW);
         }
         return userSearchCriteria;
     }
