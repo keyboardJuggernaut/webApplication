@@ -49,6 +49,6 @@ public class PaymentReceiptService implements IPaymentReceiptService {
 
     @Override
     public void deleteById(long id) {
-
+        paymentReceiptRepository.deleteById(id);
     }
 }
