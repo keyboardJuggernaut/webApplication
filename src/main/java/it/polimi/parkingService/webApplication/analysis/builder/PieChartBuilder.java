@@ -11,7 +11,7 @@ import java.util.TreeMap;
  */
 public class PieChartBuilder extends  DataChartBuilder{
 
-    private PieChart pieChart;
+    PieChart pieChart;
     private final IBookingService bookingService;
 
     public PieChartBuilder(IBookingService bookingService) {

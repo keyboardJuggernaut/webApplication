@@ -14,7 +14,7 @@ public class BarChartBuilder extends DataChartBuilder {
 
 
     private final IPaymentReceiptService paymentReceiptService;
-    private BarChart graphData;
+    BarChart graphData;
 
     public BarChartBuilder(IPaymentReceiptService paymentReceiptService) {
         this.paymentReceiptService = paymentReceiptService;
