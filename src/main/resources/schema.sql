@@ -113,7 +113,7 @@ CREATE TABLE IF NOT EXISTS `parking` (
 
                             FOREIGN KEY (`booking_id`)
                             REFERENCES `booking` (`id`)
-                            ON DELETE NO ACTION ON UPDATE NO ACTION
+                            ON DELETE NO ACTION ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
 CREATE TABLE IF NOT EXISTS `payment_receipt` (

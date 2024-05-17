@@ -1,119 +1,157 @@
-<!DOCTYPE HTML>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
-
-<head th:fragment="head">
-    <!-- Required meta tags -->
+<!doctype html>
+<html  lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" th:href="@{/favicon.ico}">
 
-    <!-- Bootstrap CSS -->
+    <title>Parking Area Map</title>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
-    <title>Parking Service</title>
-    <script>
 
-        document.addEventListener("DOMContentLoaded", function() {
-            const eventSource = new EventSource("/parkingArea/sse");
-            eventSource.onmessage = (event) => {
-                console.log(`Event received: ${event.data}`)
+    <link th:href="@{/css/album.css}"  rel="stylesheet">
 
-                const data = JSON.parse(event.data)
-                const row = document.getElementById(data.id);
-                const spotStatusCell = row.querySelector('#spotStatus');
-                const spotEstimatedTime = row.querySelector('#estimatedTime')
-                spotStatusCell.textContent = data.status;
-
-                if(data.status === "FREE") {
-                    spotEstimatedTime.textContent = ""
-                }
-
-                eventSource.onerror = (error) => {
-                    console.error("Error occurred:", error);
-                    eventSource.close();
-                };
-            };
-        });
-
-
-
-    </script>
 </head>
 
 <body>
 
-<div class="container">
-
-    <h3>Parking Area Map</h3>
-    <hr>
-    <div>
-        <a th:href="@{/parkings/checkin}" class="btn btn-primary mt-3" role="button" aria-pressed="true">Check In</a>
-    </div>
-    <div>
-        <a th:href="@{/parkings/checkout}" class="btn btn-primary mt-3" role="button" aria-pressed="true">Check Out</a>
-    </div>
-    <div>
-        <a th:href="@{/bookings/new}" class="btn btn-primary mt-3" role="button" aria-pressed="true">Book</a>
-    </div>
-    <div>
-    <a th:href="@{/reviews}" class="btn btn-primary mt-3" role="button" aria-pressed="true">See review</a>
-    </div>
-    <div>
-    <a th:href="@{/reportings}" class="btn btn-primary mt-3" role="button" aria-pressed="true">See reportings</a>
-    </div>
-    <div>
-        <a th:href="@{/analysis}" class="btn btn-primary mt-3" role="button" aria-pressed="true">See analysis</a>
-    </div>
-
-
-    <form sec:authorize="isAuthenticated()" action="#" th:action="@{/logout}"
-          method="POST">
-
-        <input type="submit" value="Logout" class="btn btn-outline-primary mt-2" />
-
-    </form>
-
-    <table class="table table-bordered table-striped">
-        <thead class="table-dark">
-        <tr>
-            <th>Spot number</th>
-            <th>Status</th>
-            <th>Color</th>
-            <th>Estimated Time</th>
-            <th sec:authorize="hasRole('ADMIN')">Actions</th>
-
-        </tr>
-        </thead>
-
-        <tbody>
-        <tr th:each="parkingSpot : ${parkingArea.keySet()}" th:id="${parkingSpot.id}">
-
-            <td><span th:text="${parkingSpot.rowNumber}"></span><span th:text="${parkingSpot.columnNumber}"></span></td>
-            <td id="spotStatus" th:text="${parkingSpot.status}" />
-            <td th:text="${parkingSpot.stripeColor}" />
-            <div th:if="${parkingArea.get(parkingSpot) != null}">
-                <td id="estimatedTime" th:text="${parkingArea.get(parkingSpot).estimatedTime}"></td>
+<header>
+    <div class="collapse bg-dark" id="navbarHeader">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-8 col-md-7 py-4">
+                    <h4 class="text-white">Welcome</h4>
+                    <p class="text-muted">Explore our features</p>
+                </div>
+                <div class="col-sm-4 offset-md-1 py-4">
+                    <h4 class="text-white">Other actions</h4>
+                    <ul class="list-unstyled">
+                        <li><a th:href="@{/reviews}" class="text-white">See reviews</a></li>
+                        <li><a th:href="@{/reportings}" class="text-white">See reportings</a></li>
+                        <li sec:authorize="hasRole('ADMIN')">
+                            <a th:href="@{/analysis}">See analysis</a>
+                        </li>
+                        <li sec:authorize="hasRole('ADMIN')">
+                            <a th:href="@{/bookings/admin}">See bookings</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
+        </div>
+    </div>
+    <div class="navbar navbar-dark bg-dark box-shadow">
+        <div class="container d-flex justify-content-between">
+            <a href="#" class="navbar-brand d-flex align-items-center">
+                <strong>ParkingEasy</strong>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <form sec:authorize="isAuthenticated()" action="#" th:action="@{/logout}"
+                  method="POST">
 
+                <input type="submit" value="Logout" class="btn btn-outline-primary mt-2" />
 
+            </form>
 
-                <td >
-                    <div sec:authorize="hasRole('ADMIN')">
-                    <form
-                            action="#" th:action="@{'/spots/' + ${parkingSpot.id} + '/toggleAvailability'}"
-                            method="POST">
+        </div>
+    </div>
+</header>
 
-                            <button type="submit" class="btn btn-danger">Toggle availability</button>
+<main role="main">
 
-                    </form>
+    <section class="jumbotron text-center">
+        <div class="container">
+            <h1 class="jumbotron-heading">Our Parking Area Is Waiting For You</h1>
+            <p class="lead text-muted">We choose the perfect spot for you</p>
+            <p>
+                <a th:href="@{/parkings/checkin}" class="btn btn-primary my-2">Check In</a>
+                <a th:href="@{/parkings/checkout}"  class="btn btn-secondary my-2">Check Out</a>
+                <a th:href="@{/bookings/new}" class="btn btn-primary my-2">Book</a>
+            </p>
+        </div>
+    </section>
+
+    <div class="album py-5 bg-light">
+        <div class="container">
+
+            <div class="row">
+                <div th:each="parkingSpot : ${parkingArea.keySet()}" th:id="${parkingSpot.id}" class="col-md-4">
+                    <div class="card mb-4 box-shadow">
+                        <img class="card-img-top" th:src="'holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=' + ${parkingSpot.getSpotIdentifier()}" alt="Card image cap">
+                        <div class="card-body">
+                            <p id="spotStatus" th:text="${parkingSpot.status}" class="card-text"></p>
+                            <p th:text="${parkingSpot.stripeColor}" class="card-text"></p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <div sec:authorize="hasRole('ADMIN')">
+                                        <form
+                                                action="#" th:action="@{'/spots/' + ${parkingSpot.id} + '/toggleAvailability'}"
+                                                method="POST">
+
+                                            <button type="submit" class="btn btn-danger">Toggle availability</button>
+
+                                        </form>
+                                    </div>
+                                </div>
+                                <div th:if="${parkingArea.get(parkingSpot) != null}">
+                                    <small id="estimatedTime" class="text-muted"  th:text="'Estimated leaving time: ' + ${parkingArea.get(parkingSpot).estimatedTime}"></small>
+                                </div>
+
+                            </div>
+                        </div>
                     </div>
+                </div>
 
-                </td>
+            </div>
+        </div>
+    </div>
 
-        </tr>
-        </tbody>
-    </table>
+</main>
 
-</div>
+<footer class="text-muted">
+    <div class="container">
+        <p class="float-right">
+            <a href="#">Back to top</a>
+        </p>
+    </div>
+</footer>
 
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script>window.jQuery || document.write('<script th:src="@{/js/jquery-slim.min.js}"><\/script>')</script>
+<script th:src="@{/js/popper.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/holder.min.js}"></script>
+<script>
+
+    document.addEventListener("DOMContentLoaded", function() {
+        const eventSource = new EventSource("/parkingArea/sse");
+        eventSource.onmessage = (event) => {
+            console.log(`Event received: ${event.data}`)
+
+            const data = JSON.parse(event.data)
+            const row = document.getElementById(data.id);
+            const spotStatusCell = row.querySelector('#spotStatus');
+            const spotEstimatedTime = row.querySelector('#estimatedTime')
+            spotStatusCell.textContent = data.status;
+
+            if(data.status === "FREE") {
+                spotEstimatedTime.textContent = ""
+            }
+
+            eventSource.onerror = (error) => {
+                console.error("Error occurred:", error);
+                eventSource.close();
+            };
+        };
+    });
+
+
+
+</script>
 </body>
 </html>

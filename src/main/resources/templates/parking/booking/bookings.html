@@ -37,11 +37,11 @@
             <td th:text="${booking.customerUser.userName}"></td>
             <td th:text="${booking.date}" />
             <td th:text="${booking.parkingSpot.getSpotIdentifier()}" />
-            <td th:text="${booking.claimed}" />
+            <td th:text="${booking.redeemed}" />
             <td>
 
                 <form
-                        action="#" th:action="@{'/parkingArea/bookings/' + ${booking.id}}"
+                        action="#" th:action="@{'/bookings/' + ${booking.id}}"
                         method="POST"
                 >
                     <button type="submit" class="btn btn-danger">Cancel</button>

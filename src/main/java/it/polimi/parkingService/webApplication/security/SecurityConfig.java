@@ -51,6 +51,7 @@ public class SecurityConfig {
                                 .requestMatchers("/analysis").hasRole("ADMIN")
                                 .requestMatchers("/register/**").permitAll()
                                 .requestMatchers("/spots").permitAll()
+                                .requestMatchers("/").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .formLogin(form ->
