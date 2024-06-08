@@ -3,19 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>Checkout</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-<h1>QR Code</h1>
-<img th:src="'data:image/png;base64,' + ${qrcode}" alt="QR Code">
-<div>
-    <form  action="#" th:action="@{/spots/checkout}"
-           method="POST">
+<body class="d-flex flex-column justify-content-center align-items-center vh-100 bg-light">
+<div class="text-center">
+    <h1 class="mb-4">Show the QR Code to the scanner</h1>
+    <img th:src="'data:image/png;base64,' + ${qrcode}" alt="QR Code" class="img-fluid mb-4">
+    <form action="#" th:action="@{/spots/checkout}" method="POST" class="mb-3">
         <input type="text" id="qrcode" name="qrcode" th:value="${qrcode}" hidden>
-        <button type="submit">Scan</button>
+        <button type="submit" class="btn btn-primary">Scan</button>
     </form>
-<!--    <a th:href="@{/templates/parking/leaving(qrcode=${qrcode})}" class="btn btn-primary mt-3" role="button" aria-pressed="true">Scan</a>-->
-    <br><br>
-    <a th:href="@{/spots}">Go back</a>
+    <a th:href="@{/spots}" class="btn btn-secondary">Go back</a>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

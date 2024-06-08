@@ -4,22 +4,22 @@
 <head>
     <title>Booking Confirmation</title>
 </head>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+<body class="d-flex flex-column justify-content-center align-items-center vh-100 bg-light">
+<div class="container text-center">
+    <h2 class="mb-4">Booking registered successfully!</h2>
+    <ul class="list-group mb-4">
+        <li class="list-group-item" th:text="'Booking id: ' + ${confirmedBooking.id}"></li>
+        <li class="list-group-item" th:text="'Date: ' + ${confirmedBooking.date}"></li>
+        <li class="list-group-item" th:text="'Parking Spot Identifier: ' + ${confirmedBooking.parkingSpot.getSpotIdentifier()}"></li>
+    </ul>
+    <hr>
+    <a th:href="@{/spots}" class="btn btn-primary">See you soon</a>
+</div>
 
-<body>
-
-<h2>Booking registered successfully!</h2>
-
-<!-- display first name, last name and email -->
-<ul>
-    <li th:text="'Booking id: ' + ${confirmedBooking.id}"></li>
-    <li th:text="'Date: ' + ${confirmedBooking.date}"></li>
-    <li th:text="'Parking Spot Identifier: ' + ${confirmedBooking.parkingSpot.getSpotIdentifier()}"></li>
-</ul>
-
-<hr>
-
-<a th:href="@{/spots}">See you soon</a>
-
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 
 </html>

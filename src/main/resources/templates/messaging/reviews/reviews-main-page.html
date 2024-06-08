@@ -13,32 +13,34 @@
 
 </head>
 
-<body>
-
-<div class="container">
-
-    <h3>Reviews</h3>
+<body class="bg-light">
+<div class="container my-5">
+    <h3 class="mb-4">Reviews</h3>
     <hr>
-    <div>
-        <a th:href="@{/reviews/new}" class="btn btn-primary mt-3" role="button" aria-pressed="true">Add a review</a>
+    <div class="mb-4">
+        <a th:href="@{/reviews/new}" class="btn btn-primary" role="button" aria-pressed="true">Add a review</a>
     </div>
-
     <div th:if="${reviews.size() != 0}">
-        <div th:each="review : ${reviews}">
+        <div th:each="review : ${reviews}" class="mb-4">
             <hr>
-                <h3 th:text="${review.heading}"></h3>
-            <span th:text="${review.timestamp}"> </span><span th:text="' From ' + ${review.author.userName}"> </span>
+            <h4 th:text="${review.heading}"></h4>
+            <small class="text-muted">
+                <span th:text="${review.timestamp}"></span>
+                <span th:text="' From ' + ${review.author.userName}"></span>
+            </small>
             <p th:text="${review.body}"></p>
-            <p th:text="'Number of stars: ' +${review.starsNumber}"></p>
+            <p th:text="'Number of stars: ' + ${review.starsNumber}"></p>
             <hr>
-            </div>
+        </div>
     </div>
     <div th:if="${reviews.size() == 0}">
-        <p>No available reviews yet</p>
+        <p class="text-muted">No available reviews yet</p>
     </div>
-    <a th:href="@{/spots}">Go back</a>
-
+    <a th:href="@{/spots}" class="btn btn-secondary">Go back</a>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

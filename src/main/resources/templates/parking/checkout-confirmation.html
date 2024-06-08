@@ -4,21 +4,31 @@
 <head>
     <title>Checkout Confirmation</title>
 </head>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
-<body>
+<body class="d-flex flex-column justify-content-center align-items-center vh-100 bg-light">
+<div class="container text-center">
+    <h2 class="mb-4">Check out done successfully!</h2>
+    <div class="mb-4">
+        <p class="mb-2">
+            <strong>Timestamp:</strong> <br>
+            <span th:text="${receipt.timestamp}"></span>
+        </p>
+        <p>
+            <strong>Total Amount:</strong> <br>
+            <span th:text="${receipt.amount} + 'euro'"></span>
+        </p>
+    </div>
+    <hr>
+    <div>
+        <a th:href="@{/templates/messaging/reviews}" class="btn btn-primary mr-2">Leave a review</a>
+        <a th:href="@{/spots}" class="btn btn-secondary">See map</a>
+    </div>
+</div>
 
-<h2>Check out done successfully!</h2>
-
-    <p>
-        Timestamp: <br><span th:text="${receipt.timestamp}"></span>
-    </p>
-    <p>
-        Total Amount: <br><span th:text="${receipt.amount}"></span>
-    </p>
-<hr>
-<a th:href="@{/templates/messaging/reviews}">Leave a review</a>
-<a th:href="@{/spots}">See map</a>
-
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 
 </html>

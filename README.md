@@ -18,7 +18,12 @@ Some environmental variables are required:
     * jwt.expiration : the jwt expiration time
 
 ## Build & run locally
-After running the dbms, follow these steps: 
+After running the dbms, follow these steps:
+Use maven plugin:
+   ```
+   mvnw spring-boot:run
+   ```
+or 
 1. package the app
    ```
    mvnw package
@@ -28,7 +33,4 @@ After running the dbms, follow these steps:
    java -jar target\webApplication-0.0.1-SNAPSHOT.jar
    ```
    
-Or use maven plugin:
-   ```
-   mvnw spring-boot:run
-   ```
+

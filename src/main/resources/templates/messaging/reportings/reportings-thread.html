@@ -10,50 +10,48 @@
 
 </head>
 
-<body>
-
+<body class="bg-light">
 <div class="container">
-
-    <h3 th:text="'Report ' + ${report.id}"></h3>
+    <h3 class="my-4" th:text="'Report ' + ${report.id}"></h3>
     <hr>
 
     <!-- Report First message -->
-    <hr>
-    <h3 th:text="${report.heading}"></h3>
-    <span th:text="${report.timestamp}"> </span><span th:text="' From ' + ${report.author.userName}"> </span>
-    <p th:text="${report.body}"></p>
-    <p th:text="'Severity: ' +${report.severity}"></p>
-    <p th:text="'Status: ' +${report.open}"></p>
+    <div class="mb-4">
+        <h4 th:text="${report.heading}"></h4>
+        <small class="text-muted">
+            <span th:text="${report.timestamp}"></span>
+            <span th:text="' From ' + ${report.author.userName}"></span>
+        </small>
+        <p th:text="${report.body}"></p>
+        <p th:text="'Severity: ' + ${report.severity}"></p>
+        <p th:text="'Status: ' + ${report.open}"></p>
         <a th:if="${report.open}" th:href="@{'/reportings/' + ${report.id} + '/responses/new'}" class="btn btn-primary mt-3" role="button" aria-pressed="true">Reply</a>
-
-    <div sec:authorize="hasRole('GUARDIAN')">
-
-        <form th:if="${report.open}"
-                action="#" th:action="@{'/reportings/' + ${report.id} + '/close'}"
-                method="POST">
-
-            <button type="submit" class="btn btn-danger">Close thread</button>
-
-        </form>
-    </div>
-        <hr>
-
-
-
-    <div th:if="${report.linkedResponses.size() != 0}">
-        <div th:each="response : ${report.linkedResponses}">
-            <hr>
-            <h3>
-            <span th:text="${response.timestamp}"> </span><span th:text="' From ' + ${response.author.userName}"> </span>
-            </h3>
-            <p th:text="${response.body}"></p>
-            <hr>
+        <div th:if="${report.open}">
+            <form action="@{'/reportings/' + ${report.id} + '/close'}" method="POST">
+                <button type="submit" class="btn btn-danger mt-3">Close thread</button>
+            </form>
         </div>
     </div>
 
-    <a th:href="@{/reportings}">Go back</a>
+    <!-- Linked Responses -->
+    <div th:if="${report.linkedResponses.size() != 0}">
+        <div th:each="response : ${report.linkedResponses}" class="mb-4">
+            <hr>
+            <h4>
+                <small class="text-muted">
+                    <span th:text="${response.timestamp}"></span>
+                    <span th:text="' From ' + ${response.author.userName}"></span>
+                </small>
+            </h4>
+            <p th:text="${response.body}"></p>
+        </div>
+    </div>
 
+    <a th:href="@{/reportings}" class="btn btn-secondary">Go back</a>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

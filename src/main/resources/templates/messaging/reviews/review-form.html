@@ -9,98 +9,68 @@
           integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 </head>
 
-<body>
-
+<body class="bg-light">
 <div class="container">
-
-    <div id="loginbox" style="margin-top: 50px;"
-         class="col-md-3 col-md-offset-2 col-sm-6 col-sm-offset-2">
-
-        <div class="card border-info">
-
-            <div class="card-header bg-info">
-                New Review
-            </div>
-
-            <div class="card-body">
-
-                <div class="card-text">
-
-                    <!-- Registration Form -->
-                    <form action="#" th:action="@{/reviews}"
-                          th:object="${review}"
-                          method="POST" class="form-horizontal">
-
-                        <!-- Place for messages: error, alert etc ... -->
-                        <div class="form-group">
-                            <div class="col-xs-15">
-                                <div>
-
-                                    <!-- Check for login error -->
-
-                                    <div th:if="${param.reviewError}">
-
-                                        <div class="alert alert-danger col-xs-offset-1 col-xs-10">
-                                            <span th:text="${param.reviewError}"></span>
-                                        </div>
-
+    <div id="loginbox" class="row justify-content-center mt-5">
+        <div class="col-md-6">
+            <div class="card border-info">
+                <div class="card-header bg-info text-white">
+                    New Review
+                </div>
+                <div class="card-body">
+                    <div class="card-text">
+                        <!-- Review Form -->
+                        <form action="#" th:action="@{/reviews}" th:object="${review}" method="POST" class="form-horizontal">
+                            <!-- Place for messages: error, alert etc ... -->
+                            <div class="form-group">
+                                <div class="col-12">
+                                    <!-- Check for review error -->
+                                    <div th:if="${param.reviewError}" class="alert alert-danger">
+                                        <span th:text="${param.reviewError}"></span>
                                     </div>
-
                                 </div>
                             </div>
-                        </div>
-
-                        <div style="margin-bottom: 25px" class="input-group">
-                            <input type="text" th:field="*{heading}" placeholder="Heading (*)" class="form-control" />
-                        </div>
-
-                        <div th:if="${#fields.hasErrors('heading')}"
-                             style="margin-bottom: 25px" class="text-danger">
-                            <ul>
-                                <li th:each="err : ${#fields.errors('heading')}" th:text="'Heading ' + ${err}" />
-                            </ul>
-                        </div>
-
-
-                        <div style="margin-bottom: 25px" class="input-group">
-                            <input type="text" th:field="*{body}" placeholder="Body (*)" class="form-control" />
-                        </div>
-
-                        <div th:if="${#fields.hasErrors('body')}"
-                             style="margin-bottom: 25px" class="text-danger">
-                            <ul>
-                                <li th:each="err : ${#fields.errors('body')}" th:text="'Body ' + ${err}" />
-                            </ul>
-                        </div>
-
-                        <div style="margin-bottom: 25px" class="input-group">
-                            <input min="1" max="5" type="number" th:field="*{starsNumber}" placeholder="Stars number (*)" class="form-control" />
-                        </div>
-
-                        <div th:if="${#fields.hasErrors('starsNumber')}"
-                             style="margin-bottom: 25px" class="text-danger">
-                            <ul>
-                                <li th:each="err : ${#fields.errors('starsNumber')}" th:text="'Stars number ' + ${err}" />
-                            </ul>
-                        </div>
-
-                        <div style="margin-top: 10px" class="form-group">
-                            <div class="col-sm-6 controls">
+                            <!-- Heading input -->
+                            <div class="form-group mb-3">
+                                <input type="text" th:field="*{heading}" placeholder="Heading (*)" class="form-control" />
+                                <div th:if="${#fields.hasErrors('heading')}" class="text-danger">
+                                    <ul>
+                                        <li th:each="err : ${#fields.errors('heading')}" th:text="'Heading ' + ${err}" />
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- Body input -->
+                            <div class="form-group mb-3">
+                                <input type="text" th:field="*{body}" placeholder="Body (*)" class="form-control" />
+                                <div th:if="${#fields.hasErrors('body')}" class="text-danger">
+                                    <ul>
+                                        <li th:each="err : ${#fields.errors('body')}" th:text="'Body ' + ${err}" />
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- Stars number input -->
+                            <div class="form-group mb-3">
+                                <input min="1" max="5" type="number" th:field="*{starsNumber}" placeholder="Stars number (*)" class="form-control" />
+                                <div th:if="${#fields.hasErrors('starsNumber')}" class="text-danger">
+                                    <ul>
+                                        <li th:each="err : ${#fields.errors('starsNumber')}" th:text="'Stars number ' + ${err}" />
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- Publish button -->
+                            <div class="form-group">
                                 <button type="submit" class="btn btn-primary">Publish</button>
                             </div>
-                        </div>
-
-
-                    </form>
-
+                        </form>
+                    </div>
                 </div>
-
             </div>
-
         </div>
     </div>
-
 </div>
 
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

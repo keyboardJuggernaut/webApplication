@@ -1,9 +1,21 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<body>
-<h1>Something went wrong! </h1>
-<p th:text="'Message: ' + ${message}"></p>
-<h2>Try later</h2>
-<a href="/">Go Home</a>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error Page</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+<div class="container text-center">
+    <h1 class="mt-5">Something went wrong!</h1>
+    <p th:text="'Message: ' + ${message}" class="lead mt-3"></p>
+    <h2 class="mt-4">Please try again later.</h2>
+    <a href="/" class="btn btn-primary mt-3">Go Home</a>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
