@@ -19,6 +19,7 @@ Some environmental variables are required:
 
 ## Build & run locally
 After running the dbms, follow these steps:
+
 Use maven plugin:
    ```
    mvnw spring-boot:run
