@@ -50,7 +50,7 @@ public class SecurityConfig {
                         configurer
                                 .requestMatchers("/analysis").hasRole("ADMIN")
                                 .requestMatchers("/register/**").permitAll()
-                                .requestMatchers("/spots").permitAll()
+                                .requestMatchers("/parkingArea/sse").permitAll()
                                 .requestMatchers("/").permitAll()
                                 .anyRequest().authenticated()
                 )
