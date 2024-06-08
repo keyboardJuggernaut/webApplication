@@ -17,7 +17,7 @@ Some environmental variables are required:
     * jwt.secret : the jwt secret to sign
     * jwt.expiration : the jwt expiration time
 
-## Build & run
+## Build & run locally
 After running the dbms, follow these steps: 
 1. package the app
    ```
