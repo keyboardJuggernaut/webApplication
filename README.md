@@ -32,13 +32,3 @@ Or use maven plugin:
    ```
    mvnw spring-boot:run
    ```
-
-## Build & run with docker
-After compiling and creating a .jar file of the project
-   ```
-   docker build --build-arg JAR_FILE=target/*.jar -t myorg/myapp .
-   ```
-followed by
-   ```
-   docker run -p 8080:8080 myorg/myapp
-   ```
